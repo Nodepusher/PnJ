@@ -3,11 +3,11 @@ import './App.css';
 import ListPage from './Pages/ListPage';
 
 function App() {
-  return (
-    <>
-    <ListPage></ListPage>
-    </>
-  );
+    return (
+        <>
+            <ListPage></ListPage>
+        </>
+    );
 }
 
 export default App;
