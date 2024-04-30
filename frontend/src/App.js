@@ -1,11 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import ListPage from './Pages/ListPage';
+import PostListPage from './Pages/PostListPage';
+import PostDetailPage from './Pages/PostDetailPage';
 
 function App() {
     return (
         <>
-            <ListPage></ListPage>
+            <PostDetailPage></PostDetailPage>
         </>
     );
 }

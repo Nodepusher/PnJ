@@ -1,11 +1,11 @@
 import React from 'react';
 import Logo from '../../Components/List/Logo';
-import HeaderAction from './HeaderAction';
+import HeaderAction from './HeaderActionContainer';
 import Category from '../../Components/List/Category';
 import '../../style/List.css';
 import '../../style/List2.css';
 
-const ListHeader = () => {
+const ListHeaderContainer = () => {
     const style = {
         display: 'flex',
         padding: '0px 32px 0px 32px',
@@ -25,4 +25,4 @@ const ListHeader = () => {
     );
 };
 
-export default ListHeader;
+export default ListHeaderContainer;

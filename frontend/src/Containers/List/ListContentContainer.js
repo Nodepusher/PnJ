@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ListContent = () => {
+const ListContentContainer = () => {
     const StImg = {
         position: 'absolute',
         height: '100%',
@@ -197,4 +197,4 @@ const ListContent = () => {
     );
 };
 
-export default ListContent;
+export default ListContentContainer;
