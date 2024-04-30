@@ -2,7 +2,7 @@ import React from 'react';
 import '../../style/List.css';
 import '../../style/List2.css';
 
-const ListFooter = () => {
+const ListFooterContainer = () => {
     return (
         <div class="mt-[56px] mobile:mt-[128px]">
             <footer class="surface_secondary sticky top-[100vh] mt-[48px] w-full mobile:mt-[80px]">
@@ -348,4 +348,4 @@ const ListFooter = () => {
     );
 };
 
-export default ListFooter;
+export default ListFooterContainer;
