@@ -1,0 +1,25 @@
+.profile_image_button {
+    width: 68px;
+    height: 68px;
+    outline: none
+
+}
+
+.profile_image {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    inset: 0px;
+    object-fit: cover;
+    object-position: center center;
+    color: transparent;
+
+}
+
+.profile_image_2{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    inset: 0px;
+    color: transparent;
+}

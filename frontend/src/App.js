@@ -7,6 +7,9 @@ import EmailLgoinPage from './Pages/EmailLoginPage';
 import InputVerifyNumberPage from './Pages/InputVerifyNumberPage';
 import ExistingAccountPage from './Pages/ExistingAccountPage';
 import EmailSignUpPage from './Pages/EmailSignUpPage';
+import EmailAuthPage from './Pages/EmailAuthPage';
+import EmailAuthSuccessPage from './Pages/EmailAuthSuccessPage';
+import MyPage from './Pages/MyPage/MyPage';
 function App() {
     return (
         <>
@@ -19,7 +22,10 @@ function App() {
             {/* <LoginPhoneVerifyPage></LoginPhoneVerifyPage> */}
             {/* <InputVerifyNumberPage /> */}
             {/* <ExistingAccountPage></ExistingAccountPage> */}
-            <EmailSignUpPage></EmailSignUpPage>
+            {/* <EmailSignUpPage></EmailSignUpPage> */}
+            {/* <EmailAuthPage></EmailAuthPage> */}
+            {/* <EmailAuthSuccessPage></EmailAuthSuccessPage> */}
+            <MyPage></MyPage>
         </>
     );
 }
