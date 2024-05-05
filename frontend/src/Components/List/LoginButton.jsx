@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LoginButton = () => {
+const LoginButton = ({ onClick }) => {
     const style = {
         padding: '0 15px',
         border: '1px solid',
@@ -16,10 +16,9 @@ const LoginButton = () => {
         fontWeight: '600',
         fontSize: '14px',
     };
-
     return (
         <div>
-            <button aria-label="button" type="button" style={style}>
+            <button aria-label="button" type="button" style={style} onClick={onClick}>
                 로그인
             </button>
         </div>
