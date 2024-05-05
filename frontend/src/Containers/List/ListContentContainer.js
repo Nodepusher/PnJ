@@ -30,17 +30,14 @@ const ListContentContainer = () => {
         const handleClickOutside = (e) => {
             console.log(dropdownRef.current);
             if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-                // 드롭다운 외부를 클릭한 경우에만 드롭다운을 닫음
                 setIsOpen(false);
                 console.log('클릭함');
             }
         };
 
-        // window에 클릭 이벤트 리스너 추가
         window.addEventListener('click', handleClickOutside);
 
         return () => {
-            // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
             window.removeEventListener('click', handleClickOutside);
         };
     }, [setIsOpen]);
