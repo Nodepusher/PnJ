@@ -3,10 +3,7 @@ import React from 'react';
 const InputVerifyNumberContainer = () => {
     return (
       <>
-        <div>인증번호 입력 컨테이너</div>
-        <div class="flex h-full min-h-screen">
-          <div class="flex w-[100%] flex-col items-center py-[40px] lg:w-[55%] lg:py-[56px]">
-            <div class="w-full px-[32px] lg:px-[40px]">
+       <div class="w-full px-[32px] lg:px-[40px]">
               <button
                 aria-label="button"
                 class="font_button_bold_md relative flex items-center justify-center h-[48px] rounded-[24px] content_secondary surface_tertiary hover:surface_primary_active active:surface_primary_active disabled:surface_disabled px-[20px] min-w-[88px] disabled:content_disabled"
@@ -62,8 +59,6 @@ const InputVerifyNumberContainer = () => {
                 </button>
               </div>
             </section>
-          </div>
-        </div>
       </>
     );
 }

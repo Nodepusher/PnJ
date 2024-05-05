@@ -4,10 +4,7 @@ import LoginPhoneVerifyContainer from "../Containers/Login/LoginPhoneVerifyConta
 const LoginPhoneVerifyPage = () => {
     return(
         <>
-            <div>
-                휴대폰 인증 페이지
-                <LoginPhoneVerifyContainer></LoginPhoneVerifyContainer>
-            </div>
+            <LoginPhoneVerifyContainer></LoginPhoneVerifyContainer>
         </>
     )
 }
