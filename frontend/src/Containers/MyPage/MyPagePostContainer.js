@@ -4,22 +4,22 @@ import '../../style/MyPagePost.css'
 const MyPagePostContainer = () => {
   return (
     <>
-      <div class="flex h-screen flex-col">
-        <nav class="sticky top-0 left-0 surface_primary_inverse z-20 flex h-[56px] w-full shrink-0 items-center justify-between px-[16px] lg:h-[58px] lg:px-[32px]">
+      <div className="flex h-screen flex-col">
+        <nav className="sticky top-0 left-0 surface_primary_inverse z-20 flex h-[56px] w-full shrink-0 items-center justify-between px-[16px] lg:h-[58px] lg:px-[32px]">
           <div>
-            <div class="flex items-center">
+            <div className="flex items-center">
               <a href="/">
                 <svg
                   viewBox="0 0 32 16"
                   xmlns="http://www.w3.org/2000/svg"
-                  class="content_primary_inverse w-[31px] lg:hidden"
+                  className="content_primary_inverse w-[31px] lg:hidden"
                 >
                   <path d="M21.96 15.796h9.232A15.592 15.592 0 0 0 .059 14.55c-.011.116-.019.234-.027.351v.105c-.013.21-.022.423-.022.637v.154h9.957c0-2.987-2.228-5.412-4.978-5.412a4.755 4.755 0 0 0-3.41 1.473c1.051-1.346 2.63-2.203 4.395-2.203 3.165 0 5.725 2.75 5.725 6.142h7.562v-.154c0-5.7-4.31-10.321-9.629-10.321a9.085 9.085 0 0 0-4.62 1.266 10.976 10.976 0 0 1 16.949 9.21v-.003Z"></path>
                 </svg>
                 <svg
                   viewBox="0 0 115 16"
                   xmlns="http://www.w3.org/2000/svg"
-                  class="content_primary_inverse hidden w-[96px] lg:block"
+                  className="content_primary_inverse hidden w-[96px] lg:block"
                 >
                   <path
                     fill-rule="evenodd"
@@ -29,17 +29,17 @@ const MyPagePostContainer = () => {
                   <path d="M21.96 15.796h9.232A15.592 15.592 0 0 0 .059 14.55c-.011.116-.019.234-.027.351v.105c-.013.21-.022.423-.022.637v.154h9.957c0-2.987-2.228-5.412-4.978-5.412a4.755 4.755 0 0 0-3.41 1.473c1.051-1.346 2.63-2.203 4.395-2.203 3.165 0 5.725 2.75 5.725 6.142h7.562v-.154c0-5.7-4.31-10.321-9.629-10.321a9.085 9.085 0 0 0-4.62 1.266 10.976 10.976 0 0 1 16.949 9.21v-.003Z"></path>
                 </svg>
               </a>
-              <div class="content_primary_inverse font_body_regular_md mx-[10px]">
+              <div className="content_primary_inverse font_body_regular_md mx-[10px]">
                 |
               </div>
-              <div class="content_primary_inverse font_body_regular_lg flex items-center">
+              <div className="content_primary_inverse font_body_regular_lg flex items-center">
                 <span>Creator Center</span>
               </div>
             </div>
           </div>
-          <div class="flex items-center justify-end profile_image_2">
-            <div class="relative">
-              <button class="surface_primary_active relative h-[32px] w-[32px] rounded-full">
+          <div className="flex items-center justify-end profile_image_2">
+            <div className="relative">
+              <button className="surface_primary_active relative h-[32px] w-[32px] rounded-full">
                 <img
                   alt="프로필 이미지"
                   sizes="10vw"
@@ -56,7 +56,7 @@ const MyPagePostContainer = () => {
                   src="/_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fprofiles%2F64cbbe30-9f2b-4957-8c4d-47b9660d2f21%2FprofileImage%2Fee000ebf-015d-4a6d-a30e-1536049c0ef0.jpg%3Fauto%3Dformat%252Ccompress%26fm%3Djpg%26h%3D300%26lossless%3Dtrue%26w%3D300&amp;w=1024&amp;q=75"
                   decoding="async"
                   data-nimg="fill"
-                  class="rounded-full"
+                  className="rounded-full"
                   loading="lazy"
                 
                 />
@@ -64,14 +64,14 @@ const MyPagePostContainer = () => {
             </div>
           </div>
         </nav>
-        <div class="flex h-full overflow-hidden">
-          <nav class="surface_secondary border_primary relative basis-[260px] border">
-            <div class="border_disabled mx-[32px] border-b pt-[40px] pb-[28px]">
-              <div class="flex flex-col items-center">
-                <div class="mb-[12px]">
+        <div className="flex h-full overflow-hidden">
+          <nav className="surface_secondary border_primary relative basis-[260px] border">
+            <div className="border_disabled mx-[32px] border-b pt-[40px] pb-[28px]">
+              <div className="flex flex-col items-center">
+                <div className="mb-[12px]">
                   <button
                     aria-label="profile image profile_image_button"
-                    class="relative flex h-full w-full items-center justify-center rounded-full"
+                    className="relative flex h-full w-full items-center justify-center rounded-full"
                     type="button"
                   >
                     <img
@@ -85,27 +85,27 @@ const MyPagePostContainer = () => {
                       src="/_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fprofiles%2F64cbbe30-9f2b-4957-8c4d-47b9660d2f21%2FprofileImage%2Fee000ebf-015d-4a6d-a30e-1536049c0ef0.jpg%3Fauto%3Dformat%252Ccompress%26fm%3Djpg%26h%3D300%26lossless%3Dtrue%26w%3D300&amp;w=1024&amp;q=75"
                       decoding="async"
                       data-nimg="fill"
-                      class="rounded-full profile_image"
+                      className="rounded-full profile_image"
                       loading="lazy"
                     />
-                    <div class="border_black_opacity absolute top-0 left-0 h-full w-full rounded-full border"></div>
+                    <div className="border_black_opacity absolute top-0 left-0 h-full w-full rounded-full border"></div>
                   </button>
                 </div>
-                <h2 class="content_primary font_title_bold_md mb-[12px] text-center">
+                <h2 className="content_primary font_title_bold_md mb-[12px] text-center">
                   황자현
                 </h2>
                 <a target="_blank" href="/creator/code">
                   <button
                     aria-label="button"
-                    class="font_button_bold_md relative flex items-center justify-center h-[32px] rounded-[16px] content_secondary surface_primary border border-solid border_black_opacity hover:surface_tertiary hover:border_secondary active:surface_tertiary active:border_secondary disabled:surface_primary disabled:border_black_opacity disabled:border disabled:border-solid px-[15px] false disabled:content_disabled"
+                    className="font_button_bold_md relative flex items-center justify-center h-[32px] rounded-[16px] content_secondary surface_primary border border-solid border_black_opacity hover:surface_tertiary hover:border_secondary active:surface_tertiary active:border_secondary disabled:surface_primary disabled:border_black_opacity disabled:border disabled:border-solid px-[15px] false disabled:content_disabled"
                     type="button"
                   >
-                    <div class="flex items-center justify-center">
+                    <div className="flex items-center justify-center">
                       <div>내 스튜디오</div>
                       <svg
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
-                        class="ml-[4px] shrink-0"
+                        className="ml-[4px] shrink-0"
                         height="16px"
                         width="16px"
                       >
@@ -117,25 +117,25 @@ const MyPagePostContainer = () => {
                 </a>
               </div>
             </div>
-            <ul class="px-[24px] py-[32px]">
-              <li class="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] surface_accent_light hover:surface_accent_light">
-                <a class="flex grow items-center" href="/creator-studio/posts">
+            <ul className="px-[24px] py-[32px]">
+              <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] surface_accent_light hover:surface_accent_light">
+                <a className="flex grow items-center" href="/creator-studio/posts">
                   <svg
                     viewBox="0 0 24 25"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-[24px] w-[24px] mr-[10px] content_accent_active"
+                    className="h-[24px] w-[24px] mr-[10px] content_accent_active"
                   >
                     <path d="M21.38 2.768a1.726 1.726 0 0 0-2.441 0L17.807 3.9l2.442 2.441L21.38 5.21a1.727 1.727 0 0 0 0-2.441ZM19.141 7.449 16.7 5.007l-6.542 6.541-1.193 2.573c-.314.676.386 1.376 1.062 1.062L12.6 13.99l6.541-6.541Z"></path>
                     <path d="M16.015 3.233A5.662 5.662 0 0 0 15.4 3.2H8.6A5.6 5.6 0 0 0 3 8.8v6.8a5.6 5.6 0 0 0 5.6 5.6h6.8a5.6 5.6 0 0 0 5.6-5.6V8.8c0-.247-.016-.49-.047-.729l-7.397 7.075a.447.447 0 0 1-.127.086l-2.764 1.228a2.281 2.281 0 0 1-3.034-2.959l.915-2.205a4.805 4.805 0 0 1 1.02-1.536l6.449-6.527Z"></path>
                   </svg>
-                  <span class="font_label_bold_xl block content_primary">
+                  <span className="font_label_bold_xl block content_primary">
                     포스트
                   </span>
                 </a>
               </li>
-              <li class="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
+              <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
                 <a
-                  class="flex grow items-center"
+                  className="flex grow items-center"
                   href="/creator-studio/community-category"
                 >
                   <svg
@@ -143,7 +143,7 @@ const MyPagePostContainer = () => {
                     height="24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-[24px] w-[24px] mr-[10px] content_secondary"
+                    className="h-[24px] w-[24px] mr-[10px] content_secondary"
                   >
                     <path
                       d="M2 5.111C2 4.498 2.45 4 3.007 4h15.099c.556 0 1.006.498 1.006 1.111 0 .614-.45 1.112-1.006 1.112h-15.1C2.452 6.223 2 5.725 2 5.11ZM2 10.668c0-.614.45-1.111 1.007-1.111h10.946a6.53 6.53 0 0 0-2.418 2.223H3.007C2.45 11.78 2 11.282 2 10.668ZM10.503 15.114H3.007C2.45 15.114 2 15.61 2 16.225s.45 1.111 1.007 1.111h7.818a6.496 6.496 0 0 1-.322-2.222Z"
@@ -156,20 +156,20 @@ const MyPagePostContainer = () => {
                       fill="#333334"
                     ></path>
                   </svg>
-                  <span class="font_label_bold_xl block content_secondary">
+                  <span className="font_label_bold_xl block content_secondary">
                     커뮤니티 카테고리
                   </span>
                 </a>
               </li>
-              <li class="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
+              <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
                 <a
-                  class="flex grow items-center"
+                  className="flex grow items-center"
                   href="/creator-studio/member-management"
                 >
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-[24px] w-[24px] mr-[10px] content_secondary"
+                    className="h-[24px] w-[24px] mr-[10px] content_secondary"
                   >
                     <path d="M8.5 11.7h2a6.057 6.057 0 0 1 1.769.265 6.51 6.51 0 0 0-.888 1.335H8.5a4.4 4.4 0 0 0-4.4 4.4v1c0 .22.18.4.4.4h6.881c.295.59.677 1.129 1.129 1.6H4.5a2 2 0 0 1-2-2v-1a6 6 0 0 1 6-6Z"></path>
                     <path
@@ -178,14 +178,14 @@ const MyPagePostContainer = () => {
                       d="M10.5 10.2a3.502 3.502 0 0 1 0-7 3.5 3.5 0 1 1 0 7Zm1.9-3.5a1.9 1.9 0 1 1-3.8 0 1.9 1.9 0 0 1 3.8 0ZM13.945 13.147a.665.665 0 0 1 .306-.74l.833-.49a.665.665 0 0 1 .795.092l.46.437c.167.16.398.231.63.23a.892.892 0 0 0 .626-.24l.451-.445a.665.665 0 0 1 .794-.105l.84.476a.665.665 0 0 1 .32.735l-.15.616a.895.895 0 0 0 .116.66c.118.2.298.36.522.423l.61.168c.287.08.486.339.488.636l.008.965a.665.665 0 0 1-.477.644l-.608.179a.892.892 0 0 0-.513.43.898.898 0 0 0-.105.663l.159.614a.665.665 0 0 1-.307.74l-.832.49a.665.665 0 0 1-.795-.092l-.46-.437a.898.898 0 0 0-.63-.23.893.893 0 0 0-.626.24l-.452.445a.665.665 0 0 1-.794.105l-.84-.476a.665.665 0 0 1-.319-.735l.15-.617a.894.894 0 0 0-.117-.66.894.894 0 0 0-.52-.421l-.612-.17a.665.665 0 0 1-.488-.635l-.008-.965a.665.665 0 0 1 .477-.644l.608-.179a.892.892 0 0 0 .514-.43.898.898 0 0 0 .105-.663l-.159-.614Zm3.115 4.278a1.283 1.283 0 1 0 0-2.566 1.283 1.283 0 0 0 0 2.566Z"
                     ></path>
                   </svg>
-                  <span class="font_label_bold_xl block content_secondary">
+                  <span className="font_label_bold_xl block content_secondary">
                     멤버
                   </span>
                 </a>
               </li>
-              <li class="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
+              <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
                 <a
-                  class="flex grow items-center"
+                  className="flex grow items-center"
                   href="/creator-studio/post-sale-management"
                 >
                   <svg
@@ -193,7 +193,7 @@ const MyPagePostContainer = () => {
                     height="24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-[24px] w-[24px] mr-[10px] content_secondary"
+                    className="h-[24px] w-[24px] mr-[10px] content_secondary"
                   >
                     <path
                       fill-rule="evenodd"
@@ -202,14 +202,14 @@ const MyPagePostContainer = () => {
                       fill="#000"
                     ></path>
                   </svg>
-                  <span class="font_label_bold_xl block content_secondary">
+                  <span className="font_label_bold_xl block content_secondary">
                     포스트 판매
                   </span>
                 </a>
               </li>
-              <li class="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
+              <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
                 <a
-                  class="flex grow items-center"
+                  className="flex grow items-center"
                   href="/creator-studio/coupon-management"
                 >
                   <svg
@@ -217,7 +217,7 @@ const MyPagePostContainer = () => {
                     height="24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-[24px] w-[24px] mr-[10px] content_secondary"
+                    className="h-[24px] w-[24px] mr-[10px] content_secondary"
                   >
                     <path
                       fill-rule="evenodd"
@@ -230,20 +230,20 @@ const MyPagePostContainer = () => {
                       fill="#333334"
                     ></path>
                   </svg>
-                  <span class="font_label_bold_xl block content_secondary">
+                  <span className="font_label_bold_xl block content_secondary">
                     쿠폰
                   </span>
                 </a>
               </li>
-              <li class="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
+              <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
                 <a
-                  class="flex grow items-center"
+                  className="flex grow items-center"
                   href="/creator-studio/earnings"
                 >
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-[24px] w-[24px] mr-[10px] content_secondary"
+                    className="h-[24px] w-[24px] mr-[10px] content_secondary"
                   >
                     <path
                       fill-rule="evenodd"
@@ -256,20 +256,20 @@ const MyPagePostContainer = () => {
                       d="M8.874 14.516c.129.434.543.734 1.014.734.474 0 .89-.303 1.016-.74l.724-2.501h.66l.724 2.501c.126.437.542.74 1.015.74.472 0 .886-.3 1.015-.734l.743-2.507h.6c.34 0 .615-.264.615-.59a.603.603 0 0 0-.615-.589h-.252l.274-.925c.135-.454-.221-.905-.714-.905a.737.737 0 0 0-.72.539l-.338 1.291h-1.409l-.3-1.113A.992.992 0 0 0 11.96 9a.99.99 0 0 0-.967.721l-.295 1.11H9.283l-.339-1.293A.738.738 0 0 0 8.224 9c-.494 0-.85.451-.715.906l.274.924h-.168a.603.603 0 0 0-.615.59c0 .325.276.589.615.589h.516l.743 2.507Zm.718-2.507h.793l-.368 1.388h-.06l-.365-1.388Zm4.32 1.365-.368-1.365h.783l-.356 1.365h-.06Z"
                     ></path>
                   </svg>
-                  <span class="font_label_bold_xl block content_secondary">
+                  <span className="font_label_bold_xl block content_secondary">
                     정산
                   </span>
                 </a>
               </li>
-              <li class="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
-                <a class="flex grow items-center" href="/creator-studio/club">
+              <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
+                <a className="flex grow items-center" href="/creator-studio/club">
                   <svg
                     width="24"
                     height="24"
                     viewBox="0 -3 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-[24px] w-[24px] mr-[10px] content_secondary"
+                    className="h-[24px] w-[24px] mr-[10px] content_secondary"
                   >
                     <path
                       fill-rule="evenodd"
@@ -282,20 +282,20 @@ const MyPagePostContainer = () => {
                       fill="#333334"
                     ></path>
                   </svg>
-                  <span class="font_label_bold_xl block content_secondary">
+                  <span className="font_label_bold_xl block content_secondary">
                     클럽
                   </span>
                 </a>
               </li>
-              <li class="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
+              <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
                 <a
-                  class="flex grow items-center"
+                  className="flex grow items-center"
                   href="/creator-studio/memberships"
                 >
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-[24px] w-[24px] mr-[10px] content_secondary"
+                    className="h-[24px] w-[24px] mr-[10px] content_secondary"
                   >
                     <path d="M8.892 9.13a.5.5 0 0 0-.862 0l-.576.977a.5.5 0 0 1-.33.236l-1.112.228a.5.5 0 0 0-.266.83l.748.806a.5.5 0 0 1 .13.394l-.12 1.092a.5.5 0 0 0 .697.513l1.06-.462a.5.5 0 0 1 .4 0l1.06.462a.5.5 0 0 0 .697-.513l-.12-1.092a.5.5 0 0 1 .13-.395l.748-.805a.5.5 0 0 0-.267-.83l-1.11-.228a.5.5 0 0 1-.33-.236l-.577-.977ZM18.108 10.3a.7.7 0 0 1-.7.7h-3.732a.7.7 0 1 1 0-1.4h3.732a.7.7 0 0 1 .7.7ZM17.408 14a.7.7 0 1 0 0-1.4h-3.732a.7.7 0 1 0 0 1.4h3.732Z"></path>
                     <path
@@ -304,17 +304,17 @@ const MyPagePostContainer = () => {
                       d="M2.2 8.4A4.4 4.4 0 0 1 6.6 4h10.7a4.4 4.4 0 0 1 4.4 4.4v6.8a4.4 4.4 0 0 1-4.4 4.4H6.6a4.4 4.4 0 0 1-4.4-4.4V8.4Zm4.4-2.8h10.7a2.8 2.8 0 0 1 2.8 2.8v6.8a2.8 2.8 0 0 1-2.8 2.8H6.6a2.8 2.8 0 0 1-2.8-2.8V8.4a2.8 2.8 0 0 1 2.8-2.8Z"
                     ></path>
                   </svg>
-                  <span class="font_label_bold_xl block content_secondary">
+                  <span className="font_label_bold_xl block content_secondary">
                     멤버십
                   </span>
                 </a>
               </li>
-              <li class="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
-                <a class="flex grow items-center" href="/creator-studio/page">
+              <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
+                <a className="flex grow items-center" href="/creator-studio/page">
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-[24px] w-[24px] mr-[10px] content_secondary"
+                    className="h-[24px] w-[24px] mr-[10px] content_secondary"
                   >
                     <path
                       fill-rule="evenodd"
@@ -323,34 +323,34 @@ const MyPagePostContainer = () => {
                     ></path>
                     <path d="M12.2 12.5a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5ZM12.2 16.4c2.21 0 4-.672 4-1.5s-1.79-1.5-4-1.5-4 .672-4 1.5 1.79 1.5 4 1.5Z"></path>
                   </svg>
-                  <span class="font_label_bold_xl block content_secondary">
+                  <span className="font_label_bold_xl block content_secondary">
                     내 스튜디오
                   </span>
                 </a>
               </li>
-              <li class="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
-                <a class="flex grow items-center" href="/creator-studio/info">
+              <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
+                <a className="flex grow items-center" href="/creator-studio/info">
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-[24px] w-[24px] mr-[10px] content_secondary"
+                    className="h-[24px] w-[24px] mr-[10px] content_secondary"
                   >
                     <path d="M5.5 7.8a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM5.5 13.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM7 17.7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM10 5.4a1 1 0 0 0 0 2h10a1 1 0 1 0 0-2H10ZM9 12a1 1 0 0 1 1-1h10a1 1 0 1 1 0 2H10a1 1 0 0 1-1-1ZM10 16.6a1 1 0 1 0 0 2h10a1 1 0 1 0 0-2H10Z"></path>
                   </svg>
-                  <span class="font_label_bold_xl block content_secondary">
+                  <span className="font_label_bold_xl block content_secondary">
                     기본정보
                   </span>
                 </a>
               </li>
-              <li class="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
+              <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
                 <a
-                  class="flex grow items-center"
+                  className="flex grow items-center"
                   href="/creator-studio/account-setting"
                 >
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-[24px] w-[24px] mr-[10px] content_secondary"
+                    className="h-[24px] w-[24px] mr-[10px] content_secondary"
                   >
                     <path
                       fill-rule="evenodd"
@@ -363,23 +363,23 @@ const MyPagePostContainer = () => {
                       d="M6.916 5.077a.543.543 0 0 0-.245.606l.332 1.236c.186.694.03 1.387-.274 1.935-.305.552-.81 1.048-1.497 1.257l-1.225.372a.543.543 0 0 0-.385.529l.034 1.95a.543.543 0 0 0 .402.514l1.24.331c.692.186 1.213.664 1.537 1.203.324.54.501 1.225.339 1.924l-.29 1.249a.543.543 0 0 0 .265.597l1.705.946c.212.117.476.08.647-.091l.905-.906c.508-.508 1.182-.72 1.813-.73.627-.01 1.312.177 1.837.668l.934.874a.543.543 0 0 0 .65.069l1.672-1.004a.543.543 0 0 0 .245-.606l-.332-1.236c-.187-.694-.03-1.387.273-1.935.306-.552.81-1.047 1.497-1.256l1.224-.373a.543.543 0 0 0 .385-.528l-.033-1.95a.543.543 0 0 0-.403-.515l-1.236-.33c-.694-.186-1.216-.664-1.54-1.204-.324-.54-.501-1.226-.339-1.925l.29-1.247a.543.543 0 0 0-.266-.597l-1.705-.946a.543.543 0 0 0-.647.09l-.904.906c-.508.508-1.182.72-1.813.73-.626.01-1.311-.177-1.836-.668l-.935-.874a.543.543 0 0 0-.65-.069L6.916 5.077Zm-1.79 1.02c-.249-.923.146-1.9.966-2.392l1.671-1.003a2.143 2.143 0 0 1 2.567.272l.934.874c.159.148.41.242.719.237.306-.005.551-.106.706-.261l.904-.906a2.143 2.143 0 0 1 2.556-.36l1.704.946a2.143 2.143 0 0 1 1.048 2.359l-.29 1.247c-.049.213-.005.476.153.74.158.262.37.425.58.481l1.237.33a2.143 2.143 0 0 1 1.59 2.034l.033 1.95a2.143 2.143 0 0 1-1.519 2.086l-1.224.372c-.21.064-.414.232-.563.5-.15.27-.184.537-.128.746l.332 1.236c.248.924-.146 1.9-.967 2.393l-1.671 1.003a2.143 2.143 0 0 1-2.566-.271l-.935-.874c-.158-.149-.41-.243-.719-.238-.306.005-.551.107-.706.262l-.905.906a2.143 2.143 0 0 1-2.555.359l-1.705-.946a2.143 2.143 0 0 1-1.048-2.358l.29-1.25c.05-.212.006-.475-.151-.737-.158-.263-.37-.425-.58-.48l-1.239-.332a2.143 2.143 0 0 1-1.589-2.033l-.033-1.95A2.143 2.143 0 0 1 3.54 8.953l1.225-.373c.21-.064.415-.232.563-.5.15-.27.185-.537.128-.746l-.331-1.236Z"
                     ></path>
                   </svg>
-                  <span class="font_label_bold_xl block content_secondary">
+                  <span className="font_label_bold_xl block content_secondary">
                     크리에이터 설정
                   </span>
                 </a>
               </li>
-              <li class="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] hover:surface_accent_light">
+              <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] hover:surface_accent_light">
                 <a
-                  class="flex grow items-center justify-between"
+                  className="flex grow items-center justify-between"
                   href="https://steadio.zendesk.com/hc/ko"
                   rel="noreferrer"
                   target="_blank"
                 >
-                  <div class="content_secondary font_label_bold_xl flex items-center">
+                  <div className="content_secondary font_label_bold_xl flex items-center">
                     <svg
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
-                      class="content_secondary mr-[12px] h-[24px] w-[24px]"
+                      className="content_secondary mr-[12px] h-[24px] w-[24px]"
                     >
                       <path d="M10.457 8.471a1.494 1.494 0 1 1 2.988 0 1.494 1.494 0 0 1-2.988 0ZM10.955 11.459c0-.275.223-.498.498-.498h.996c.275 0 .498.223.498.498v4.979a.498.498 0 0 1-.498.498h-.996a.498.498 0 0 1-.498-.498v-4.98Z"></path>
                       <path
@@ -393,7 +393,7 @@ const MyPagePostContainer = () => {
                   <svg
                     viewBox="0 0 11 12"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="content_quaternary h-[16px] w-[16px]"
+                    className="content_quaternary h-[16px] w-[16px]"
                   >
                     <path d="M4.834 2.667A.667.667 0 0 0 4.167 2h-4v9.333H9.5v-4a.667.667 0 0 0-1.333 0V10H1.5V3.333h2.667a.667.667 0 0 0 .667-.666Z"></path>
                     <path d="M10.173.552h.66V4.99a.667.667 0 0 1-1.333 0V2.828L5.972 6.357a.667.667 0 0 1-.943-.943l3.528-3.528H6.396a.667.667 0 0 1 0-1.334h3.777Z"></path>
@@ -402,26 +402,26 @@ const MyPagePostContainer = () => {
               </li>
             </ul>
           </nav>
-          <div class="shrink-0 grow basis-0 overflow-x-auto">
-            <div class="mx-auto grid w-desktop-grid grid-cols-12 gap-x-[16px] gap-y-0 pb-[64px]">
-              <div class="col-span-full">
-                <div class="surface_primary sticky top-0 z-10">
-                  <header class="flex items-center justify-between pt-[40px]">
-                    <h1 class="content_primary font_headline_bold_lg">
+          <div className="shrink-0 grow basis-0 overflow-x-auto">
+            <div className="mx-auto grid w-desktop-grid grid-cols-12 gap-x-[16px] gap-y-0 pb-[64px]">
+              <div className="col-span-full">
+                <div className="surface_primary sticky top-0 z-10">
+                  <header className="flex items-center justify-between pt-[40px]">
+                    <h1 className="content_primary font_headline_bold_lg">
                       포스트
                     </h1>
                     <div>
-                      <div class="flex gap-[16px]">
+                      <div className="flex gap-[16px]">
                         <button
                           aria-label="button"
-                          class="font_button_bold_md relative flex items-center justify-center h-[40px] rounded-[20px] content_secondary surface_primary border border-solid border_black_opacity hover:surface_tertiary hover:border_secondary active:surface_tertiary active:border_secondary disabled:surface_primary disabled:border_black_opacity disabled:border disabled:border-solid px-[15px] false disabled:content_disabled"
+                          className="font_button_bold_md relative flex items-center justify-center h-[40px] rounded-[20px] content_secondary surface_primary border border-solid border_black_opacity hover:surface_tertiary hover:border_secondary active:surface_tertiary active:border_secondary disabled:surface_primary disabled:border_black_opacity disabled:border disabled:border-solid px-[15px] false disabled:content_disabled"
                           type="button"
                         >
                           카테고리 편집
                         </button>
                         <button
                           aria-label="button"
-                          class="font_button_bold_md relative flex items-center justify-center h-[40px] rounded-[20px] content_primary_inverse surface_primary_inverse hover:surface_primary_inverse_active active:surface_primary_inverse_active disabled:surface_disabled px-[16px] false disabled:content_disabled"
+                          className="font_button_bold_md relative flex items-center justify-center h-[40px] rounded-[20px] content_primary_inverse surface_primary_inverse hover:surface_primary_inverse_active active:surface_primary_inverse_active disabled:surface_disabled px-[16px] false disabled:content_disabled"
                           type="button"
                         >
                           작성
@@ -429,34 +429,34 @@ const MyPagePostContainer = () => {
                       </div>
                     </div>
                   </header>
-                  <div class="mt-[26px]">
-                    <ul class="border_black_opacity flex h-[36px] gap-x-[20px] border-b">
-                      <li class="relative">
+                  <div className="mt-[26px]">
+                    <ul className="border_black_opacity flex h-[36px] gap-x-[20px] border-b">
+                      <li className="relative">
                         <button
                           aria-label="tab button"
-                          class="font_label_bold_xl relative block h-full pb-[16px] text-left content_primary"
+                          className="font_label_bold_xl relative block h-full pb-[16px] text-left content_primary"
                           type="button"
                         >
-                          <div class="flex">
-                            <p class="font_label_bold_xl">게시완료</p>
-                            <div class="ml-[8px] rounded-[25px] px-[8px] py-[2px] surface_tertiary">
-                              <p class="font_label_bold_sm">0</p>
+                          <div className="flex">
+                            <p className="font_label_bold_xl">게시완료</p>
+                            <div className="ml-[8px] rounded-[25px] px-[8px] py-[2px] surface_tertiary">
+                              <p className="font_label_bold_sm">0</p>
                             </div>
                           </div>
                         </button>
-                        <div class="surface_primary_inverse absolute -bottom-[1.5px] h-[2px] w-full"></div>
+                        <div className="surface_primary_inverse absolute -bottom-[1.5px] h-[2px] w-full"></div>
                       </li>
-                      <li class="relative">
+                      <li className="relative">
                         <button
                           aria-label="tab button"
-                          class="font_label_bold_xl relative block h-full pb-[16px] text-left content_disabled"
+                          className="font_label_bold_xl relative block h-full pb-[16px] text-left content_disabled"
                           type="button"
                         >
                           <div>
-                            <div class="flex">
-                              <p class="font_label_bold_xl">임시보관</p>
-                              <div class="ml-[8px] rounded-[25px] px-[8px] py-[2px] surface_disabled">
-                                <p class="font_label_bold_sm">0</p>
+                            <div className="flex">
+                              <p className="font_label_bold_xl">임시보관</p>
+                              <div className="ml-[8px] rounded-[25px] px-[8px] py-[2px] surface_disabled">
+                                <p className="font_label_bold_sm">0</p>
                               </div>
                             </div>
                           </div>
@@ -466,30 +466,30 @@ const MyPagePostContainer = () => {
                   </div>
                 </div>
                 <div>
-                  <div class="col-span-full">
-                    <div class="flex items-center justify-between py-[12px]">
+                  <div className="col-span-full">
+                    <div className="flex items-center justify-between py-[12px]">
                       <div>
-                        <span class="content_primary font_button_bold_md">
+                        <span className="content_primary font_button_bold_md">
                           전체
                         </span>
-                        <span class="content_accent font_button_bold_md ml-[4px]">
+                        <span className="content_accent font_button_bold_md ml-[4px]">
                           0
                         </span>
                       </div>
-                      <div class="flex gap-x-[12px]">
-                        <div class="relative">
+                      <div className="flex gap-x-[12px]">
+                        <div className="relative">
                           <button
                             aria-label="filter"
-                            class="surface_primary h-[32px] border px-[16px] py-[8px] border_black_opacity flex max-w-[164px] items-center rounded-[16px] outline-none"
+                            className="surface_primary h-[32px] border px-[16px] py-[8px] border_black_opacity flex max-w-[164px] items-center rounded-[16px] outline-none"
                             type="button"
                           >
-                            <span class="overflow-hidden content_secondary font_label_medium_lg text-ellipsis whitespace-nowrap">
+                            <span className="overflow-hidden content_secondary font_label_medium_lg text-ellipsis whitespace-nowrap">
                               카테고리 전체
                             </span>
                             <svg
                               viewBox="0 0 24 24"
                               xmlns="http://www.w3.org/2000/svg"
-                              class="shrink-0 ml-[4px] w-[10px] h-[10px]"
+                              className="shrink-0 ml-[4px] w-[10px] h-[10px]"
                             >
                               <path
                                 fill-rule="evenodd"
@@ -499,19 +499,19 @@ const MyPagePostContainer = () => {
                             </svg>
                           </button>
                         </div>
-                        <div class="relative">
+                        <div className="relative">
                           <button
                             aria-label="filter"
-                            class="surface_primary h-[32px] border px-[16px] py-[8px] border_black_opacity flex max-w-[164px] items-center rounded-[16px] outline-none"
+                            className="surface_primary h-[32px] border px-[16px] py-[8px] border_black_opacity flex max-w-[164px] items-center rounded-[16px] outline-none"
                             type="button"
                           >
-                            <span class="overflow-hidden content_secondary font_label_medium_lg text-ellipsis whitespace-nowrap">
+                            <span className="overflow-hidden content_secondary font_label_medium_lg text-ellipsis whitespace-nowrap">
                               공개범위 전체
                             </span>
                             <svg
                               viewBox="0 0 24 24"
                               xmlns="http://www.w3.org/2000/svg"
-                              class="shrink-0 ml-[4px] w-[10px] h-[10px]"
+                              className="shrink-0 ml-[4px] w-[10px] h-[10px]"
                             >
                               <path
                                 fill-rule="evenodd"
@@ -521,19 +521,19 @@ const MyPagePostContainer = () => {
                             </svg>
                           </button>
                         </div>
-                        <div class="relative">
+                        <div className="relative">
                           <button
                             aria-label="filter"
-                            class="surface_primary h-[32px] border px-[16px] py-[8px] border_black_opacity flex max-w-[164px] items-center rounded-[16px] outline-none"
+                            className="surface_primary h-[32px] border px-[16px] py-[8px] border_black_opacity flex max-w-[164px] items-center rounded-[16px] outline-none"
                             type="button"
                           >
-                            <span class="overflow-hidden content_secondary font_label_medium_lg text-ellipsis whitespace-nowrap">
+                            <span className="overflow-hidden content_secondary font_label_medium_lg text-ellipsis whitespace-nowrap">
                               최신순
                             </span>
                             <svg
                               viewBox="0 0 24 24"
                               xmlns="http://www.w3.org/2000/svg"
-                              class="shrink-0 ml-[4px] w-[10px] h-[10px]"
+                              className="shrink-0 ml-[4px] w-[10px] h-[10px]"
                             >
                               <path
                                 fill-rule="evenodd"
@@ -545,12 +545,12 @@ const MyPagePostContainer = () => {
                         </div>
                       </div>
                     </div>
-                    <div class="col-span-full mt-[88px] flex flex-col items-center justify-center">
+                    <div className="col-span-full mt-[88px] flex flex-col items-center justify-center">
                       <svg
                         viewBox="0 0 154 104"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-[104px] w-[154px]"
+                        className="h-[104px] w-[154px]"
                       >
                         <g clip-path="url(#ImgEmptyPostPublished_svg__a)">
                           <rect
@@ -622,16 +622,16 @@ const MyPagePostContainer = () => {
                           </clipPath>
                         </defs>
                       </svg>
-                      <p class="content_primary font_headline_bold_sm mt-[24px]">
+                      <p className="content_primary font_headline_bold_sm mt-[24px]">
                         게시 완료된 포스트가 없습니다.
                       </p>
-                      <p class="content_quaternary font_body_regular_lg mt-[4px]">
+                      <p className="content_quaternary font_body_regular_lg mt-[4px]">
                         지금 첫 포스트를 작성하고 게시해보세요.
                       </p>
-                      <div class="mt-[24px]">
+                      <div className="mt-[24px]">
                         <button
                           aria-label="button"
-                          class="font_button_bold_md relative flex items-center justify-center h-[32px] rounded-[16px] content_primary_inverse surface_accent hover:surface_accent_active active:surface_accent_active disabled:surface_disabled px-[16px] false disabled:content_disabled"
+                          className="font_button_bold_md relative flex items-center justify-center h-[32px] rounded-[16px] content_primary_inverse surface_accent hover:surface_accent_active active:surface_accent_active disabled:surface_disabled px-[16px] false disabled:content_disabled"
                           type="button"
                         >
                           포스트 작성하기
