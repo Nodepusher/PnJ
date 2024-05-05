@@ -4,15 +4,15 @@ const EmailAuthSuccessContainer = () => {
   return (
     <>
       <div>이메일 인증 성공 페이지</div>
-      <div class="flex h-full min-h-screen">
-        <div class="flex w-[100%] flex-col items-center py-[40px] lg:w-[55%] lg:py-[56px]">
-          <section class="mx-auto flex h-full w-full max-w-[400px] flex-col justify-start lg:w-[400px]">
-            <div class="mt-[62px] flex flex-col items-center justify-center lg:mt-[116px]">
+      <div className="flex h-full min-h-screen">
+        <div className="flex w-[100%] flex-col items-center py-[40px] lg:w-[55%] lg:py-[56px]">
+          <section className="mx-auto flex h-full w-full max-w-[400px] flex-col justify-start lg:w-[400px]">
+            <div className="mt-[62px] flex flex-col items-center justify-center lg:mt-[116px]">
               <svg
                 viewBox="0 0 92 89"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-[89px] w-[92px]"
+                className="h-[89px] w-[92px]"
               >
                 <path
                   d="M32.184 6.766c-7.26 8.91-16.463 17.367-21.765 27.61-.772 18.412-.938 34.915-.918 47.957.006 3.3 2.661 5.944 5.96 5.84 16.087-.512 50.737-2.493 64.31-3.287 3.164-.185 5.618-2.78 5.59-5.949-.114-13.396-.739-46.356-4.094-49.712-7.94-7.94-18.5-14.94-27.721-21.227-3.178-2.167-6.602-5.04-10.166-6.449-4.893-1.935-8.237 1.586-11.196 5.217Z"
@@ -31,18 +31,18 @@ const EmailAuthSuccessContainer = () => {
                   fill="#000"
                 ></path>
               </svg>
-              <h1 class="content_primary font_headline_bold_lg mt-[40px] lg:mt-[25px]">
+              <h1 className="content_primary font_headline_bold_lg mt-[40px] lg:mt-[25px]">
                 이메일 인증 완료
               </h1>
-              <p class="content_primary font_body_regular_md keep-all mt-[16px] text-center">
+              <p className="content_primary font_body_regular_md keep-all mt-[16px] text-center">
                 jh940412@naver.com 이메일 인증이 완료되었습니다.
               </p>
             </div>
-            <div class="mx-[32px] mt-[98px]">
+            <div className="mx-[32px] mt-[98px]">
               <a href="/">
                 <button
                   aria-label="button"
-                  class="font_button_bold_md relative flex items-center justify-center h-[48px] rounded-[8px] content_primary_inverse surface_primary_inverse hover:surface_primary_inverse_active active:surface_primary_inverse_active disabled:surface_disabled px-[20px] w-full min-w-[88px] disabled:content_disabled"
+                  className="font_button_bold_md relative flex items-center justify-center h-[48px] rounded-[8px] content_primary_inverse surface_primary_inverse hover:surface_primary_inverse_active active:surface_primary_inverse_active disabled:surface_disabled px-[20px] w-full min-w-[88px] disabled:content_disabled"
                   type="button"
                 >
                   메인으로
