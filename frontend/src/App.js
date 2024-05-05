@@ -2,6 +2,8 @@ import './App.css';
 import { BrowserRouter, Route, Routes, useNavigate, Outlet } from 'react-router-dom';
 import PostListPage from './Pages/PostListPage';
 import PostDetailPage from './Pages/PostDetailPage';
+import PostWritepage from './Pages/PostWritepage';
+
 import LoginMainPage from './Pages/LoginMainPage';
 import LoginPhoneVerifyPage from './Pages/LoginPhoneVerifyPage';
 import EmailLgoinPage from './Pages/EmailLoginPage';
@@ -15,6 +17,7 @@ import LoginPage from './Pages/LoginPage';
 function App() {
     return (
         <>
+            <PostListPage></PostListPage>
             {/* 게시판 페이지 */}
             {/* <PostDetailPage></PostDetailPage> */}
 
