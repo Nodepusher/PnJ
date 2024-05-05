@@ -1,0 +1,208 @@
+body {
+    margin: 0px 16px;
+  }
+  
+  .copy-disabled {
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+  }
+  
+  .mce-content-readonly {
+    border: none;
+    color: #B9B9BB !important;
+    overflow: hidden;
+  }
+  
+  .steadio-post h2 {
+    font-size: 28px;
+    line-height: 34px;
+    margin-bottom: 12px;
+  }
+  
+  .steadio-post h4 {
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 10px;
+  }
+  
+  .steadio-post h5 {
+    font-size: 20px;
+    line-height: 26px;
+    margin-bottom: 8px;
+  }
+  
+  .steadio-post {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 30px;
+    word-break: break-all;
+    color: #333334; /* content_secondary */
+    padding: 0;
+  }
+  
+  
+  /* ë³¸ë¬¸ */
+  .steadio-post p {
+    font-size: 16px;
+    margin: 0 0 8px 0;
+  }
+  
+  /* ë³¸ë¬¸ í¬ìŠ¤íŠ¸ ìƒì„¸ í™”ë©´ ë³¸ë¬¸*/
+  .steadio-post-detail p {
+    margin: 0 0 8px 0;
+    padding: 0;
+  }
+  
+  .steadio-post-detail img{
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+  }
+  
+  /* ì œëª© */
+  .steadio-post h3 {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 32px;
+    color: #1D1D1E; /* content_primary */
+    margin: 0 0 12px 0;
+    padding: 0 16px;
+  }
+  
+  /* ë³¸ë¬¸ í¬ìŠ¤íŠ¸ ìƒì„¸ í™”ë©´ ì œëª©*/
+  .steadio-post-detail h3 {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 32px;
+    color: #1D1D1E; /* content_primary */
+    margin: 0 0 12px 0;
+    padding: 0;
+  }
+  
+  /* í¬ìŠ¤íŠ¸ ìƒì„¸ ë¬¸ë‹¨ ìŠ¤íƒ€ì¼ */
+  .steadio-post-detail h5 {
+    font-size: 20px;
+    line-height: 26px;
+    margin-bottom: 8px;
+    padding: 0;
+  }
+  
+  .steadio-post-detail h4 {
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 10px;
+    padding: 0;
+  }
+  
+  .steadio-post-detail h2 {
+    font-size: 28px;
+    line-height: 34px;
+    margin-bottom: 12px;
+    padding: 0;
+  }
+  
+  /* bold */
+  .steadio-post strong {
+    font-weight: 700;
+  }
+  
+  /* italic */
+  .steadio-post em {
+    font-style: italic;
+  }
+  
+  /* link */
+  .steadio-post a {
+    color: #5b44ea; /* content_accent */
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  /* img */
+  .steadio-post .image-wrapper {
+    margin: 0 0 24px 0;
+  }
+  
+  .steadio-post img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    cursor: default;
+  }
+  
+  /* bullet */
+  .steadio-post ol {
+    margin: 0;
+    display: block;
+    list-style-type: decimal;
+    margin-block-start: 16px;
+    margin-block-end: 16px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+    padding-right: 16px;
+  }
+  .steadio-post ul {
+    margin: 0;
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 16px;
+    margin-block-end: 16px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+    padding-right: 16px;
+  }
+  
+  /* embed */
+  .steadio-post .iframe-wrapper {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56%;
+    margin: 0 0 24px 0;
+  }
+  
+  .steadio-post .iframe-wrapper iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+  
+  /* hr */
+  .steadio-post hr {
+    margin: 0 16px 20px 16px;
+    border-top: 1px solid #e6e6e7; /* border_primary */
+    border-left-width: 0;
+    border-bottom-width: 0;
+    border-right-width: 0;
+  }
+  
+  /* blockquote */
+  .steadio-post blockquote {
+    margin: 0 16px 20px 16px;
+    padding: 6px 0 6px 16px;
+    border-left: 4px solid #666667; /* border_secondary_inverse */
+  }
+  
+  .steadio-post blockquote p,
+  .steadio-post blockquote h3 {
+      padding: 0;
+      margin: 0;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+  }
+  
+  /* ì—ë””í„° placeholder */
+  .steadio-post.mce-content-body:not([dir=rtl])[data-mce-placeholder]:not(.mce-visualblocks)::before {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #B9B9BB;
+    padding: 4px 0px;
+  }
