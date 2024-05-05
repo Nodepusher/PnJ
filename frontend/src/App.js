@@ -41,7 +41,7 @@ function App() {
                         <Route path="verify-phone-token" element={<InputVerifyNumberPage />} />
                         <Route path="existing-account" element={<ExistingAccountPage />} />
                         <Route path="success-verify-email" element={<EmailAuthSuccessPage />} />
-                        {/* <Route path="modal" element={<EmailAuthPage />} /> */}
+                        <Route path="email-auth" element={<EmailAuthPage />} />
                     </Route>
                     <Route path="/email-sign-up" element={<EmailSignUpPage />} />
                 </Routes>
