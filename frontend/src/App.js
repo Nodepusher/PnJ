@@ -17,7 +17,6 @@ import LoginPage from './Pages/LoginPage';
 function App() {
     return (
         <>
-            <PostListPage></PostListPage>
             {/* 게시판 페이지 */}
             {/* <PostDetailPage></PostDetailPage> */}
 
