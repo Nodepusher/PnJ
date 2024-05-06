@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CommonButton from "../../Components/Login/LoginCommonButton";
 import CommonSectionContainer from "./CommonSectionContainer";
@@ -6,7 +7,10 @@ const { KakaoButton, EmailButton } = CommonButton;
 const LoginMainContainer = () => {
   const nav = useNavigate();
   const onClickEmailLogin = () => {
-    nav("/login/email-login");
+    axios.get('http://localhost:4000/')
+      .then((response) => console.log(response))
+
+    // nav("/login/email-login");
   };
   return (
     <>
