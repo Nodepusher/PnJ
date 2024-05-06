@@ -3,7 +3,7 @@ import BackButton from "../../Components/Login/BackButton";
 import CommonButton from "../../Components/Login/LoginCommonButton";
 import CommonSectionContainer from "./CommonSectionContainer";
 import LoginInput from "../../Components/Login/LoginInput";
-
+import { useNavigate } from "react-router-dom";
 
 const { LoginCommonButton } = CommonButton;
 
@@ -13,9 +13,17 @@ const InputVerifyNumberContainer = () => {
     console.log(event.target.value);
     setVerifyNumber(event.target.value);
   }
+  const nav = useNavigate();
+  const onClickExistAccount = () => {
+    nav("/login/existing-account")
+  }
+
+  const onClickEmailSignUp = () => {
+    nav("/login/email-sign-up");
+  };
   return (
     <>
-      <BackButton />
+      <BackButton url="/login/verify-phone" />
       <CommonSectionContainer
         divText={`인증번호를
             <br />
@@ -39,7 +47,8 @@ const InputVerifyNumberContainer = () => {
               </label>
             </div>
           </div>
-          <LoginCommonButton text={"인증하기"} />
+          <LoginCommonButton onClickNav={onClickExistAccount} text={"인증하기"} />
+          <LoginCommonButton onClickNav={onClickEmailSignUp} text={"임시 Navigation"} />
         </div>
       </CommonSectionContainer>
     </>

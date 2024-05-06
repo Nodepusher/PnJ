@@ -6,7 +6,7 @@ import PostWritepage from './Pages/PostWritepage';
 
 import LoginMainPage from './Pages/LoginMainPage';
 import LoginPhoneVerifyPage from './Pages/LoginPhoneVerifyPage';
-import EmailLgoinPage from './Pages/EmailLoginPage';
+import EmailLoginPage from './Pages/EmailLoginPage';
 import InputVerifyNumberPage from './Pages/InputVerifyNumberPage';
 import ExistingAccountPage from './Pages/ExistingAccountPage';
 import EmailSignUpPage from './Pages/EmailSignUpPage';
@@ -36,14 +36,14 @@ function App() {
                     {/*<Route path="/detail/:id" element={<PostDetailPage />} />*/}
                     <Route path="/login" element={<LoginPage />}>
                         <Route path="" element={<LoginMainPage />} />
-                        <Route path="email-login" element={<EmailLgoinPage />} />
+                        <Route path="email-login" element={<EmailLoginPage />} />
                         <Route path="verify-phone" element={<LoginPhoneVerifyPage />} />
                         <Route path="verify-phone-token" element={<InputVerifyNumberPage />} />
                         <Route path="existing-account" element={<ExistingAccountPage />} />
                         <Route path="success-verify-email" element={<EmailAuthSuccessPage />} />
                         <Route path="email-auth" element={<EmailAuthPage />} />
+                        <Route path="email-sign-up" element={<EmailSignUpPage />} />
                     </Route>
-                    <Route path="/email-sign-up" element={<EmailSignUpPage />} />
                 </Routes>
             </BrowserRouter>
         </>

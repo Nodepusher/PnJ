@@ -2,9 +2,11 @@ import React, {useState} from "react";
 import CommonButton from "../../Components/Login/LoginCommonButton";
 import CommonSectionContainer from "./CommonSectionContainer";
 import LoginInput from "../../Components/Login/LoginInput";
+import { useNavigate } from "react-router-dom";
 
 const { LoginCommonButton, KakaoButton, EmailButton } = CommonButton;
 const EmailLoginContainer = () => {
+  const nav = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,6 +18,9 @@ const EmailLoginContainer = () => {
     console.log(event.target.value);
     setPassword(event.target.value);
   }
+  const onClickVerifyPhonePage = () => {
+    nav("/login/verify-phone");
+  };
 
   return (
     <>
@@ -67,7 +72,7 @@ const EmailLoginContainer = () => {
           </div>
           <div className="mt-[20px] flex flex-col gap-y-[12px]">
             <KakaoButton text={"카카오로 시작하기"} />
-            <EmailButton text={"이메일로 시작하기"} />
+            <EmailButton onClickNav={onClickVerifyPhonePage} text={"이메일로 시작하기"} />
           </div>
           <div className="mt-[20px] flex items-center justify-center">
             <p className="content_secondary font_body_regular_md mr-[8px]">
