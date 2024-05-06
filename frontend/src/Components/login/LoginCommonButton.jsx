@@ -1,10 +1,11 @@
-const LoginCommonButton = ({ text }) => {
+const LoginCommonButton = ({ text, onClickNav }) => {
   return (
     <>
       <button
         aria-label="button"
         className="font_button_bold_md relative flex items-center justify-center mb-[16px] h-[48px] rounded-[8px] content_primary_inverse surface_primary_inverse hover:surface_primary_inverse_active active:surface_primary_inverse_active disabled:surface_disabled px-[20px] w-full min-w-[88px] disabled:content_disabled"
         type="button"
+        onClick={onClickNav}
       >
         {text}
       </button>
@@ -41,7 +42,7 @@ const KakaoButton = ({ text }) => {
   );
 };
 
-const EmailButton = ({text, onClick}) => {
+const EmailButton = ({text, onClickNav}) => {
     return (
       <>
         <button
@@ -63,7 +64,7 @@ const EmailButton = ({text, onClick}) => {
                 d="M3.833 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h9.334a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H3.833Zm1.008 1.924a.533.533 0 1 0-.682.819L8.5 9.361l4.341-3.618a.533.533 0 0 0-.682-.82L8.5 7.974l-3.659-3.05Z"
               ></path>
             </svg>
-            <div onClick={onClick}>{text}</div>
+            <div onClick={onClickNav}>{text}</div>
           </div>
         </button>
       </>

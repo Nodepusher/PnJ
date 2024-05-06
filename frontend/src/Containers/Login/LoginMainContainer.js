@@ -31,7 +31,7 @@ const LoginMainContainer = () => {
           <div className="mt-[80px] flex flex-col gap-y-[12px]">
             <KakaoButton text={"카카오로 시작하기"} />
             <EmailButton
-              onClick={onClickEmailLogin}
+              onClickNav={onClickEmailLogin}
               text={"이메일로 시작하기"}
             />
           </div>
