@@ -1,9 +1,9 @@
 import React from "react";
 
-const checkedStyle = {
+const checkedTrue = {
     backgroundColor: '#7e69fe',
 }
-const NoneCheckedStyle = {
+const checkedFalse = {
     backgroundColor: 'rgb(232 232 232)',
 }
 const CheckBoxOption = ({ label, onChange, isChecked }) => {
@@ -15,7 +15,7 @@ const CheckBoxOption = ({ label, onChange, isChecked }) => {
         checked={isChecked}
         onChange={onChange}
       />
-      <div style={isChecked ? checkedStyle : NoneCheckedStyle} className="surface_accent flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-full">
+      <div style={isChecked ? checkedTrue : checkedFalse} className="surface_accent flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-full">
         <svg
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
