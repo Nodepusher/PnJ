@@ -3,7 +3,7 @@ import DetailCategory from '../../Components/Detail/DetailCategory';
 import DetailTitle from '../../Components/Detail/DetailTitle';
 import DetailWrtierInfoTop from '../../Components/Detail/DetailWrtierInfoTop';
 
-const DetailTop = () => {
+const DetailSectionTop = () => {
     return (
         <>
             <DetailCategory></DetailCategory>
@@ -14,4 +14,4 @@ const DetailTop = () => {
     );
 };
 
-export default DetailTop;
+export default DetailSectionTop;
