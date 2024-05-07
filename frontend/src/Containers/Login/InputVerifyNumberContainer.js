@@ -1,13 +1,16 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import BackButton from "../../Components/Login/BackButton";
 import CommonButton from "../../Components/Login/LoginCommonButton";
 import CommonSectionContainer from "./CommonSectionContainer";
 import LoginInput from "../../Components/Login/LoginInput";
 import { useNavigate } from "react-router-dom";
+import AuthTimer from "../../Components/Login/AuthTimer";
+
 
 const { LoginCommonButton } = CommonButton;
 
 const InputVerifyNumberContainer = () => {
+
   const [verifyNumber, setVerifyNumber] = useState("");
   const onChangeVerifyNumber = (event) => {
     console.log(event.target.value);
@@ -21,6 +24,8 @@ const InputVerifyNumberContainer = () => {
   const onClickEmailSignUp = () => {
     nav("/login/email-sign-up");
   };
+
+
   return (
     <>
       <BackButton url="/login/verify-phone" />
@@ -39,11 +44,7 @@ const InputVerifyNumberContainer = () => {
                    value={verifyNumber}
                    onChange={onChangeVerifyNumber}
                 />
-                <div className="flex w-full justify-end px-[20px] py-[15px]">
-                  <div className="content_accent font_title_bold_sm">
-                    <p>0:51</p>
-                  </div>
-                </div>
+                <AuthTimer />
               </label>
             </div>
           </div>

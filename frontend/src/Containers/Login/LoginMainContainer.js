@@ -1,24 +1,26 @@
-import React from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import CommonButton from '../../Components/Login/LoginCommonButton';
-import CommonSectionContainer from './CommonSectionContainer';
+import React from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import CommonButton from "../../Components/Login/LoginCommonButton";
+import CommonSectionContainer from "./CommonSectionContainer";
 const { KakaoButton, EmailButton } = CommonButton;
 const LoginMainContainer = () => {
-    const nav = useNavigate();
-    const onClickEmailLogin = () => {
-        axios.get('http://localhost:4000/').then((response) => console.log(response));
+  const nav = useNavigate();
+  const onClickEmailLogin = () => {
+    // axios
+    //   .get("http://localhost:4000/")
+    //   .then((response) => console.log(response));
 
-        // nav("/login/email-login");
-    };
-    return (
-        <>
-            <CommonSectionContainer
-                text={`취준생들의
+    nav("/login/email-login");
+  };
+  return (
+    <>
+      <CommonSectionContainer
+        text={`취준생들의
           <br />
           정보 공유 공간 `}
-            >
-                {/* <svg
+      >
+        {/* <svg
           viewBox="0 0 115 16"
           xmlns="http://www.w3.org/2000/svg"
           className="content_accent_active mt-[24px] h-[30px] w-[200px]"
@@ -30,15 +32,18 @@ const LoginMainContainer = () => {
           ></path>
           <path d="M21.96 15.796h9.232A15.592 15.592 0 0 0 .059 14.55c-.011.116-.019.234-.027.351v.105c-.013.21-.022.423-.022.637v.154h9.957c0-2.987-2.228-5.412-4.978-5.412a4.755 4.755 0 0 0-3.41 1.473c1.051-1.346 2.63-2.203 4.395-2.203 3.165 0 5.725 2.75 5.725 6.142h7.562v-.154c0-5.7-4.31-10.321-9.629-10.321a9.085 9.085 0 0 0-4.62 1.266 10.976 10.976 0 0 1 16.949 9.21v-.003Z"></path>
         </svg> */}
-                <div className="w-full">
-                    <div className="mt-[80px] flex flex-col gap-y-[12px]">
-                        <KakaoButton text={'카카오로 시작하기'} />
-                        <EmailButton onClickNav={onClickEmailLogin} text={'이메일로 시작하기'} />
-                    </div>
-                </div>
-            </CommonSectionContainer>
-        </>
-    );
+        <div className="w-full">
+          <div className="mt-[80px] flex flex-col gap-y-[12px]">
+            <KakaoButton text={"카카오로 시작하기"} />
+            <EmailButton
+              onClickNav={onClickEmailLogin}
+              text={"이메일로 시작하기"}
+            />
+          </div>
+        </div>
+      </CommonSectionContainer>
+    </>
+  );
 };
 
 export default LoginMainContainer;
