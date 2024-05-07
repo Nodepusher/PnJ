@@ -19,7 +19,6 @@ function App() {
         <>
             {/* 게시판 페이지 */}
             {/* <PostDetailPage></PostDetailPage> */}
-
             {/* 로그인/회원가입 페이지 */}
             {/* <LoginMainPage></LoginMainPage> */}
             {/* <EmailLgoinPage></EmailLgoinPage> */}
@@ -33,6 +32,8 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<PostListPage />} />
+                    <Route path="/detail" element={<PostDetailPage />} />
+                    {/*<Route path="/detail/:id" element={<PostDetailPage />} />*/}
                     <Route path="/login" element={<LoginPage />}>
                         <Route path="" element={<LoginMainPage />} />
                         <Route path="email-login" element={<EmailLgoinPage />} />

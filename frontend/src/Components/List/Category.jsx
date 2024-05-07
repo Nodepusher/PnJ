@@ -6,7 +6,7 @@ function Category() {
     const [activeBtn, setActiveBtn] = useState(0);
 
     const handleBtnClick = (i) => {
-        setActiveBtn(i); // 클릭된 버튼의 인덱스로 state를 업데이트
+        setActiveBtn(i);
     };
 
     const StDefaultBtn = {
@@ -84,7 +84,8 @@ function Category() {
                             </div>
                         ))}
                     </div>
-                    {/* <button
+                    {/* 이전버튼 다음버튼
+                    <button
                         aria-label="prev button"
                         className="absolute z-[5] w-[32px] h-[32px] rounded-full surface_primary items-center justify-center left-[-16px] hidden"
                         type="button"
