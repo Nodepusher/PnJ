@@ -1,6 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import InputCommentComponent from '../../Components/Detail/InputCommentComponent';
 
 const DetailReplyContainer = () => {
+    const nav = useNavigate();
+
+    const moveToLoginPage = () => {
+        nav('/login');
+    };
+
     const StImg = {
         position: 'absolute',
         height: '100%',
@@ -22,22 +30,8 @@ const DetailReplyContainer = () => {
                 댓글 <span>2</span>
             </h4>
             <div className="h-[24px]"></div>
-            <div className="border_primary rounded-[8px] border">
-                <div className="surface_secondary flex items-center justify-between gap-[16px] overflow-hidden rounded-[8px] py-[12px] px-[16px]">
-                    <div className="flex items-center justify-between gap-[16px]">
-                        <p className="content_disabled font_label_regular_lg">댓글을 작성하려면 로그인을 해주세요.</p>
-                    </div>
-                    <div className="shrink-0">
-                        <button
-                            aria-label="button"
-                            className="font_button_bold_md relative flex items-center justify-center h-[32px] rounded-[16px] content_primary_inverse surface_accent hover:surface_accent_active active:surface_accent_active disabled:surface_disabled px-[16px] false disabled:content_disabled"
-                            type="button"
-                        >
-                            로그인
-                        </button>
-                    </div>
-                </div>
-            </div>
+            {/* 댓글 인풋 컴포넌트 */}
+            <InputCommentComponent />
             <div className="h-[23px]"></div>
             <ul>
                 <li className="pt-[24px] border-t-[1px] pb-[12px] last:pb-[0px] border_secondary pl-[10px] first:border-t-0">
