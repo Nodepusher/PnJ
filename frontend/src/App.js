@@ -12,6 +12,7 @@ import ExistingAccountPage from './Pages/ExistingAccountPage';
 import EmailSignUpPage from './Pages/EmailSignUpPage';
 import EmailAuthPage from './Pages/EmailAuthPage';
 import EmailAuthSuccessPage from './Pages/EmailAuthSuccessPage';
+
 import MyPage from './Pages/MyPage/MyPage';
 import LoginPage from './Pages/LoginPage';
 function App() {
@@ -19,21 +20,15 @@ function App() {
         <>
             {/* 게시판 페이지 */}
             {/* <PostDetailPage></PostDetailPage> */}
-            {/* 로그인/회원가입 페이지 */}
-            {/* <LoginMainPage></LoginMainPage> */}
-            {/* <EmailLgoinPage></EmailLgoinPage> */}
-            {/* <LoginPhoneVerifyPage></LoginPhoneVerifyPage> */}
-            {/* <InputVerifyNumberPage /> */}
-            {/* <ExistingAccountPage></ExistingAccountPage> */}
-            {/* <EmailSignUpPage></EmailSignUpPage> */}
-            {/* <EmailAuthPage></EmailAuthPage> */}
-            {/* <EmailAuthSuccessPage></EmailAuthSuccessPage> */}
+
+            {/* 마이페이지 */}
             {/* <MyPage></MyPage> */}
+
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<PostListPage />} />
-                    <Route path="/detail" element={<PostDetailPage />} />
-                    {/*<Route path="/detail/:id" element={<PostDetailPage />} />*/}
+
+                    {/* 로그인/회원가입 페이지 */}
                     <Route path="/login" element={<LoginPage />}>
                         <Route path="" element={<LoginMainPage />} />
                         <Route path="email-login" element={<EmailLoginPage />} />
