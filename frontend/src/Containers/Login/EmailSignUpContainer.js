@@ -4,8 +4,10 @@ import CommonSectionContainer from "./CommonSectionContainer";
 import UserInput from "../../Components/Login/UserInput";
 import UserInputMsg from "../../Components/Login/UserInputMsg";
 import UserSignUpCheckBox from "../../Components/Login/UserSignUpCheckBox";
+import { useUser } from "../../Context/UserContext";
 
 const EmailSignUpContainer = () => {
+  const { user, updateUserInfo, deleteUserInfo } = useUser();
   const [userInfo, setUserInfo] = useState({
     email: "",
     name: "",
@@ -19,16 +21,35 @@ const EmailSignUpContainer = () => {
     passwordValid: null,
     passwordMatch: null,
   });
-
+  console.log("::::::::::::::::: " +user.phoneNumber)
   const handleInputChange = (e) => {
+   
     const { name, value } = e.target;
     setUserInfo((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
+  const onClickRegister = () => {
+    const userInfo = {
+      email: userInfo.email,
+      name: userInfo.name,
+      password:  userInfo.password,
+      phoneNumber: user.phoneNumber,
+    }
+    
+    // 임시로 만듬
+    const tempNavState = false;
+
+    // axios 써서 서버에 데이터 저장
+    // userinfo를 http body에 담아서 전송
+    // 전송 시, 서버에서 DB 확인 후 새로운 정보면 저장, 이미 있다면 실패 모달
+    
+  }
  
   useEffect(() => {
+    
+
     setValidationResults({
       emailValid: userInfo.email
         ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userInfo.email)
@@ -173,6 +194,7 @@ const EmailSignUpContainer = () => {
             />
 
             <button
+              onClick={onClickRegister}
               aria-label="button"
               className="font_button_bold_md relative flex items-center justify-center h-[48px] rounded-[8px] content_primary_inverse surface_primary_inverse hover:surface_primary_inverse_active active:surface_primary_inverse_active disabled:surface_disabled px-[20px] w-full min-w-[88px] disabled:content_disabled"
               type="submit"
