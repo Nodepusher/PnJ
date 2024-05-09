@@ -25,7 +25,7 @@ const EmailSignUpContainer = () => {
   const [checkModal, setCheckModal] = useState(false) // 모달 상태관리
   
   // http api 통신
-  const signUp = (sendData) => {
+  const signUp = async(sendData) => {
     return axios(option, {
       data : sendData
     }).then(res => {
@@ -55,10 +55,12 @@ const EmailSignUpContainer = () => {
       phoneNumber : user.phoneNumber,
     }
     if(allValuesTrue && allChecked){
+
       // setSignUpState(await signUp(sendData))
-      // const result = signUp(sendData)
-      const result = "success"
+      const result = signUp(sendData)
       setSignUpState(result)
+
+      // const result = "success"  
       switch (result) {
         case "exist":
           nav('/login/existing-account');
