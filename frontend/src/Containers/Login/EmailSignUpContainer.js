@@ -4,7 +4,7 @@ import CommonSectionContainer from "./CommonSectionContainer";
 import UserInput from "../../Components/Login/UserInput";
 import UserInputMsg from "../../Components/Login/UserInputMsg";
 import UserSignUpCheckBox from "../../Components/Login/UserSignUpCheckBox";
-import SendVerifyEmailModal from "../../Components/Login/SendVerifyEmailModal";
+import Modal from "../../Components/Login/Modal";
 import { useUser } from "../../Context/UserContext";
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
@@ -265,7 +265,7 @@ const EmailSignUpContainer = () => {
           </form>
         </div>
       </CommonSectionContainer>
-      {checkModal && <SendVerifyEmailModal type={signUpState} modalState={checkModal} closeModal={closeModal} />}
+      {checkModal && <Modal type={signUpState} modalState={checkModal} closeModal={closeModal} />}
     </>
   );
 };

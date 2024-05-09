@@ -4,7 +4,7 @@ import CommonButton from "../../Components/Login/LoginCommonButton";
 import CommonSectionContainer from "./CommonSectionContainer";
 import LoginInput from "../../Components/Login/LoginInput";
 import { useNavigate } from "react-router-dom";
-import SendVerifyEmailModal from "../../Components/Login/SendVerifyEmailModal";
+import Modal from "../../Components/Login/Modal";
 import { useUser } from "../../Context/UserContext";
 
 const { LoginCommonButton } = CommonButton;
@@ -52,7 +52,7 @@ const LoginPhoneVerifyContainer = () => {
         </div>
       </CommonSectionContainer>
       {/* checkedNumber가 참인 경우 렌더링 */}
-      {checkedNumber && <SendVerifyEmailModal type="phone" modalState={checkedNumber} closeModal={closeModal} />}
+      {checkedNumber && <Modal type="phone" modalState={checkedNumber} closeModal={closeModal} />}
     </>
   );
 };

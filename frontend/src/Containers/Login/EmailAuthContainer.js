@@ -1,5 +1,5 @@
 import React from 'react';
-import SendVerifyEmailModal from '../../Components/Login/SendVerifyEmailModal';
+import Modal from '../../Components/Login/Modal';
 import { useUser } from '../../Context/UserContext';
 const EmailAuthContainer = () => {
     const { user } = useUser();
@@ -53,7 +53,7 @@ const EmailAuthContainer = () => {
                     </p>
                 </div>
             </section>
-            <SendVerifyEmailModal></SendVerifyEmailModal>
+            <Modal></Modal>
         </>
     );
 };
