@@ -1,9 +1,10 @@
 import React from "react";
 
-const UserInputMsg = ({isValid, text}) => {
+const UserInputMsg = ({isValid, text, userInfo}) => {
   
   console.log(isValid)
   console.log(text)
+  console.log(userInfo)
   return (
     <>
       <label style={{display: isValid === false ? "block" : "none" }} className="relative flex overflow-hidden rounded-[8px] border-solid border-[1px] border_black_opacity surface_primary disabled:content_disabled">
