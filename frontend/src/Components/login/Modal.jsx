@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const SendVerifyEmailModal = ({ type, modalState, closeModal }) => {
+const Modal = ({ type, modalState, closeModal }) => {
   const [modalObj, setModalObj] = useState({
     title: "",
     content: "",
@@ -83,4 +83,4 @@ const SendVerifyEmailModal = ({ type, modalState, closeModal }) => {
   );
 };
 
-export default SendVerifyEmailModal;
+export default Modal;
