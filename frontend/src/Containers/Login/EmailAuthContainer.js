@@ -1,19 +1,21 @@
 import React from 'react';
 import SendVerifyEmailModal from '../../Components/Login/SendVerifyEmailModal';
+import { useUser } from '../../Context/UserContext';
 const EmailAuthContainer = () => {
+    const { user } = useUser();
     return (
         <>
             <section className="flex w-full min-w-[320px] max-w-[400px] flex-col items-center px-[32px] lg:mx-auto">
                 <div className="mt-[110px] w-full lg:mt-[116px]">
                     <div className="flex flex-col items-center justify-center">
-                        <p className="content_accent font_title_bold_md">스테디오에 오신 것을 환영합니다.</p>
+                        <p className="content_accent font_title_bold_md">P&J에 오신 것을 환영합니다.</p>
                         <h1 className="content_primary font_display_bold_sm mt-[20px] text-center">
                             이메일을 인증하고
                             <br />
                             가입을 완료해주세요.
                         </h1>
                         <p className="content_primary font_body_regular_md mt-[16px] text-center">
-                            <strong className="font_label_bold_lg">jh940412@naver.com</strong>
+                            <strong className="font_label_bold_lg">{user.email}</strong>
                             으로 전송된
                             <br />
                             인증메일을 확인해주세요.

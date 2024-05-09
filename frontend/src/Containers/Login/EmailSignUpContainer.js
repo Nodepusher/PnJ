@@ -4,10 +4,94 @@ import CommonSectionContainer from "./CommonSectionContainer";
 import UserInput from "../../Components/Login/UserInput";
 import UserInputMsg from "../../Components/Login/UserInputMsg";
 import UserSignUpCheckBox from "../../Components/Login/UserSignUpCheckBox";
+import SendVerifyEmailModal from "../../Components/Login/SendVerifyEmailModal";
 import { useUser } from "../../Context/UserContext";
+import axios from "axios"
+import { useNavigate } from "react-router-dom";
+
+const URL = "http://localhost:4000/회원가입API";
 
 const EmailSignUpContainer = () => {
   const { user, updateUserInfo, deleteUserInfo } = useUser();
+  const nav = useNavigate();
+  const option = {
+    method : 'post',
+    url : URL,
+    contentType : 'application/json',
+  }
+  
+  // useState 상태관리
+  const [signUpState, setSignUpState] = useState(false) // api를 통해 오는 상태값
+  const [checkModal, setCheckModal] = useState(false) // 모달 상태관리
+  
+  // http api 통신
+  const signUp = (sendData) => {
+    return axios(option, {
+      data : sendData
+    }).then(res => {
+      // 응답 네가지 : 
+      // 1.이미있는계정(exist) -> 이미있는 이메일 페이지이동, 
+      //   => 이미있는 계정의 정보를 가져와야함
+      // 2.중복된이메일(duplEmail)-> 모달 , 
+      // 3.가입가능(success)-> 이메일인증페이지로 이동
+      
+
+      console.log(res.data)
+      
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  // 가입 버튼
+  const onSubmitButton = async(e) => {
+    e.preventDefault(); // Form의 기본 이벤트를 차단
+
+    const allValuesTrue = Object.values(validationResults).every(value => value === true);
+    const sendData = {
+      email : userInfo.email,
+      name : userInfo.name,
+      password :  userInfo.password,
+      phoneNumber : user.phoneNumber,
+    }
+    if(allValuesTrue && allChecked){
+      // setSignUpState(await signUp(sendData))
+      // const result = signUp(sendData)
+      const result = "success"
+      setSignUpState(result)
+      switch (result) {
+        case "exist":
+          nav('/login/existing-account');
+          break;
+        case "duplEmail":
+          setCheckModal(true);
+          break;
+        case "success":
+          updateUserInfo('email',sendData.email)
+          /**
+           *  axios를 통해 호출
+           *  이 부분에서 이메일 인증 api 호출
+           *  */
+          nav('/login/email-auth');
+          break;
+        default:
+          setCheckModal(false);
+          break;
+      }
+      // console.log('1')
+      
+    } else{
+      setSignUpState("fail")
+      setCheckModal(true);
+    }
+
+  }
+  // 모달창 닫기위한 함수
+  const closeModal = () => {
+    setCheckModal(false);
+  };
+
+  // user 정보 담기위한 상태관리
   const [userInfo, setUserInfo] = useState({
     email: "",
     name: "",
@@ -15,41 +99,23 @@ const EmailSignUpContainer = () => {
     passwordCheck: "",
   });
 
+  // 유효성 상태관리
   const [validationResults, setValidationResults] = useState({
     emailValid: null,
     nameValid: null,
     passwordValid: null,
     passwordMatch: null,
   });
-  console.log("::::::::::::::::: " +user.phoneNumber)
+
+  // input창 정규식 적용 
   const handleInputChange = (e) => {
-   
     const { name, value } = e.target;
     setUserInfo((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
-  const onClickRegister = () => {
-    const userInfo = {
-      email: userInfo.email,
-      name: userInfo.name,
-      password:  userInfo.password,
-      phoneNumber: user.phoneNumber,
-    }
-    
-    // 임시로 만듬
-    const tempNavState = false;
-
-    // axios 써서 서버에 데이터 저장
-    // userinfo를 http body에 담아서 전송
-    // 전송 시, 서버에서 DB 확인 후 새로운 정보면 저장, 이미 있다면 실패 모달
-    
-  }
- 
   useEffect(() => {
-    
-
     setValidationResults({
       emailValid: userInfo.email
         ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userInfo.email)
@@ -65,9 +131,9 @@ const EmailSignUpContainer = () => {
           ? userInfo.password === userInfo.passwordCheck
           : null,
     });
-  }, [userInfo]);
+  }, [userInfo, userInfo.email, userInfo.name, userInfo.password, userInfo.passwordCheck]);
 
-
+  // 체크박스 상태관리
   const [options, setOptions] = useState([
     { label: "[필수] 만 14세 이상", isChecked: false },
     { label: "[필수] P&J 이용약관", isChecked: false },
@@ -114,9 +180,7 @@ const EmailSignUpContainer = () => {
               <UserInputMsg
                 isValid={validationResults.emailValid}
                 text={
-                  userInfo.email === ""
-                    ? "필수항목입니다."
-                    : "올바른 이메일 형식이 아닙니다."
+                  "올바른 이메일 형식이 아닙니다."
                 }
               />
             </div>
@@ -136,9 +200,7 @@ const EmailSignUpContainer = () => {
               <UserInputMsg
                 isValid={validationResults.nameValid}
                 text={
-                  userInfo.name === ""
-                    ? "필수항목입니다."
-                    : "올바른 이름을 입력해주세요."
+                  "올바른 이름을 입력해주세요."
                 }
               />
             </div>
@@ -157,9 +219,7 @@ const EmailSignUpContainer = () => {
               <UserInputMsg
                 isValid={validationResults.passwordValid}
                 text={
-                  userInfo.password === ""
-                    ? "필수항목입니다."
-                    : "비밀번호는 8자 이상 특수문자 1개 이상 입력해주세요."
+                  "비밀번호는 8자 이상 특수문자 1개 이상 입력해주세요."
                 }
               />
             </div>
@@ -178,10 +238,9 @@ const EmailSignUpContainer = () => {
               />
               <UserInputMsg
                 isValid={validationResults.passwordMatch}
+                userInfo={userInfo}
                 text={
-                  userInfo.passwordCheck === ""
-                    ? "필수항목입니다."
-                    : "비밀번호와 일치하지 않습니다."
+                  "비밀번호와 일치하지 않습니다."
                 }
               />
             </div>
@@ -194,16 +253,17 @@ const EmailSignUpContainer = () => {
             />
 
             <button
-              onClick={onClickRegister}
-              aria-label="button"
+              onClick={onSubmitButton}
+              // aria-label="button"
+              type="button"
               className="font_button_bold_md relative flex items-center justify-center h-[48px] rounded-[8px] content_primary_inverse surface_primary_inverse hover:surface_primary_inverse_active active:surface_primary_inverse_active disabled:surface_disabled px-[20px] w-full min-w-[88px] disabled:content_disabled"
-              type="submit"
             >
               시작하기
             </button>
           </form>
         </div>
       </CommonSectionContainer>
+      {checkModal && <SendVerifyEmailModal type={signUpState} modalState={checkModal} closeModal={closeModal} />}
     </>
   );
 };
