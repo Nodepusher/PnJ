@@ -23,8 +23,67 @@ const CommentComponent = () => {
         outline: 'none',
     };
 
+    const comments = [
+        {
+            id:1,
+            content:'댓글내용1',
+            userInfo:{userName:'유저닉네임1'},
+            replies: [{
+                id:1,
+                content:'대댓글내용1',
+                userInfo:{userName:'유저닉네임2'},
+                updateTime: '2024. 3. 8. 08:15'
+            },
+            {
+                id:2,
+                content:'대댓글내용2',
+                userInfo:{userName:'유저닉네임1'},
+                updateTime: '2024. 3. 8. 08:50'
+            }
+        
+        ],
+            updateTime: '2024. 3. 8. 07:50'
+        },
+        {
+            id:1,
+            content:'댓글내용2',
+            userInfo:{userName:'유저닉네임1'},
+            replies: [{
+                id:1,
+                content:'대댓글내용1',
+                userInfo:{userName:'유저닉네임2'},
+                updateTime: '2024. 3. 8. 08:15'
+            },
+            {
+                id:2,
+                content:'대댓글내용2',
+                userInfo:{userName:'유저닉네임1'},
+                updateTime: '2024. 3. 8. 08:50'
+            },
+            {
+                id:2,
+                content:'대댓글내용2',
+                userInfo:{userName:'유저닉네임1'},
+                updateTime: '2024. 3. 8. 08:50'
+            }
+        
+        ],
+            updateTime: '2024. 3. 8. 07:50'
+        },
+        {
+            id:3,
+            content:'댓글내용3',
+            userInfo:{userName:'유저닉네임3'},
+            replies: [
+        ],
+            updateTime: '2024. 3. 8. 07:50'
+        },
+
+    ]
+
     return (
         <ul>
+            {comments.map((comment, i)=> (
             <li className="pt-[24px] border-t-[1px] pb-[12px] last:pb-[0px] border_secondary pl-[10px] first:border-t-0">
                 <div className="flex gap-[10px]">
                     <div className="shrink-0">
@@ -57,22 +116,21 @@ const CommentComponent = () => {
                     <div className="w-full">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-[4px]">
-                                <div className="content_primary font_label_bold_lg">선영</div>
+                                <div className="content_primary font_label_bold_lg">{comment.userInfo.userName}</div>
                             </div>
                         </div>
                         <div className="h-[5px]"></div>
                         <div className="font_label_regular_lg whitespace-pre-wrap break-all content_secondary">
                             <p>
                                 <span>
-                                    귀 부분에서 꼬리실을 자르고 난 다음부터 이해가 잘..ㅠㅜ 정리할려고하면 귀가 둥글게
-                                    말린다고 해야할까요?ㅠㅜ 사진에서도 귀는 잘 안보이고 도와주세요ㅠㅜㅜ
+                                    {comment.content}
                                 </span>
                             </p>
                         </div>
                         <div className="h-[8px]"></div>
                         <div className="flex gap-[13px]">
                             <div className="flex items-center">
-                                <span className="content_quaternary font_label_regular_sm">2024. 3. 8. 04:27</span>
+                                <span className="content_quaternary font_label_regular_sm">{comment.updateTime}</span>
                             </div>
 
                             {replyBtn ? (
@@ -91,8 +149,9 @@ const CommentComponent = () => {
                     </div>
                 </div>
                 <div className="h-[12px]"></div>
-                <ReplyComponent props={replyBtn} StBtn={StBtn} StImg={StImg} />
+                <ReplyComponent props={replyBtn} StBtn={StBtn} StImg={StImg} replies={comment.replies}/>
             </li>
+            ))}
         </ul>
     );
 };

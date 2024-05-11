@@ -14,6 +14,10 @@ const TuiEditor = ({ content = '' }) => {
         ['scrollSync'],
     ];
 
+    const TempFunction = (temp1, temp2) => {
+        console.log('토스트ui모듈에 임시함수가 있습니다.')
+        console.log(temp1, temp2)
+    }
     return (
         <>
             {editorRef.current && (
@@ -27,7 +31,7 @@ const TuiEditor = ({ content = '' }) => {
                     theme=""
                     usageStatistics={false}
                     toolbarItems={toolbarItems}
-                    hooks={addImageBlobHook:}
+                    hooks={{addImageBlobHook:TempFunction}}
                     useCommandShortcut={true}
                 />
             )}
