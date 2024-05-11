@@ -14,10 +14,11 @@ import EmailAuthPage from '../Pages/EmailAuthPage';
 import EmailSignUpPage from '../Pages/EmailSignUpPage';
 import LoginMainPage from '../Pages/LoginMainPage';
 
-import MyPage from '../Pages/MyPage/MyPage'; 
+import MyPage from '../Pages/MyPage/MyPage';
 
 const MainRouter = () => {
-    {/* 리덕스나 컨텍스트로 전달할 것
+    {
+        /* 리덕스나 컨텍스트로 전달할 것
     const nav = useNavigate();
 
     const moveToPrev = () => {
@@ -35,7 +36,8 @@ const MainRouter = () => {
     const moveToDetail = () => {
         nav('/detail');
     };
-    */}
+    */
+    }
     return (
         <Routes>
             {/* 목록 페이지 */}
@@ -54,7 +56,7 @@ const MainRouter = () => {
                 <Route path="email-sign-up" element={<EmailSignUpPage />} />
             </Route>
             <Route path="/myPage" element={<MyPage />} />
-        </Routes> 
+        </Routes>
     );
 };
 

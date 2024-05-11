@@ -7,7 +7,6 @@ const InputCommentComponent = () => {
         nav('/login');
     };
     const isLoggedIn = true;
-
     const [comment, setComment] = useState('');
     const onChange = (e) => {
         setComment(e.target.value);
@@ -29,11 +28,17 @@ const InputCommentComponent = () => {
         color: 'transparent',
     };
 
+    const StInput = {
+        backgroundColor: '#fafafb',
+        color: '#757575',
+        width: '100%',
+    };
+
     return (
         <div className="border_primary rounded-[8px] border">
             <div className="surface_secondary flex items-center justify-between gap-[16px] overflow-hidden rounded-[8px] py-[12px] px-[16px]">
                 {isLoggedIn ? (
-                    <div className="flex items-center justify-between gap-[16px]">
+                    <div className="flex items-center justify-between gap-[16px] w-full">
                         <div className="shrink-0">
                             <button
                                 aria-label="profile image"
@@ -59,17 +64,16 @@ const InputCommentComponent = () => {
                                 <div className="border_black_opacity absolute top-0 left-0 h-full w-full rounded-full border"></div>
                             </button>
                         </div>
-                        {comment != '' ? (
-                            <form></form>
-                        ) : (
+                        <form className="w-full">
                             <input
                                 type="text"
                                 placeholder="댓글을 입력해주세요."
                                 className="content_disabled font_label_regular_lg"
                                 value={comment}
                                 onChange={onChange}
-                            ></input>
-                        )}
+                                style={StInput}
+                            />
+                        </form>
                     </div>
                 ) : (
                     <div className="flex items-center justify-between gap-[16px]">

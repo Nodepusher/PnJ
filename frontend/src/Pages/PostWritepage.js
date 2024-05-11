@@ -1,7 +1,8 @@
 import React from 'react';
+import PostWriteContainer from '../Containers/Write/PostWriteContainer';
 
 const PostWritepage = () => {
-    return <div id="editor"></div>;
+    return <PostWriteContainer />;
 };
 
 export default PostWritepage;
