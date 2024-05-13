@@ -32,6 +32,16 @@ const Modal = ({ type, modalState, closeModal }) => {
         checkType.content = "약관 동의 또는 다시 입력해주세요";
         checkType.modalStyle = { display: "block" };
         break;
+      case 'reEmailAuth':
+        checkType.title = "인증 이메일을 보냈습니다.";
+        checkType.content = "이메일 인증을 진행해주세요.";
+        checkType.modalStyle = { display: "block" };
+        break;
+      case 'alreadyEmailAuth':
+        checkType.title = "이미 이메일 인증이 완료되었습니다.";
+        checkType.content = "P&J 서비스를 이용하실 수 있습니다.";
+        checkType.modalStyle = { display: "block" };
+        break;
       default:
         // 기본 설정은 모달을 숨깁니다.
         checkType.title = "";

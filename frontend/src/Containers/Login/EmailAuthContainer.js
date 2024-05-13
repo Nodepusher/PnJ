@@ -1,8 +1,61 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Modal from '../../Components/Login/Modal';
 import { useUser } from '../../Context/UserContext';
+import axios from 'axios';
+import { useNavigate } from'react-router-dom';
 const EmailAuthContainer = () => {
-    const { user } = useUser();
+    const nav = useNavigate()
+    const { user, deleteUserInfo } = useUser();
+    const [checkModal, setCheckModal] = useState(false) // 모달 상태관리
+    const [emailAuthState, setEmailAuthState] = useState() 
+    const sendData = {
+        email : user.email,
+        name : user.name,
+        phoneNumber : user.phoneNumber,
+    }
+    const option = {
+        method : 'post',
+        url : 'http://localhost:3000/Email인증API',
+        contentType:'application/json'
+    }
+    const sendEmailAuth = () => {
+        return axios(option, {
+            data : sendData
+        }).catch(err => console.log(err))
+    }
+    const onSubmitButton = () => {
+        // axios http request 부분
+        // sendEmailAuth().then(res => {
+        //     if(res === 'success') { // 백엔드에서 분기 설정 status를 200으로 하든지 아니면, 문자열로 하든지
+        //         setEmailAuthState('reEmailAuth')
+        //         setCheckModal(true)
+
+        //     }else{
+        //         setEmailAuthState('alreadyEmailAuth')
+        //         setCheckModal(true)
+        //     }
+        // })
+
+        // 임시 테스트용
+        // const result = "reEmailAuth"
+        const result = "alreadyEmailAuth"
+        setCheckModal(true)
+        setEmailAuthState(result)
+        
+        
+
+    }
+    // 모달창 닫기위한 함수
+  const closeModal = () => {
+    setCheckModal(false);
+    if(emailAuthState === 'alreadyEmailAuth'){
+        deleteUserInfo(user.email)
+        deleteUserInfo(user.name)
+        deleteUserInfo(user.phoneNumber)
+        nav('/')
+
+    }
+  };
     return (
         <>
             <section className="flex w-full min-w-[320px] max-w-[400px] flex-col items-center px-[32px] lg:mx-auto">
@@ -44,6 +97,7 @@ const EmailAuthContainer = () => {
                             aria-label="button"
                             className="font_button_bold_md relative flex items-center justify-center h-[48px] rounded-[8px] content_secondary surface_primary border border-solid border_black_opacity hover:surface_tertiary hover:border_secondary active:surface_tertiary active:border_secondary disabled:surface_primary disabled:border_black_opacity disabled:border disabled:border-solid px-[19px] w-full min-w-[88px] disabled:content_disabled"
                             type="button"
+                            onClick={onSubmitButton}
                         >
                             인증 메일 재발송
                         </button>
@@ -53,7 +107,7 @@ const EmailAuthContainer = () => {
                     </p>
                 </div>
             </section>
-            <Modal></Modal>
+            {checkModal && <Modal type={emailAuthState} modalState={checkModal} closeModal={closeModal} />}
         </>
     );
 };

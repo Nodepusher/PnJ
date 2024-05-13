@@ -57,10 +57,10 @@ const EmailSignUpContainer = () => {
     if(allValuesTrue && allChecked){
 
       // setSignUpState(await signUp(sendData))
-      const result = signUp(sendData)
+      // const result = signUp(sendData)
+      
+      const result = "success"  
       setSignUpState(result)
-
-      // const result = "success"  
       switch (result) {
         case "exist":
           nav('/login/existing-account');
@@ -70,6 +70,8 @@ const EmailSignUpContainer = () => {
           break;
         case "success":
           updateUserInfo('email',sendData.email)
+          updateUserInfo('name',sendData.name)
+          updateUserInfo('password',sendData.password)
           /**
            *  axios를 통해 호출
            *  이 부분에서 이메일 인증 api 호출
