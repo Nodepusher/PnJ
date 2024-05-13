@@ -14,6 +14,9 @@ import EmailAuthPage from '../Pages/EmailAuthPage';
 import EmailSignUpPage from '../Pages/EmailSignUpPage';
 import LoginMainPage from '../Pages/LoginMainPage';
 
+import MyPage from '../Pages/MyPage/MyPage'; 
+import MyPagePostContainer from '../Containers/MyPage/MyPagePostContainer';
+
 const MainRouter = () => {
     {/* 리덕스나 컨텍스트로 전달할 것
     const nav = useNavigate();
@@ -51,7 +54,9 @@ const MainRouter = () => {
                 <Route path="email-auth" element={<EmailAuthPage />} />
                 <Route path="email-sign-up" element={<EmailSignUpPage />} />
             </Route>
-        </Routes>
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/MyPagePostContainer" element={<MyPagePostContainer />} />
+        </Routes> 
     );
 };
 
