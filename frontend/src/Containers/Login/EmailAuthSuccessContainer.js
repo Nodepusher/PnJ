@@ -31,10 +31,10 @@ const EmailAuthSuccessComponent = ({userEmail}) => {
             ></path>
           </svg>
           <h1 className="content_primary font_headline_bold_lg mt-[40px] lg:mt-[25px]">
-            {userEmail}
+            이메일 인증 완료
           </h1>
           <p className="content_primary font_body_regular_md keep-all mt-[16px] text-center">
-            jh940412@naver.com 이메일 인증이 완료되었습니다.
+            {userEmail} 이메일 인증이 완료되었습니다.
           </p>
         </div>
         <div className="mx-[32px] mt-[98px]">
@@ -87,6 +87,7 @@ const EmailAuthSuccessContainer = () => {
     })
   }
 
+  // **** request to server
   // useEffect(() => {
   //   emailAuth()
   // }, []) // deps를 빈배열로 한번만 작동
@@ -96,7 +97,10 @@ const EmailAuthSuccessContainer = () => {
     setCheckModal(false);
     nav('/login/email-login')
   };
+
+  // 임시 테스트 
   useEffect(()=> {
+    setUserEmail('test@example.com')
     setCheckModal(false)
     setEmailAuthState("successEmailAuth")
   },[])
