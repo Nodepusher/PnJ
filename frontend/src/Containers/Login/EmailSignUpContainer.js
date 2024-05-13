@@ -17,7 +17,9 @@ const EmailSignUpContainer = () => {
   const option = {
     method : 'post',
     url : URL,
-    contentType : 'application/json',
+    headers : {
+      'Content-Type' : 'application/json'
+    }
   }
   
   // useState 상태관리

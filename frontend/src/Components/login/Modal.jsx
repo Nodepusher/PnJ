@@ -42,6 +42,11 @@ const Modal = ({ type, modalState, closeModal }) => {
         checkType.content = "P&J 서비스를 이용하실 수 있습니다.";
         checkType.modalStyle = { display: "block" };
         break;
+      case 'failEmailAuth':
+        checkType.title = "이메일 인증에 실패하였습니다.";
+        checkType.content = "회원가입을 다시 진행해주세요.";
+        checkType.modalStyle = { display: "block" };
+        break;
       default:
         // 기본 설정은 모달을 숨깁니다.
         checkType.title = "";
