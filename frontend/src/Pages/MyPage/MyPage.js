@@ -1,10 +1,10 @@
 import React from "react";
 import MyPagePostContainer from "../../Containers/MyPage/MyPagePostContainer";
-import MyPageEditContainer from "../../Containers/MyPage/MyPageEditContainer";
+import MyPageContainer from "../../Containers/MyPage/MyPageContainer";
 const MyPage = () => {
   return <>
     {/* <MyPagePostContainer /> */}
-    <MyPageEditContainer />
+    <MyPageContainer />
   </>;
 };
 

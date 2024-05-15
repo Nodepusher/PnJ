@@ -57,7 +57,7 @@ const SideBar = () => {
             </div>
             <ul className="px-[24px] py-[32px]">
               <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
-                <a className="flex grow items-center" href="/creator-studio/posts">
+                <a className="flex grow items-center" href="">
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +76,7 @@ const SideBar = () => {
                 </a>
               </li>
               <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] surface_accent_light hover:surface_accent_light">
-                <a className="flex grow items-center" href="/creator-studio/page">
+                <a className="flex grow items-center" href="">
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
@@ -90,20 +90,6 @@ const SideBar = () => {
                   </svg>
                   <span className="font_label_bold_xl block content_primary">
                     내 스튜디오
-                  </span>
-                </a>
-              </li>
-              <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
-                <a className="flex grow items-center" href="/creator-studio/info">
-                  <svg
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-[24px] w-[24px] mr-[10px] content_secondary"
-                  >
-                    <path d="M5.5 7.8a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM5.5 13.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM7 17.7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM10 5.4a1 1 0 0 0 0 2h10a1 1 0 1 0 0-2H10ZM9 12a1 1 0 0 1 1-1h10a1 1 0 1 1 0 2H10a1 1 0 0 1-1-1ZM10 16.6a1 1 0 1 0 0 2h10a1 1 0 1 0 0-2H10Z"></path>
-                  </svg>
-                  <span className="font_label_bold_xl block content_secondary">
-                    기본정보
                   </span>
                 </a>
               </li>
