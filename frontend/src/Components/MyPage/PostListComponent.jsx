@@ -1,0 +1,140 @@
+import React from "react";
+import NoPost from "./NoPost"
+import { useState, useReducer, useEffect } from "react";
+const mockData = [
+  {
+    id: 0,
+    title: "post 1",
+    content: "test Post 1",
+    date: "2024.05.15",
+  },
+  {
+    id: 1,
+    title: "post 2",
+    content: "test Post 2",
+    date: "2024.05.15",
+  },
+  {
+    id: 2,
+    title: "post 3",
+    content: "test Post 3",
+    date: "2024.05.15",
+  },
+  {
+    id: 3,
+    title: "post 4",
+    content: "test Post 4",
+    date: "2024.05.15",
+  },
+];
+
+const PostListComponent = () => {
+    function reducer() {}
+  const [post, dispatch] = useReducer(reducer, mockData);
+//   const [post, dispatch] = useReducer(reducer);
+  const [postState, setPostState] = useState();
+    useEffect(() =>{
+        if(!post){
+            setPostState(false)
+        }else{
+            setPostState(true)
+        }
+    },[postState])
+  return (
+    <>
+      {/* {postState && <NoPost />}
+      {postState && <PostList postList={post} />} */}
+      {console.log(postState)}
+      {postState ? <PostList postList={post} /> : <NoPost />}
+    </>
+  );
+};
+
+const PostList = ({ postList }) => {
+  return (
+    <>
+      <ul class="col-span-full mt-[8px] flex flex-col">
+        {postList.map((post) => {
+          return (
+            <li class="border_secondary flex items-center border-b px-[8px] py-[16px] hover:surface_secondary">
+              <button class="block w-[280px] text-left">
+                <div class="content_secondary flex flex-col gap-y-[2px]">
+                  <div class="flex gap-[12px]">
+                    <div class="flex flex-col">
+                      <div class="flex gap-[2px]">
+                        <p class="font_label_medium_xl text-ellipsis-1 overflow-hidden">
+                          {post.title}
+                        </p>
+                      </div>
+                      <p class="content_quaternary font_body_regular_md text-ellipsis-1 mt-[2px] overflow-hidden">
+                        {post.content}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </button>
+              <div class="ml-[32px] flex items-center gap-x-[32px]">
+                <div class="flex w-[56px] flex-col items-end gap-y-[4px]">
+                  <p class="font_label_medium_lg">1</p>
+                  <p class="content_quaternary font_label_regular_md">조회</p>
+                </div>
+                <div class="flex w-[56px] flex-col items-end gap-y-[4px]">
+                  <p class="font_label_medium_lg">0</p>
+                  <p class="content_quaternary font_label_regular_md">좋아요</p>
+                </div>
+                <div class="flex w-[76px] flex-col items-end gap-y-[4px]">
+                  <p class="font_label_medium_lg">{post.date}</p>
+                  <p class="content_quaternary font_label_regular_md">게시일</p>
+                </div>
+              </div>
+              <div class="ml-auto flex items-center gap-x-[12px]">
+                <button
+                  aria-label="edit button"
+                  class="border_primary flex h-[40px] w-[40px] items-center justify-center rounded-full border"
+                  type="button"
+                >
+                  <svg
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="content_secondary h-[20px] w-[20px]"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="m15.687 8.163.545-.506c1.024-.951 1.024-2.493 0-3.444-1.024-.95-2.684-.95-3.709 0l-8.362 7.765-1.127 3.547c-.183.577.395 1.113 1.016.943l3.82-1.046 6.661-6.186.005.004 1.155-1.073-.004-.004Zm-2.312 0-6.367 5.912-1.981.543.584-1.84 6.367-5.912 1.397 1.297Zm1.156-1.073-1.397-1.298.545-.506a1.042 1.042 0 0 1 1.397 0 .872.872 0 0 1 0 1.298l-.545.506Z"
+                    ></path>
+                  </svg>
+                </button>
+                <button
+                  aria-label="delete button"
+                  class="border_primary flex h-[40px] w-[40px] items-center justify-center rounded-full border"
+                  type="button"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="content_secondary h-[20px] w-[20px]"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M10 15.6a.7.7 0 0 1-.7-.7v-3.6a.7.7 0 0 1 1.4 0v3.6a.7.7 0 0 1-.7.7ZM14 15.6a.7.7 0 0 1-.7-.7v-3.6a.7.7 0 1 1 1.4 0v3.6a.7.7 0 0 1-.7.7Z"
+                    ></path>
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M9.6 3.8h4.6c.22 0 .4.178.4.4v1.4H9.2V4.2c0-.222.179-.4.4-.4Zm-2 .4a2 2 0 0 1 2-2h4.6a2 2 0 0 1 2 2v1.4h3.5a.8.8 0 0 1 0 1.6H19v10.4a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V7.2h-.7a.8.8 0 1 1 0-1.6h3.3V4.2Zm-1 3h10.8v10.4A2.4 2.4 0 0 1 15 20H9a2.4 2.4 0 0 1-2.4-2.4V7.2Z"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </>
+  );
+};
+
+
+export default PostListComponent;

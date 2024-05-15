@@ -1,13 +1,9 @@
 import React from "react";
-import SideBar from "../../Components/MyPage/SideBar";
 
-const MyPageEditContainer = () => {
-  return (
-    <>
-      <div className="flex h-screen flex-col">
-        <div className="flex h-full overflow-hidden">
-          <SideBar />
-          <div className="shrink-0 grow basis-0 overflow-x-auto">
+const MyPageEdit = () => {
+    return (
+        <>
+            <div className="shrink-0 grow basis-0 overflow-x-auto">
             <div className="mx-auto grid w-desktop-grid grid-cols-12 gap-x-[16px] gap-y-0 pb-[64px]">
               <div className="col-span-full">
                 <div className="surface_primary sticky top-0 z-10">
@@ -215,10 +211,7 @@ const MyPageEditContainer = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </>
-  );
-};
-
-export default MyPageEditContainer;
+        </>
+    )
+}
+export default MyPageEdit
