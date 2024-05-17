@@ -1,6 +1,6 @@
 import React from "react";
 
-const MyPageEdit = () => {
+const MyPageEditContainer = () => {
     return (
         <>
             <div className="shrink-0 grow basis-0 overflow-x-auto">
@@ -214,4 +214,4 @@ const MyPageEdit = () => {
         </>
     )
 }
-export default MyPageEdit
+export default MyPageEditContainer
