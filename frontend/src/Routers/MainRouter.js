@@ -55,7 +55,6 @@ const MainRouter = () => {
                 <Route path="email-sign-up" element={<EmailSignUpPage />} />
             </Route>
             <Route path="/mypage" element={<MyPage />} />
-            <Route path="/MyPagePostContainer" element={<MyPagePostContainer />} />
         </Routes> 
     );
 };

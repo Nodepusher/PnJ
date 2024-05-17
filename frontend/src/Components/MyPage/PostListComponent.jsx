@@ -1,60 +1,35 @@
-import React from "react";
-import NoPost from "./NoPost"
-import { useState, useReducer, useEffect } from "react";
-const mockData = [
-  {
-    id: 0,
-    title: "post 1",
-    content: "test Post 1",
-    date: "2024.05.15",
-  },
-  {
-    id: 1,
-    title: "post 2",
-    content: "test Post 2",
-    date: "2024.05.15",
-  },
-  {
-    id: 2,
-    title: "post 3",
-    content: "test Post 3",
-    date: "2024.05.15",
-  },
-  {
-    id: 3,
-    title: "post 4",
-    content: "test Post 4",
-    date: "2024.05.15",
-  },
-];
+import React, {useState, useEffect} from "react";
+import NoPost from "./NoPost";
+import MyPageModal from "../MyPage/MyPageModal"
 
-const PostListComponent = () => {
-    function reducer() {}
-  const [post, dispatch] = useReducer(reducer, mockData);
-//   const [post, dispatch] = useReducer(reducer);
-  const [postState, setPostState] = useState();
-    useEffect(() =>{
-        if(!post){
-            setPostState(false)
-        }else{
-            setPostState(true)
-        }
-    },[postState])
+const PostListComponent = ({postState, post, sort, setPost}) => {
+
   return (
     <>
-      {/* {postState && <NoPost />}
-      {postState && <PostList postList={post} />} */}
-      {console.log(postState)}
-      {postState ? <PostList postList={post} /> : <NoPost />}
+      {postState ? <PostList postList={post} sort={sort} setPost={setPost}/> : <NoPost />}
     </>
   );
 };
 
-const PostList = ({ postList }) => {
+const PostList = ({ postList, sort, setPost }) => {
+  const [checkModal, setCheckModal] = useState(false) // 모달 상태관리
+  const [deleteId, setDeleteId] = useState()
+  const ascPost = (postList) => {
+    return postList.sort((a,b) => new Date(a.date) - new Date(b.date))
+  }
+  const descPost = (postList) => {
+    return postList.sort((a,b) => new Date(b.date) - new Date(a.date))
+  }
+  const onDeleteModal = (id) => {
+    setCheckModal(true)
+    setDeleteId(id)
+  }
+
+  const sortPostList = sort === "최신순" ? ascPost(postList) : descPost(postList)
   return (
     <>
       <ul class="col-span-full mt-[8px] flex flex-col">
-        {postList.map((post) => {
+        {sortPostList.map((post) => {
           return (
             <li class="border_secondary flex items-center border-b px-[8px] py-[16px] hover:surface_secondary">
               <button class="block w-[280px] text-left">
@@ -109,6 +84,7 @@ const PostList = ({ postList }) => {
                   aria-label="delete button"
                   class="border_primary flex h-[40px] w-[40px] items-center justify-center rounded-full border"
                   type="button"
+                  onClick={() => onDeleteModal(post.id)}
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -132,9 +108,10 @@ const PostList = ({ postList }) => {
           );
         })}
       </ul>
+      {/* <MyPageModal></MyPageModal> */}
+      {checkModal && <MyPageModal setCheckModal={setCheckModal} deletePostId={deleteId} setPost={setPost} postList={postList}/>}
     </>
   );
 };
-
 
 export default PostListComponent;

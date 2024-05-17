@@ -3,12 +3,17 @@ import MyPagePostContainer from "../../Containers/MyPage/MyPagePostContainer";
 import MyPageContainer from "../../Containers/MyPage/MyPageContainer";
 import { PageProvider } from "../../Context/MyPageContext";
 const MyPage = () => {
-  return <>
-    {/* <MyPagePostContainer /> */}
-    <PageProvider>
-      <MyPageContainer />
-    </PageProvider>
-  </>;
+  return (
+    <>
+      <PageProvider>
+        <div className="flex h-screen flex-col">
+          <div className="flex h-full overflow-hidden">
+            <MyPageContainer />
+          </div>
+        </div>
+      </PageProvider>
+    </>
+  );
 };
 
 export default MyPage;
