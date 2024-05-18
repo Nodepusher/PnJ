@@ -1,4 +1,6 @@
-const EditInfo = () => {
+import React from "react";
+
+const EditInfo = ({handleSave}) => {
     return (
       <>
         <div className="surface_primary sticky top-0 z-10">
@@ -13,6 +15,7 @@ const EditInfo = () => {
                     aria-label="button"
                     className="font_button_bold_md relative flex items-center justify-center h-[40px] rounded-[20px] content_primary_inverse surface_primary_inverse hover:surface_primary_inverse_active active:surface_primary_inverse_active disabled:surface_disabled px-[16px] w-full false disabled:content_disabled"
                     type="button"
+                    onClick={handleSave}
                   >
                     수정
                   </button>

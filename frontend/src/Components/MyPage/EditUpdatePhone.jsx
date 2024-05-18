@@ -20,7 +20,7 @@ const EditUpdatePhone = ({ content, type, value, readOnly }) => {
                 className="content_accent font_button_bold_md"
                 style={{ margin: "16px" }}
               >
-                변경
+                {/* 변경 */}
               </div>
             </button>
           </label>

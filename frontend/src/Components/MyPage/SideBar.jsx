@@ -1,7 +1,7 @@
 import React from "react";
 import { usePage } from "../../Context/MyPageContext";
 import { useSearchParams } from "react-router-dom";
-
+import tempImage from "../../Assets/images/temp.png"
 const SideBar = () => {
   const { page, updatePageInfo } = usePage();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,79 +33,51 @@ const SideBar = () => {
   };
 
   return (
-    <>
-      <nav className="surface_secondary border_primary relative basis-[260px] border">
-        <div className="border_disabled mx-[32px] border-b pt-[40px] pb-[28px]">
-          <div className="flex flex-col items-center">
-            <div className="mb-[12px]">
-              <button
-                aria-label="profile image"
-                className="relative flex h-full w-full items-center justify-center rounded-full profile_image_button"
-                type="button"
-              >
-                <img
-                  alt="프로필 이미지"
-                  sizes="(max-width: 240px) 100vw, 240px"
-                  srcset="
-                  /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fprofiles%2F64cbbe30-9f2b-4957-8c4d-47b9660d2f21%2FprofileImage%2Fee000ebf-015d-4a6d-a30e-1536049c0ef0.jpg%3Fauto%3Dformat%252Ccompress%26fm%3Djpg%26h%3D300%26lossless%3Dtrue%26w%3D300&amp;w=500&amp;q=75   500w,
-                  /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fprofiles%2F64cbbe30-9f2b-4957-8c4d-47b9660d2f21%2FprofileImage%2Fee000ebf-015d-4a6d-a30e-1536049c0ef0.jpg%3Fauto%3Dformat%252Ccompress%26fm%3Djpg%26h%3D300%26lossless%3Dtrue%26w%3D300&amp;w=768&amp;q=75   768w,
-                  /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fprofiles%2F64cbbe30-9f2b-4957-8c4d-47b9660d2f21%2FprofileImage%2Fee000ebf-015d-4a6d-a30e-1536049c0ef0.jpg%3Fauto%3Dformat%252Ccompress%26fm%3Djpg%26h%3D300%26lossless%3Dtrue%26w%3D300&amp;w=1024&amp;q=75 1024w
-                "
-                  src="/_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fprofiles%2F64cbbe30-9f2b-4957-8c4d-47b9660d2f21%2FprofileImage%2Fee000ebf-015d-4a6d-a30e-1536049c0ef0.jpg%3Fauto%3Dformat%252Ccompress%26fm%3Djpg%26h%3D300%26lossless%3Dtrue%26w%3D300&amp;w=1024&amp;q=75"
-                  decoding="async"
-                  data-nimg="fill"
-                  className="rounded-full profile_image"
-                  loading="lazy"
-                />
-                <div className="border_black_opacity absolute top-0 left-0 h-full w-full rounded-full border"></div>
-              </button>
-            </div>
-            <h2 className="content_primary font_title_bold_md mb-[12px] text-center">
-              황자현
-            </h2>
-            <a target="_blank" href="/creator/code">
-              <button
-                aria-label="button"
-                className="font_button_bold_md relative flex items-center justify-center h-[32px] rounded-[16px] content_secondary surface_primary border border-solid border_black_opacity hover:surface_tertiary hover:border_secondary active:surface_tertiary active:border_secondary disabled:surface_primary disabled:border_black_opacity disabled:border disabled:border-solid px-[15px] false disabled:content_disabled"
-                type="button"
-              >
-                <div className="flex items-center justify-center">
-                  <div>내 스튜디오</div>
-                  <svg
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="ml-[4px] shrink-0"
-                    height="16px"
-                    width="16px"
-                  >
-                    <path d="M11 7a1 1 0 0 0-1-1H4v14h14v-6a1 1 0 1 0-2 0v4H6V8h4a1 1 0 0 0 1-1Z"></path>
-                    <path d="M19.01 3.829H20v6.656a1 1 0 1 1-2 0V7.244l-5.293 5.293a1 1 0 0 1-1.414-1.415l5.293-5.292h-3.243a1 1 0 1 1 0-2H19.01Z"></path>
-                  </svg>
-                </div>
-              </button>
-            </a>
+    <nav className="surface_secondary border_primary relative basis-[260px] border">
+      <div className="border_disabled mx-[32px] border-b pt-[40px] pb-[28px]">
+        <div className="flex flex-col items-center">
+          <div className="mb-[12px]">
+            <button
+              aria-label="profile image"
+              className="relative flex h-full w-full items-center justify-center rounded-full profile_image_button"
+              type="button"
+            >
+              {/* 임시 이미지 */}
+              <img
+                alt="프로필 이미지"
+                sizes="(max-width: 240px) 100vw, 240px"
+                src={tempImage}
+                data-nimg="fill"
+                className="rounded-full profile_image"
+                loading="lazy"
+              />
+              <div className="border_black_opacity absolute top-0 left-0 h-full w-full rounded-full border"></div>
+            </button>
           </div>
+          <h2 className="content_primary font_title_bold_md mb-[12px] text-center">
+            황자현
+          </h2>
         </div>
-        <ul className="px-[24px] py-[32px]">
-          <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
-            <button onClick={onClickPage} className="flex grow items-center postButton buttonClass">
-              <PostMenu postState={page.myPost}/>
-              <span className="font_label_bold_xl block content_secondary">
-                포스트
-              </span>
-            </button>
-          </li>
-          <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px]  hover:surface_accent_light">
-            <button onClick={onClickPage} className="flex grow items-center infoButton buttonClass">
-              <MyInfo myInfoState={page.myInfo}/>
-              <span className="font_label_bold_xl block content_primary">
-                내 정보
-              </span>
-            </button>
-          </li>
-        </ul>
-      </nav>
-    </>
+      </div>
+      <ul className="px-[24px] py-[32px]">
+        <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px] false hover:surface_accent_light">
+          <button onClick={onClickPage} className="flex grow items-center postButton buttonClass">
+            <PostMenu postState={page.myPost}/>
+            <span className="font_label_bold_xl block content_secondary">
+              포스트
+            </span>
+          </button>
+        </li>
+        <li className="mb-[8px] flex h-[40px] items-center rounded-[8px] px-[12px]  hover:surface_accent_light">
+          <button onClick={onClickPage} className="flex grow items-center infoButton buttonClass">
+            <MyInfo myInfoState={page.myInfo}/>
+            <span className="font_label_bold_xl block content_primary">
+              내 정보
+            </span>
+          </button>
+        </li>
+      </ul>
+    </nav>
   );
 };
 
