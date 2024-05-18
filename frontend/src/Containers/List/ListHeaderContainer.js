@@ -4,6 +4,7 @@ import HeaderAction from './HeaderActionContainer';
 import Category from '../../Components/List/Category';
 import '../../style/List.css';
 import '../../style/List2.css';
+import ListTitle from '../../Components/List/ListTitle';
 
 const ListHeaderContainer = () => {
     const style = {
@@ -20,7 +21,12 @@ const ListHeaderContainer = () => {
                 <Logo></Logo>
                 <HeaderAction></HeaderAction>
             </nav>
-            <Category></Category>
+            <div className="mx-auto max-w-main">
+                <ListTitle />
+                <div className="h-[18px]"></div>
+                <Category></Category>
+                <div className="h-[22px]"></div>
+            </div>
         </div>
     );
 };

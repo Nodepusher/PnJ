@@ -43,46 +43,35 @@ function Category() {
     };
     const StStatic = { position: 'static' };
     return (
-        <div className="mx-auto max-w-main">
-            <div className="pt-[8px] md:pt-[12px] min-w-screen mx-auto flex flex-col items-start px-[16px] md:items-center md:px-0">
-                <div className="flex gap-[16px] xl:gap-[20px]">
-                    <span className="font_headline_bold_md md:font_display_bold_sm content_primary cursor-pointer">
-                        포스트
-                    </span>
+        <div className="relative">
+            <div
+                className="swiper swiper-initialized swiper-horizontal swiper-pointer-events"
+                style={StStatic}
+                draggable="true"
+            >
+                <div className="swiper-wrapper" style={style}>
+                    {categories.map((category, i) => (
+                        <div className="swiper-slide swiper-slide-active !w-auto !ml-[16px] md:!ml-[0] mr-[12px] shrink-0 relative">
+                            <li key={i} className="shrink-0">
+                                <div>
+                                    <button
+                                        aria-label="category chip"
+                                        style={
+                                            activeBtn === i
+                                                ? { ...StDefaultBtn, ...StActive }
+                                                : { ...StDefaultBtn, ...StInactive }
+                                        }
+                                        type="button"
+                                        onClick={() => handleBtnClick(i)}
+                                    >
+                                        {category}
+                                    </button>
+                                </div>
+                            </li>
+                        </div>
+                    ))}
                 </div>
             </div>
-            <div className="h-[18px]"></div>
-            <div className="relative">
-                <div
-                    className="swiper swiper-initialized swiper-horizontal swiper-pointer-events"
-                    style={StStatic}
-                    draggable="true"
-                >
-                    <div className="swiper-wrapper" style={style}>
-                        {categories.map((category, i) => (
-                            <div className="swiper-slide swiper-slide-active !w-auto !ml-[16px] md:!ml-[0] mr-[12px] shrink-0 relative">
-                                <li key={i} className="shrink-0">
-                                    <div>
-                                        <button
-                                            aria-label="category chip"
-                                            style={
-                                                activeBtn === i
-                                                    ? { ...StDefaultBtn, ...StActive }
-                                                    : { ...StDefaultBtn, ...StInactive }
-                                            }
-                                            type="button"
-                                            onClick={() => handleBtnClick(i)}
-                                        >
-                                            {category}
-                                        </button>
-                                    </div>
-                                </li>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-            <div className="h-[22px]"></div>
         </div>
     );
 }
