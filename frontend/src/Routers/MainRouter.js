@@ -15,6 +15,7 @@ import EmailSignUpPage from '../Pages/EmailSignUpPage';
 import LoginMainPage from '../Pages/LoginMainPage';
 
 import MyPage from '../Pages/MyPage/MyPage';
+import PostWritepage from '../Pages/PostWritepage';
 
 const MainRouter = () => {
     {
@@ -56,6 +57,7 @@ const MainRouter = () => {
                 <Route path="email-sign-up" element={<EmailSignUpPage />} />
             </Route>
             <Route path="/myPage" element={<MyPage />} />
+            <Route path="/write" element={<PostWritepage />} />
         </Routes>
     );
 };
