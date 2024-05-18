@@ -11,8 +11,6 @@ const MyPageModal = ({ setCheckModal, deletePostId, setPost, postList }) => {
         await axios.get("http://localhost:4000/deletePost", {
           params: deletePostId,
         });
-        // 안돼면
-        // setPost(postList.filter(post => post.id !== deletePostId))
         setCheckModal(false);
     } catch (error) {
         setPost(postList.filter(post => post.id !== deletePostId))

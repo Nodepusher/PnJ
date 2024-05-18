@@ -1,5 +1,66 @@
+/**
+ * 
+ * canvas : html5 동적 그래픽 렌더링 js를 통해 그림을 그림
+ * @param {File} file - 업로드된 이미지 파일
+ * @param {Object} props - 컴포넌트 속성
+ * @param {string} props.uploadImage - 업로드된 이미지의 데이터 URL
+ * @param {function} props.setUploadImage - 업로드된 이미지 URL을 설정하는 함수
+ */
 
-const EditUploadImage = () => {
+
+import React from 'react';
+
+const EditUploadImage = ({uploadImage, setUploadImage}) => {
+  const UploadImage = (e)=> {
+    const file = e.target.files[0]
+    console.log(e.target.files[0])
+    resizeImage(file)
+  }
+  const resizeImage = (file) => {
+    // FileReader 객체 생성
+    const reader = new FileReader();
+
+    // 파일이 읽혔을때 실행 이벤트
+    reader.onload = function (event) {
+      // 이미지 객체
+      const img = new Image();
+      // 이미지 로드 됐을 때 실행 이벤트
+      img.onload = function () {
+        const size = 200;
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+  
+        canvas.width = size;
+        canvas.height = size;
+  
+        // Create a circular mask
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.clip();
+  
+        // Calculate the aspect ratio and dimensions
+        const aspect = img.width / img.height;
+        let drawWidth, drawHeight;
+  
+        if (aspect > 1) {
+          drawWidth = size * aspect;
+          drawHeight = size;
+        } else {
+          drawWidth = size;
+          drawHeight = size / aspect;
+        }
+  
+        ctx.drawImage(img, (size - drawWidth) / 2, (size - drawHeight) / 2, drawWidth, drawHeight);
+  
+        const dataUrl = canvas.toDataURL('image/png');
+        setUploadImage(dataUrl);
+      };
+
+      img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
     return (
       <>
         <div className="mb-[14px]">
@@ -15,9 +76,9 @@ const EditUploadImage = () => {
               for="fileInputprofile-upload"
             >
               <input
-                accept="image/png,image/jpeg,image/jpg"
                 className="hidden cursor-pointer"
                 id="fileInputprofile-upload"
+                onChange={UploadImage}
                 type="file"
               />
             </label>

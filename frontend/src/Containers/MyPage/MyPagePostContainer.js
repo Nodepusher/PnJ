@@ -31,7 +31,7 @@ const mockData = [
 ];
 
 const MyPagePostContainer = () => {
-  const [post, setPost] = useState([]);
+  const [post, setPost] = useState(mockData);
   const [postState, setPostState] = useState();
   const [sort, setSort] = useState("최신순");
     useEffect(() =>{
@@ -42,12 +42,12 @@ const MyPagePostContainer = () => {
             setPost(res.data)
             post.length > 0 ? setPostState(true) : setPostState(false)
           } catch (error) {
-            setPost(mockData)
+            // setPost(mockData)
             post.length > 0 ? setPostState(true) : setPostState(false)
           }
         }
         requestPost()
-    },[post])
+    },[post.length])
 
   return (
     <>
