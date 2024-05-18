@@ -29,6 +29,16 @@ const SortPost = ({ props }) => {
         };
     }, []);
 
+    const propsClassName = 'absolute top-[42px] right-0 z-10 w-[248px]';
+
+    const propsList = [
+        {
+            dataOptionValue: 'popular',
+            content: '인기',
+        },
+        { dataOptionValue: 'time', content: '최신' },
+    ];
+
     return (
         <div className="flex h-[44px] items-center justify-between px-[16px] md:p-0">
             <h5 className="font_title_bold_md">포스트 {posts.length}</h5>
@@ -57,7 +67,7 @@ const SortPost = ({ props }) => {
                         ></path>
                     </svg>
                 </button>
-                {isOpen && <DropdownList onClick={handleMenuClick}></DropdownList>}
+                {isOpen && <DropdownList onClick={handleMenuClick} propsClassName={propsClassName} props={propsList} />}
             </div>
         </div>
     );
