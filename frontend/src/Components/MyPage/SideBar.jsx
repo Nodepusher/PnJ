@@ -1,13 +1,17 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { usePage } from "../../Context/MyPageContext";
+import { useSearchParams } from "react-router-dom";
+
 const SideBar = () => {
   const { page, updatePageInfo } = usePage();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const onClickPage = (e) => {
-    const target = e.target.closest('.buttonClass'); // .buttonClass는 해당 버튼의 공통 클래스명입니다.
+    const target = e.target.closest('.buttonClass');
     if (target) {
       const isPostButton = target.classList.contains("postButton");
       const isInfoButton = target.classList.contains("infoButton");
-      
+
       if (isPostButton) {
         updatePageInfo('myPost', true);
         updatePageInfo('myInfo', false);
@@ -15,8 +19,17 @@ const SideBar = () => {
         updatePageInfo('myPost', false);
         updatePageInfo('myInfo', true);
       }
+
+      const params = {};
+      if (isPostButton) {
+        params.myPost = "true";
+        params.myInfo = "false";
+      } else if (isInfoButton) {
+        params.myPost = "false";
+        params.myInfo = "true";
+      }
+      setSearchParams(params);
     }
-    console.log(page)
   };
 
   return (
@@ -95,6 +108,7 @@ const SideBar = () => {
     </>
   );
 };
+
 const PostMenu = ({postState}) => {
   return (
     <>
@@ -125,6 +139,7 @@ const PostMenu = ({postState}) => {
     </>
   );
 };
+
 const MyInfo = ({myInfoState}) => {
   return (
     <>
@@ -158,4 +173,5 @@ const MyInfo = ({myInfoState}) => {
     </>
   );
 };
+
 export default SideBar;
