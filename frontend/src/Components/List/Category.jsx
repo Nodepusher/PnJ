@@ -35,12 +35,8 @@ function Category() {
         borderColor: '#e6e6e7',
     };
 
-    const buttons = ['스터디해요', '정보 공유', 'Q&A'];
+    const categories = ['스터디해요', '정보 공유', 'Q&A'];
 
-    const StBtn = {
-        boxShadow: 'rgba(0, 0, 0, 0.25) 0px 1px 4px, rgba(0, 0, 0, 0.1) 0px 4px 5px',
-        top: '0px',
-    };
     const style = {
         transitionDuration: '0ms',
         transform: 'translate3d(0px, 0px, 0px)',
@@ -63,7 +59,7 @@ function Category() {
                     draggable="true"
                 >
                     <div className="swiper-wrapper" style={style}>
-                        {buttons.map((button, i) => (
+                        {categories.map((category, i) => (
                             <div className="swiper-slide swiper-slide-active !w-auto !ml-[16px] md:!ml-[0] mr-[12px] shrink-0 relative">
                                 <li key={i} className="shrink-0">
                                     <div>
@@ -77,50 +73,13 @@ function Category() {
                                             type="button"
                                             onClick={() => handleBtnClick(i)}
                                         >
-                                            {button}
+                                            {category}
                                         </button>
                                     </div>
                                 </li>
                             </div>
                         ))}
                     </div>
-                    {/* 이전버튼 다음버튼
-                    <button
-                        aria-label="prev button"
-                        className="absolute z-[5] w-[32px] h-[32px] rounded-full surface_primary items-center justify-center left-[-16px] hidden"
-                        type="button"
-                        style={StBtn}
-                    >
-                        <svg
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="content_primary h-[16px] w-[16px]"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M15.58 3.27c.504.405.563 1.115.13 1.587L9.168 12l6.543 7.143a1.076 1.076 0 0 1-.13 1.586 1.26 1.26 0 0 1-1.695-.122L6 12l7.885-8.607a1.26 1.26 0 0 1 1.695-.122Z"
-                            ></path>
-                        </svg>
-                    </button>
-                    <button
-                        aria-label="next button"
-                        className="absolute z-[5] w-[32px] h-[32px] rounded-full surface_primary items-center justify-center right-[-16px] hidden md:flex"
-                        type="button"
-                        style={StBtn}
-                    >
-                        <svg
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="content_primary h-[16px] w-[16px]"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M8.42 20.73a1.076 1.076 0 0 1-.13-1.587L14.832 12 8.289 4.857a1.076 1.076 0 0 1 .13-1.586 1.26 1.26 0 0 1 1.696.122L18 12l-7.885 8.607a1.26 1.26 0 0 1-1.695.122Z"
-                            ></path>
-                        </svg>
-                    </button>*/}
                 </div>
             </div>
             <div className="h-[22px]"></div>
