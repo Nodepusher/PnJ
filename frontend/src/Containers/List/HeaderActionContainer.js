@@ -15,8 +15,8 @@ const HeaderActionContainer = () => {
     };
 
     const moveToLoginPage = () => {
-        nav('/login')
-    }
+        nav('/login');
+    };
 
     const style = {
         display: 'flex',
@@ -26,8 +26,7 @@ const HeaderActionContainer = () => {
     return (
         <div style={style}>
             <SearchButton></SearchButton>
-            {/*isLoggedIn ? <LoggedIn></LoggedIn> : <LoginButton onClick={handleLogin}></LoginButton>*/}
-            {isLoggedIn ? (<LoggedIn />) : (<LoginButton onClick={moveToLoginPage}/>)}
+            {isLoggedIn ? <LoggedIn /> : <LoginButton onClick={moveToLoginPage} />}
             <EditButton></EditButton>
         </div>
     );

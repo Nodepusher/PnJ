@@ -6,7 +6,7 @@ import '../../style/List.css';
 import '../../style/List2.css';
 import ListTitle from '../../Components/List/ListTitle';
 
-const ListHeaderContainer = () => {
+const ListHeaderContainer = ({ postdata }) => {
     const style = {
         display: 'flex',
         padding: '0px 32px 0px 32px',
@@ -18,13 +18,13 @@ const ListHeaderContainer = () => {
     return (
         <div className="sticky surface_primary z-20 w-full top-0">
             <nav className="sticky" style={style}>
-                <Logo></Logo>
-                <HeaderAction></HeaderAction>
+                <Logo />
+                <HeaderAction />
             </nav>
             <div className="mx-auto max-w-main">
                 <ListTitle />
                 <div className="h-[18px]"></div>
-                <Category></Category>
+                <Category />
                 <div className="h-[22px]"></div>
             </div>
         </div>

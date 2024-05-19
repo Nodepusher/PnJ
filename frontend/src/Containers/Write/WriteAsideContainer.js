@@ -39,23 +39,6 @@ const WriteAsideContainer = () => {
         setInputTag(text);
     };
 
-    useEffect(() => {
-        const handleClickOutside = (e) => {
-            console.log();
-            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-                // 클릭된 요소가 드롭다운 메뉴 바깥인 경우에 메뉴를 닫음
-                setIsOpen(false);
-            }
-        };
-
-        // 윈도우 전역에 클릭 이벤트 리스너 추가
-        window.addEventListener('blur', handleClickOutside);
-
-        return () => {
-            // 컴포넌트가 unmount 될 때 클릭 이벤트 리스너 제거
-            window.removeEventListener('blur', handleClickOutside);
-        };
-    }, []);
 
     return (
         <section className="col-span-5 col-start-11 ml-[15px]">

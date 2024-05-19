@@ -1,13 +1,25 @@
 import React, { useState } from 'react';
 import '../../style/List.css';
 import '../../style/List2.css';
+import { useDispatch } from 'react-redux';
+import { selectCategory } from '../../store/postListReducer';
 
 function Category() {
+    const dispatch = useDispatch();
+
     const [activeBtn, setActiveBtn] = useState(0);
 
-    const handleBtnClick = (i) => {
+    const handleSelectCategory = (category, i) => {
         setActiveBtn(i);
+        dispatch(selectCategory(category.value));
     };
+
+    const categories = [
+        { name: '전체' },
+        { name: '스터디해요', value: 'study' },
+        { name: '정보 공유', value: 'info' },
+        { name: 'Q&A', value: 'qa' },
+    ];
 
     const StDefaultBtn = {
         position: 'relative',
@@ -35,13 +47,13 @@ function Category() {
         borderColor: '#e6e6e7',
     };
 
-    const categories = ['스터디해요', '정보 공유', 'Q&A'];
+    const StStatic = { position: 'static' };
 
     const style = {
         transitionDuration: '0ms',
         transform: 'translate3d(0px, 0px, 0px)',
     };
-    const StStatic = { position: 'static' };
+
     return (
         <div className="relative">
             <div
@@ -52,7 +64,7 @@ function Category() {
                 <div className="swiper-wrapper" style={style}>
                     {categories.map((category, i) => (
                         <div className="swiper-slide swiper-slide-active !w-auto !ml-[16px] md:!ml-[0] mr-[12px] shrink-0 relative">
-                            <li key={i} className="shrink-0">
+                            <li key={category.value} className="shrink-0">
                                 <div>
                                     <button
                                         aria-label="category chip"
@@ -62,9 +74,9 @@ function Category() {
                                                 : { ...StDefaultBtn, ...StInactive }
                                         }
                                         type="button"
-                                        onClick={() => handleBtnClick(i)}
+                                        onClick={() => handleSelectCategory(category, i)}
                                     >
-                                        {category}
+                                        {category.name}
                                     </button>
                                 </div>
                             </li>
