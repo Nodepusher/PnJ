@@ -1,9 +1,8 @@
 import React from "react";
 import BackButton from "../../Components/Login/BackButton";
-import CommonButton from "../../Components/Login/LoginCommonButton";
+import {LoginCommonButton, EmailButton} from "../../Components/Login/LoginCommonButton";
 import CommonSectionContainer from "./CommonSectionContainer";
 import { useNavigate } from "react-router-dom";
-const { LoginCommonButton, EmailButton } = CommonButton;
 
 const ExistingAccountContainer = () => {
   const nav = useNavigate();
