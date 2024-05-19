@@ -16,6 +16,7 @@ import LoginMainPage from '../Pages/LoginMainPage';
 
 import MyPage from '../Pages/MyPage/MyPage';
 import PostWritepage from '../Pages/PostWritepage';
+import PrivateRoute from './PrivateRoute'
 
 const MainRouter = () => {
     {
@@ -55,6 +56,9 @@ const MainRouter = () => {
                 <Route path="success-verify-email/:token" element={<EmailAuthSuccessPage />} />
                 <Route path="email-auth" element={<EmailAuthPage />} />
                 <Route path="email-sign-up" element={<EmailSignUpPage />} />
+            </Route>
+            <Route path="/myPage" element={<PrivateRoute />} >
+                <Route path="" element={<MyPage />} />
             </Route>
             <Route path="/myPage" element={<MyPage />} />
             <Route path="/write" element={<PostWritepage />} />

@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from "react";
 import BackButton from "../../Components/Login/BackButton";
-import CommonButton from "../../Components/Login/LoginCommonButton";
+import { LoginCommonButton } from "../../Components/Login/LoginCommonButton";
 import CommonSectionContainer from "./CommonSectionContainer";
 import LoginInput from "../../Components/Login/LoginInput";
 import { useNavigate, Prompt } from "react-router-dom";
 import AuthTimer from "../../Components/Login/AuthTimer";
 import { useUser } from "../../Context/UserContext"
-const { LoginCommonButton } = CommonButton;
 
 const InputVerifyNumberContainer = () => {
 

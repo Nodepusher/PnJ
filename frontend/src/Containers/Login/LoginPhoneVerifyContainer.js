@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import BackButton from "../../Components/Login/BackButton";
-import CommonButton from "../../Components/Login/LoginCommonButton";
+import { LoginCommonButton } from "../../Components/Login/LoginCommonButton";
 import CommonSectionContainer from "./CommonSectionContainer";
 import LoginInput from "../../Components/Login/LoginInput";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../Components/Login/Modal";
 import { useUser } from "../../Context/UserContext";
 
-const { LoginCommonButton } = CommonButton;
 const phoneReg = /^\d{3}\d{3,4}\d{4}$/;
 
 const LoginPhoneVerifyContainer = () => {

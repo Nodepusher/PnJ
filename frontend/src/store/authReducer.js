@@ -1,3 +1,7 @@
+/**
+ * action.js 디스패치로 부터 받음
+ */
+
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

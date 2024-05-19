@@ -1,3 +1,4 @@
+import React from "react";
 const LoginInput = ({ name, type, placeholder, value, onChange }) => {
     return (
       <>
@@ -13,5 +14,5 @@ const LoginInput = ({ name, type, placeholder, value, onChange }) => {
     );
   };
   
-  export default LoginInput;
+  export default React.memo(LoginInput);
   

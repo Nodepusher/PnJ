@@ -16,4 +16,4 @@ const CommonSectionContainer = ({ text, divText, children }) => {
   );
 };
 
-export default CommonSectionContainer;
+export default React.memo(CommonSectionContainer) ;
