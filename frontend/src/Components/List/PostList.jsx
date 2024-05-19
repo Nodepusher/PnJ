@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const PostList = ({ props, StProps }) => {
+const PostList = ({ StProps }) => {
     const nav = useNavigate();
-    const posts = props;
-    const { StfirstPost = '', StUlMargin = '' } = StProps || {};
     const moveToDetail = () => {
         nav('/detail');
     };
+
+    const postData = useSelector((state) => state.postList.filteredPosts);
+
+    const { StfirstPost = '', StUlMargin = '' } = StProps || {};
+
     const StImg = {
         position: 'absolute',
         height: '100%',
@@ -18,9 +22,9 @@ const PostList = ({ props, StProps }) => {
 
     return (
         <ul className={`col-span-full flex flex-col ${StUlMargin}`}>
-            {posts.map((post, i) => (
+            {postData.map((post, i) => (
                 <li
-                    key={i}
+                    key={post.id}
                     className={`border_secondary border-t py-[20px] first:border-0 md:py-[24px] ${StfirstPost}`}
                 >
                     <div onClick={moveToDetail}>
@@ -38,7 +42,7 @@ const PostList = ({ props, StProps }) => {
                                     <img
                                         alt="멜빵바지를 입은 볼빵빵 아기토끼 키링뜨기 (글도안+부분영상+사진+첨부파일 추가)"
                                         sizes="(max-width: 500px) 72px, 90px"
-                                        srcset="
+                                        srcSet="
                                                 /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fcreator-posts%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FcreatorPostImage%2F5d6d6e7a-cb08-483d-b1ef-b5438e71f987.jpeg%3Fauto%3Dformat%252Ccompress%26fit%3Dmax%26lossless%3Dtrue%26w%3D1240&amp;w=16&amp;q=75     16w,
                                                 /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fcreator-posts%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FcreatorPostImage%2F5d6d6e7a-cb08-483d-b1ef-b5438e71f987.jpeg%3Fauto%3Dformat%252Ccompress%26fit%3Dmax%26lossless%3Dtrue%26w%3D1240&amp;w=32&amp;q=75     32w,
                                                 /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fcreator-posts%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FcreatorPostImage%2F5d6d6e7a-cb08-483d-b1ef-b5438e71f987.jpeg%3Fauto%3Dformat%252Ccompress%26fit%3Dmax%26lossless%3Dtrue%26w%3D1240&amp;w=48&amp;q=75     48w,
