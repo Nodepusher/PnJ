@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import DropdownList from './DropdownList';
+import { useSelector } from 'react-redux';
 
-const SortPost = ({ props }) => {
-    const posts = props;
+const SortPost = () => {
+    const postData = useSelector((state) => state.postList.filteredPosts);
+
     const [isOpen, setIsOpen] = useState(false);
     const [dropdownState, setDropdownState] = useState('인기');
     const dropdownRef = useRef();
@@ -41,7 +43,7 @@ const SortPost = ({ props }) => {
 
     return (
         <div className="flex h-[44px] items-center justify-between px-[16px] md:p-0">
-            <h5 className="font_title_bold_md">포스트 {posts.length}</h5>
+            <h5 className="font_title_bold_md">포스트 {postData.length}</h5>
             <div className="relative">
                 <button
                     onClick={() => {

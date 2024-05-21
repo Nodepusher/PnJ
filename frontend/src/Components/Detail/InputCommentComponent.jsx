@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const InputCommentComponent = () => {
+const InputCommentComponent = ({ type }) => {
     const nav = useNavigate();
     const moveToLoginPage = () => {
         nav('/login');
     };
     const isLoggedIn = true;
+
     const [comment, setComment] = useState('');
-    const onChange = (e) => {
+    const handleChange = (e) => {
         setComment(e.target.value);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        type === 'comment' ? console.log('Comment submitted:', comment) : console.log('Reply submitted:', comment);
+        setComment('');
     };
 
     const StBtn = {
@@ -70,7 +77,7 @@ const InputCommentComponent = () => {
                                 placeholder="댓글을 입력해주세요."
                                 className="content_disabled font_label_regular_lg"
                                 value={comment}
-                                onChange={onChange}
+                                onChange={(e) => handleChange(e)}
                                 style={StInput}
                             />
                         </form>
@@ -85,7 +92,7 @@ const InputCommentComponent = () => {
                         aria-label="button"
                         className="font_button_bold_md relative flex items-center justify-center h-[32px] rounded-[16px] content_primary_inverse surface_accent hover:surface_accent_active active:surface_accent_active disabled:surface_disabled px-[16px] false disabled:content_disabled"
                         type="button"
-                        onClick={isLoggedIn ? '' : moveToLoginPage}
+                        onClick={isLoggedIn ? (e) => handleSubmit(e) : moveToLoginPage}
                     >
                         {isLoggedIn ? '게시' : '로그인'}
                     </button>

@@ -1,13 +1,25 @@
 import React, { useState } from 'react';
 import '../../style/List.css';
 import '../../style/List2.css';
+import { useDispatch } from 'react-redux';
+import { selectCategory } from '../../store/postListReducer';
 
 function Category() {
+    const dispatch = useDispatch();
+
     const [activeBtn, setActiveBtn] = useState(0);
 
-    const handleBtnClick = (i) => {
+    const handleSelectCategory = (category, i) => {
         setActiveBtn(i);
+        dispatch(selectCategory(category.value));
     };
+
+    const categories = [
+        { name: '전체' },
+        { name: '스터디해요', value: 'study' },
+        { name: '정보 공유', value: 'info' },
+        { name: 'Q&A', value: 'qa' },
+    ];
 
     const StDefaultBtn = {
         position: 'relative',
@@ -35,54 +47,43 @@ function Category() {
         borderColor: '#e6e6e7',
     };
 
-    const categories = ['스터디해요', '정보 공유', 'Q&A'];
+    const StStatic = { position: 'static' };
 
     const style = {
         transitionDuration: '0ms',
         transform: 'translate3d(0px, 0px, 0px)',
     };
-    const StStatic = { position: 'static' };
+
     return (
-        <div className="mx-auto max-w-main">
-            <div className="pt-[8px] md:pt-[12px] min-w-screen mx-auto flex flex-col items-start px-[16px] md:items-center md:px-0">
-                <div className="flex gap-[16px] xl:gap-[20px]">
-                    <span className="font_headline_bold_md md:font_display_bold_sm content_primary cursor-pointer">
-                        포스트
-                    </span>
+        <div className="relative">
+            <div
+                className="swiper swiper-initialized swiper-horizontal swiper-pointer-events"
+                style={StStatic}
+                draggable="true"
+            >
+                <div className="swiper-wrapper" style={style}>
+                    {categories.map((category, i) => (
+                        <div className="swiper-slide swiper-slide-active !w-auto !ml-[16px] md:!ml-[0] mr-[12px] shrink-0 relative">
+                            <li key={category.value} className="shrink-0">
+                                <div>
+                                    <button
+                                        aria-label="category chip"
+                                        style={
+                                            activeBtn === i
+                                                ? { ...StDefaultBtn, ...StActive }
+                                                : { ...StDefaultBtn, ...StInactive }
+                                        }
+                                        type="button"
+                                        onClick={() => handleSelectCategory(category, i)}
+                                    >
+                                        {category.name}
+                                    </button>
+                                </div>
+                            </li>
+                        </div>
+                    ))}
                 </div>
             </div>
-            <div className="h-[18px]"></div>
-            <div className="relative">
-                <div
-                    className="swiper swiper-initialized swiper-horizontal swiper-pointer-events"
-                    style={StStatic}
-                    draggable="true"
-                >
-                    <div className="swiper-wrapper" style={style}>
-                        {categories.map((category, i) => (
-                            <div className="swiper-slide swiper-slide-active !w-auto !ml-[16px] md:!ml-[0] mr-[12px] shrink-0 relative">
-                                <li key={i} className="shrink-0">
-                                    <div>
-                                        <button
-                                            aria-label="category chip"
-                                            style={
-                                                activeBtn === i
-                                                    ? { ...StDefaultBtn, ...StActive }
-                                                    : { ...StDefaultBtn, ...StInactive }
-                                            }
-                                            type="button"
-                                            onClick={() => handleBtnClick(i)}
-                                        >
-                                            {category}
-                                        </button>
-                                    </div>
-                                </li>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-            <div className="h-[22px]"></div>
         </div>
     );
 }

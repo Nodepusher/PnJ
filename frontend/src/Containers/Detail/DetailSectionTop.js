@@ -6,10 +6,10 @@ import DetailWrtierInfoTop from '../../Components/Detail/DetailWrtierInfoTop';
 const DetailSectionTop = () => {
     return (
         <>
-            <DetailCategory></DetailCategory>
+            <DetailCategory />
             <div className="h-[8px]"></div>
-            <DetailTitle></DetailTitle>
-            <DetailWrtierInfoTop></DetailWrtierInfoTop>
+            <DetailTitle />
+            <DetailWrtierInfoTop />
         </>
     );
 };
