@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import EditInfo from "../../Components/MyPage/EditInfo";
 import EditUploadImage from "../../Components/MyPage/EditUploadImage";
 import EditUpdateImage from "../../Components/MyPage/EditUpdateImage";
@@ -26,13 +26,13 @@ const MyPageEditContainer = () => {
     phoneNumber: "",
     profileImage: "",
   });
-  const onChangeInput = (e) => {
+  const onChangeInput = useCallback((e) => {
     const { name, value } = e.target;
     setUpdateUserInfo((prevState) => ({
       ...prevState,
       [name]: value,
     }));
-  };
+  },[]);
 
   useEffect(() => {
     setValid({
@@ -225,4 +225,4 @@ const MyPageEditContainer = () => {
   );
 };
 
-export default MyPageEditContainer;
+export default React.memo(MyPageEditContainer);

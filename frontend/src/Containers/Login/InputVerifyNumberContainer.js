@@ -1,9 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, Suspense, useCallback} from "react";
 import BackButton from "../../Components/Login/BackButton";
-import { LoginCommonButton } from "../../Components/Login/LoginCommonButton";
+import axios from "axios";
 
 import CommonSectionContainer from "./CommonSectionContainer";
 import LoginInput from "../../Components/Login/LoginInput";
+import Modal from "../../Components/Login/Modal"
+
 import { useNavigate, Prompt } from "react-router-dom";
 import AuthTimer from "../../Components/Login/AuthTimer";
 import { useUser } from "../../Context/UserContext"
@@ -15,19 +17,50 @@ const InputVerifyNumberContainer = () => {
 
   const [verifyNumber, setVerifyNumber] = useState("");
   const {user, updateUserInfo, deleteUserInfo} = useUser();
-  const onChangeVerifyNumber = (event) => {
+  const [modalState, setModalState] = useState(false);
+  const onChangeVerifyNumber = useCallback((event) => {
     console.log(event.target.value);
     setVerifyNumber(event.target.value);
-  }
+  },[])
   const nav = useNavigate();
-  const onClickExistAccount = () => {
-    nav("/login/existing-account")
-  }
 
-  //
-  const onClickEmailSignUp = () => {
-    nav("/login/email-sign-up");
-  };
+  // const onClickExistAccount = () => {
+  //   nav("/login/existing-account")
+  // }
+  // const onClickEmailSignUp = () => {
+  //   nav("/login/email-sign-up");
+  // };
+
+  const onClickVerifyButton = useCallback(async() => {
+    try {
+      const res = await axios.post("/api/auth/verify-sms", {  });
+      console.log(res);
+      if(res.type === "success") {
+        nav("/login/email-sign-up");
+      }else if(res.type === "exist") {
+        nav("/login/existing-account")
+      }else{
+        // 인증번호 잘못입력
+        setModalState(true)
+      }
+
+      // 페이지 확인 시 이거 이용 테스트용이므로 이후에 지울것
+    } catch (error) {
+      const testType = 1 // 1 : success, 2: existing, 3.fail
+      if(testType === 1){
+        nav("/login/email-sign-up");
+      }else if(testType === 2){
+        nav("/login/existing-account")
+      }else{
+        setModalState(true)
+      }
+      
+    }
+  },[])
+  const closeModal = useCallback(() => {
+    setModalState(false);
+  }, []);
+
 
   return (
     <>
@@ -51,10 +84,15 @@ const InputVerifyNumberContainer = () => {
               </label>
             </div>
           </div>
-          <LoginCommonButton onClickNav={onClickExistAccount} text={"인증하기"} />
-          <LoginCommonButton onClickNav={onClickEmailSignUp} text={"임시(인증 성공 시 회원가입 페이지로)"} />
+          <Suspense >
+            <CommonButton onClickNav={onClickVerifyButton} text={"인증하기"} />
+            {/* <CommonButton onClickNav={onClickEmailSignUp} text={"임시(인증 성공 시 회원가입 페이지로)"} /> */}
+          </Suspense>
         </div>
       </CommonSectionContainer>
+      {modalState && (
+        <Modal type="failVerify" modalState={modalState} closeModal={closeModal} />
+      )}
     </>
   );
 };

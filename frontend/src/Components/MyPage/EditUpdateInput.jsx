@@ -19,4 +19,4 @@ const EditUpdateInput = ({ content, name, type, value, readOnly, placeholder,onC
   );
 };
 
-export default EditUpdateInput;
+export default React.memo(EditUpdateInput);

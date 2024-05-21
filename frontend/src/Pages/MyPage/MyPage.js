@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import MyPageContainer from "../../Containers/MyPage/MyPageContainer";
 import { PageProvider } from "../../Context/MyPageContext";
 import { useSearchParams } from "react-router-dom";
+import HeaderContainer from "../../Containers/Common/HeaderContainer"
+
 
 const MyPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,6 +18,7 @@ const MyPage = () => {
   return (
     <PageProvider>
       <div className="flex h-screen flex-col">
+        <HeaderContainer></HeaderContainer>
         <div className="flex h-full overflow-hidden">
           <MyPageContainer />
         </div>

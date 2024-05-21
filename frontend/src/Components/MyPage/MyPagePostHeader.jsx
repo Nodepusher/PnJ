@@ -129,4 +129,4 @@ const PostButton = () => {
     </>
   );
 };
-export default MyPagePostHeader;
+export default React.memo(MyPagePostHeader);

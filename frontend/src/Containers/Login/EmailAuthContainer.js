@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, memo, useCallback} from 'react';
 import Modal from '../../Components/Login/Modal';
 import { useUser } from '../../Context/UserContext';
 import axios from 'axios';
@@ -23,7 +23,7 @@ const EmailAuthContainer = () => {
             data : sendData
         }).catch(err => console.log(err))
     }
-    const onSubmitButton = () => {
+    const onSubmitButton = useCallback(() => {
         // axios http request 부분
         // sendEmailAuth().then(res => {
         //     if(res === 'success') { // 백엔드에서 분기 설정 status를 200으로 하든지 아니면, 문자열로 하든지
@@ -44,9 +44,9 @@ const EmailAuthContainer = () => {
         
         
 
-    }
+    },[])
     // 모달창 닫기위한 함수
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setCheckModal(false);
     if(emailAuthState === 'alreadyEmailAuth'){
         deleteUserInfo(user.email)
@@ -55,7 +55,7 @@ const EmailAuthContainer = () => {
         nav('/')
 
     }
-  };
+  },[]);
     return (
         <>
             <section className="flex w-full min-w-[320px] max-w-[400px] flex-col items-center px-[32px] lg:mx-auto">
@@ -112,4 +112,4 @@ const EmailAuthContainer = () => {
     );
 };
 
-export default EmailAuthContainer;
+export default memo(EmailAuthContainer);

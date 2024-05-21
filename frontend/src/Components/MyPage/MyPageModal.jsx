@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import axios from "axios";
 
 const MyPageModal = ({ setCheckModal, deletePostId, setPost, postList }) => {
   const closeModal = () => {
     setCheckModal(false);
   };
-    const requestDelete = async () => {
+    const requestDelete = useCallback(async () => {
       try {
         // 아마 성공하면 상태 변화 되지 않을가?
         await axios.get("http://localhost:4000/deletePost", {
@@ -16,7 +16,7 @@ const MyPageModal = ({ setCheckModal, deletePostId, setPost, postList }) => {
         setPost(postList.filter(post => post.id !== deletePostId))
         setCheckModal(false);
       }
-    };
+    },[]);
   return (
     <>
       <div className="z-10">
@@ -59,4 +59,4 @@ const MyPageModal = ({ setCheckModal, deletePostId, setPost, postList }) => {
   );
 };
 
-export default MyPageModal;
+export default React.memo(MyPageModal);

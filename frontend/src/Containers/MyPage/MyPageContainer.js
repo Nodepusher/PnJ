@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import { useSearchParams } from "react-router-dom";
 import SideBar from "../../Components/MyPage/SideBar";
 import MyPageEditContainer from "./MyPageEditContainer";
@@ -28,4 +28,4 @@ const MyPageContainer = () => {
   );
 };
 
-export default MyPageContainer;
+export default memo(MyPageContainer);
