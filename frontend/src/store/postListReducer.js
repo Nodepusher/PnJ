@@ -14,19 +14,21 @@ export const getPostData = () => {
     return async (dispatch) => {
         try {
             const response = await axios.get('http://localhost:4000/posts');
-
             dispatch({
                 type: GET_POST_DATA,
                 payload: response.data,
             });
         } catch (error) {
-            console.error('Error fetching post data:', error);
-            const postData = [
-                { id: 1, title: '게시글 제목1', content: '게시글 내용1', category: 'study' },
-                { id: 2, title: '게시글 제목2', content: '게시글 내용2', category: 'info' },
-                { id: 3, title: '게시글 제목3', content: '게시글 내용3', category: 'qa' },
-                { id: 4, title: '게시글 제목4', content: '게시글 내용4', category: 'study' },
-            ];
+            const categories = ['study', 'info', 'qa'];
+            const postData = [];
+            for (let i = 0; i < 50; i++) {
+                postData.push({
+                    id: i + 1,
+                    title: `게시글 제목${i + 1}`,
+                    content: `게시글 내용${i + 1}`,
+                    category: categories[i % 3],
+                });
+            }
             dispatch({
                 type: GET_POST_DATA,
                 payload: postData,

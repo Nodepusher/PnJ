@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const DetailHeaderContainer = () => {
+    const nav = useNavigate();
+
     return (
         <div className="sticky top-0 left-0 z-20 h-[56px] w-full shadow-[0px_0px_4px_rgba(0,0,0,0.6)]">
             <nav

@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getPostData } from '../store/postListReducer';
 import ListHeaderContainer from '../Containers/List/ListHeaderContainer';
 import ListContentContainer from '../Containers/List/ListContentContainer';
 import ListFooterContainer from '../Containers/List/ListFooterContainer';
-import { useDispatch } from 'react-redux';
-import { getPostData } from '../store/postListReducer';
 
 const PostListPage = () => {
-    const [activeCategory, setActiveCategory] = useState('');
-    const [posts, setPosts] = useState([]);
-
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getPostData());
@@ -16,9 +13,9 @@ const PostListPage = () => {
 
     return (
         <>
-            <ListHeaderContainer></ListHeaderContainer>
-            <ListContentContainer></ListContentContainer>
-            <ListFooterContainer></ListFooterContainer>
+            <ListHeaderContainer search={true} login={true} mypage={true} />
+            <ListContentContainer />
+            <ListFooterContainer />
         </>
     );
 };

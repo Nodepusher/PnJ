@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 // 인증 상태를 관리할 리듀서를 임포트
 import authReducer from './authReducer';
 import postListReducer from './postListReducer';
+import postDetailReducer from './postDetailReducer';
 
 // configureStore 함수를 사용하여 Redux 스토어를 생성
 const store = configureStore({
@@ -15,6 +16,7 @@ const store = configureStore({
         // 'auth' 상태가 authReducer에 의해 관리
         auth: authReducer,
         postList: postListReducer,
+        detail: postDetailReducer,
     },
 });
 

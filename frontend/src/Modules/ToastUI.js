@@ -1,5 +1,6 @@
 import '@toast-ui/editor/dist/toastui-editor.css';
-import { Editor } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import { Editor, Viewer } from '@toast-ui/react-editor';
 import React, { useEffect } from 'react';
 
 const TuiEditor = ({ editorRef, content }) => {
@@ -44,4 +45,9 @@ const TuiEditor = ({ editorRef, content }) => {
     );
 };
 
+const TuiViewer = ({ content }) => {
+    return <Viewer initialValue={content} />;
+};
+
 export default TuiEditor;
+export { TuiViewer };

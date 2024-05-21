@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EditButton = () => {
+const MypageButton = () => {
     const style = {
         padding: '0 16px',
         borderRadius: '16px',
@@ -13,10 +13,10 @@ const EditButton = () => {
     return (
         <div class="hidden lg:block">
             <button aria-label="button" type="button" style={style}>
-                스튜디오 만들기
+                크리에이터 센터
             </button>
         </div>
     );
 };
 
-export default EditButton;
+export default MypageButton;
