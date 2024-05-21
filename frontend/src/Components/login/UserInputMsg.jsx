@@ -29,4 +29,4 @@ const UserInputMsg = ({isValid, text, userInfo}) => {
   );
 };
 
-export default UserInputMsg;
+export default React.memo(UserInputMsg);

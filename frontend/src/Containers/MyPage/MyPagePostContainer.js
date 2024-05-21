@@ -1,7 +1,8 @@
-import React from "react";
+import React, {memo} from "react";
 import PostListComponent from "../../Components/MyPage/PostListComponent";
 import MyPagePostHeader from "../../Components/MyPage/MyPagePostHeader";
 import { useState, useReducer, useEffect } from "react";
+import HeaderContainer from "../Common/HeaderContainer"
 import axios from "axios";
 const mockData = [
   {
@@ -62,4 +63,4 @@ const MyPagePostContainer = () => {
     </>
   );
 };
-export default MyPagePostContainer;
+export default memo(MyPagePostContainer);

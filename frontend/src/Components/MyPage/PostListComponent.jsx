@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import NoPost from "./NoPost";
 import MyPageModal from "../MyPage/MyPageModal"
 
@@ -20,10 +20,10 @@ const PostList = ({ postList, sort, setPost }) => {
   const descPost = (postList) => {
     return postList.sort((a,b) => new Date(b.date) - new Date(a.date))
   }
-  const onDeleteModal = (id) => {
+  const onDeleteModal = useCallback( (id) => {
     setCheckModal(true)
     setDeleteId(id)
-  }
+  }, [])
 
   const sortPostList = sort === "최신순" ? ascPost(postList) : descPost(postList)
   return (
@@ -114,4 +114,4 @@ const PostList = ({ postList, sort, setPost }) => {
   );
 };
 
-export default PostListComponent;
+export default React.memo(PostListComponent);

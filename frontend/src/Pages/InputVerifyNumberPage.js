@@ -4,7 +4,7 @@ import InputVerifyNumberContainer from '../Containers/Login/InputVerifyNumberCon
 const InputVerifyNumberPage = () => {
     return(
         <>
-            <InputVerifyNumberContainer></InputVerifyNumberContainer>
+            <InputVerifyNumberContainer />
         </>
     )
 

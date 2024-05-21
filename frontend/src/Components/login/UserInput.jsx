@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 
 /* const ValidLabelStyle = {
     borderStyle: "solid",
@@ -49,4 +49,4 @@ const UserInput = ({ name, placeholder, type, value, handleInputChange, isValid 
   );
 };
 
-export default UserInput;
+export default React.memo(UserInput);

@@ -26,4 +26,4 @@ const EditInputMsg = ({text, isValid}) => {
   );
 };
 
-export default EditInputMsg
+export default React.memo(EditInputMsg)

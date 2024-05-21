@@ -61,4 +61,4 @@ const UserSignUpCheckBox = ({ onChange, options, allChecked }) => {
   );
 };
 
-export default UserSignUpCheckBox;
+export default React.memo(UserSignUpCheckBox);

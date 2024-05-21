@@ -45,6 +45,11 @@ const Modal = ({ type, modalState, closeModal }) => {
         checkType.content = "회원가입을 다시 진행해주세요.";
         checkType.modalStyle = { display: "block" };
         break;
+      case 'failVerify' : 
+        checkType.title = "인증을 실패하였습니다"
+        checkType.content = "인증을 다시 진행해주세요."
+        checkType.modalStyle = { display: "block" };
+        break;
       default:
         // 기본 설정은 모달을 숨깁니다.
         checkType.title = "";

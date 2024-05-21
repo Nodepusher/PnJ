@@ -25,4 +25,4 @@ const SaveInfo = ({ animationClass,updateState }) => {
   );
 };
 
-export default SaveInfo;
+export default React.memo(SaveInfo);

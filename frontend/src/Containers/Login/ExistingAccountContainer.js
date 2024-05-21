@@ -3,6 +3,9 @@ import BackButton from "../../Components/Login/BackButton";
 import {LoginCommonButton, EmailButton} from "../../Components/Login/LoginCommonButton";
 import CommonSectionContainer from "./CommonSectionContainer";
 import { useNavigate } from "react-router-dom";
+const CommonButton = React.lazy(() =>
+  import("../../Components/Button/CommonButton")
+);
 
 const ExistingAccountContainer = () => {
   const nav = useNavigate();
@@ -29,7 +32,7 @@ const ExistingAccountContainer = () => {
           <div className="surface_secondary content_primary font_body_regular_md mb-[40px] rounded-[8px] p-[16px] text-center">
             <p>ail**@naver.com</p>
           </div>
-          <LoginCommonButton onClickNav={onClickEmailLogin} text={"기존 계정으로 계속하기"} />
+          <CommonButton onClickNav={onClickEmailLogin} text={"기존 계정으로 계속하기"} />
           {/* <EmailButton onClickNav={onClickEmailSignUp} text={"다른 이메일로 시작하기"} /> */}
         </div>
       </CommonSectionContainer>
