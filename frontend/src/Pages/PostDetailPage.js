@@ -1,14 +1,21 @@
-import React from 'react';
-import DetailHeaderContainer from '../Containers/Detail/DetailHeaderContainer';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getPostData } from '../store/postDetailReducer';
+import HeaderContainer from '../Containers/List/HeaderContainer';
 import DetailFooterContainer from '../Containers/Detail/DetailFooterContainer';
 import DetailSectionContainer from '../Containers/Detail/DetailSectionContainer';
 
 const PostDetailPage = () => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getPostData());
+    }, [dispatch]);
+
     return (
         <>
-            <DetailHeaderContainer></DetailHeaderContainer>
-            <DetailSectionContainer></DetailSectionContainer>
-            <DetailFooterContainer></DetailFooterContainer>
+            <HeaderContainer login={true} />
+            <DetailSectionContainer />
+            <DetailFooterContainer />
         </>
     );
 };

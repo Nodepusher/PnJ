@@ -1,17 +1,12 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const PostList = ({ StProps }) => {
+const PostList = ({ StProps, postData }) => {
     const nav = useNavigate();
     const moveToDetail = () => {
         nav('/detail');
     };
-
-    const postData = useSelector((state) => state.postList.filteredPosts);
-
     const { StfirstPost = '', StUlMargin = '' } = StProps || {};
-
     const StImg = {
         position: 'absolute',
         height: '100%',
@@ -19,7 +14,6 @@ const PostList = ({ StProps }) => {
         inset: '0px',
         color: 'transparent',
     };
-
     return (
         <ul className={`col-span-full flex flex-col ${StUlMargin}`}>
             {postData.map((post, i) => (
