@@ -28,50 +28,50 @@ const PostList = ({ postList, sort, setPost }) => {
   const sortPostList = sort === "최신순" ? ascPost(postList) : descPost(postList)
   return (
     <>
-      <ul class="col-span-full mt-[8px] flex flex-col">
+      <ul className="col-span-full mt-[8px] flex flex-col">
         {sortPostList.map((post) => {
           return (
-            <li class="border_secondary flex items-center border-b px-[8px] py-[16px] hover:surface_secondary">
-              <button class="block w-[280px] text-left">
-                <div class="content_secondary flex flex-col gap-y-[2px]">
-                  <div class="flex gap-[12px]">
-                    <div class="flex flex-col">
-                      <div class="flex gap-[2px]">
-                        <p class="font_label_medium_xl text-ellipsis-1 overflow-hidden">
+            <li className="border_secondary flex items-center border-b px-[8px] py-[16px] hover:surface_secondary">
+              <button className="block w-[280px] text-left">
+                <div className="content_secondary flex flex-col gap-y-[2px]">
+                  <div className="flex gap-[12px]">
+                    <div className="flex flex-col">
+                      <div className="flex gap-[2px]">
+                        <p className="font_label_medium_xl text-ellipsis-1 overflow-hidden">
                           {post.title}
                         </p>
                       </div>
-                      <p class="content_quaternary font_body_regular_md text-ellipsis-1 mt-[2px] overflow-hidden">
+                      <p className="content_quaternary font_body_regular_md text-ellipsis-1 mt-[2px] overflow-hidden">
                         {post.content}
                       </p>
                     </div>
                   </div>
                 </div>
               </button>
-              <div class="ml-[32px] flex items-center gap-x-[32px]">
-                <div class="flex w-[56px] flex-col items-end gap-y-[4px]">
-                  <p class="font_label_medium_lg">1</p>
-                  <p class="content_quaternary font_label_regular_md">조회</p>
+              <div className="ml-[32px] flex items-center gap-x-[32px]">
+                <div className="flex w-[56px] flex-col items-end gap-y-[4px]">
+                  <p className="font_label_medium_lg">1</p>
+                  <p className="content_quaternary font_label_regular_md">조회</p>
                 </div>
-                <div class="flex w-[56px] flex-col items-end gap-y-[4px]">
-                  <p class="font_label_medium_lg">0</p>
-                  <p class="content_quaternary font_label_regular_md">좋아요</p>
+                <div className="flex w-[56px] flex-col items-end gap-y-[4px]">
+                  <p className="font_label_medium_lg">0</p>
+                  <p className="content_quaternary font_label_regular_md">좋아요</p>
                 </div>
-                <div class="flex w-[76px] flex-col items-end gap-y-[4px]">
-                  <p class="font_label_medium_lg">{post.date}</p>
-                  <p class="content_quaternary font_label_regular_md">게시일</p>
+                <div className="flex w-[76px] flex-col items-end gap-y-[4px]">
+                  <p className="font_label_medium_lg">{post.date}</p>
+                  <p className="content_quaternary font_label_regular_md">게시일</p>
                 </div>
               </div>
-              <div class="ml-auto flex items-center gap-x-[12px]">
+              <div className="ml-auto flex items-center gap-x-[12px]">
                 <button
                   aria-label="edit button"
-                  class="border_primary flex h-[40px] w-[40px] items-center justify-center rounded-full border"
+                  className="border_primary flex h-[40px] w-[40px] items-center justify-center rounded-full border"
                   type="button"
                 >
                   <svg
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="content_secondary h-[20px] w-[20px]"
+                    className="content_secondary h-[20px] w-[20px]"
                   >
                     <path
                       fill-rule="evenodd"
@@ -82,14 +82,14 @@ const PostList = ({ postList, sort, setPost }) => {
                 </button>
                 <button
                   aria-label="delete button"
-                  class="border_primary flex h-[40px] w-[40px] items-center justify-center rounded-full border"
+                  className="border_primary flex h-[40px] w-[40px] items-center justify-center rounded-full border"
                   type="button"
                   onClick={() => onDeleteModal(post.id)}
                 >
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="content_secondary h-[20px] w-[20px]"
+                    className="content_secondary h-[20px] w-[20px]"
                   >
                     <path
                       fill-rule="evenodd"

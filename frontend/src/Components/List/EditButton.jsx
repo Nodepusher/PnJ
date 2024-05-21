@@ -11,7 +11,7 @@ const EditButton = () => {
         fontSize: '14px',
     };
     return (
-        <div class="hidden lg:block">
+        <div className="hidden lg:block">
             <button aria-label="button" type="button" style={style}>
                 스튜디오 만들기
             </button>

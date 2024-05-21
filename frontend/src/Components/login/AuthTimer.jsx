@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 
 // const VALIDTIME = 180
-const VALIDTIME = 10
+const VALIDTIME = 180
 
 const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
