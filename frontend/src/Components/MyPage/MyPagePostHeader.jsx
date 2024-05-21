@@ -77,12 +77,12 @@ const ComboBoxButton = ({ sort, setSort, comboVisible, setComboVisible }) => {
 const ComboBox = ({ setSort, setComboVisible }) => {
   return (
     <>
-      <div class="absolute top-[42px] right-0 z-10 w-[248px]">
-        <ul class="rounded-[8px] p-[8px] surface_primary shadow-menu false">
-          <li class="undefined" data-option-value="publishedAt" tabindex="-1">
+      <div className="absolute top-[42px] right-0 z-10 w-[248px]">
+        <ul className="rounded-[8px] p-[8px] surface_primary shadow-menu false">
+          <li className="undefined" data-option-value="publishedAt" tabindex="-1">
             <button
               aria-label="dropdown option"
-              class="surface_primary content_primary font_label_regular_lg w-full overflow-hidden text-ellipsis whitespace-nowrap rounded-[8px] py-[12px] px-[20px] text-left hover:surface_tertiary"
+              className="surface_primary content_primary font_label_regular_lg w-full overflow-hidden text-ellipsis whitespace-nowrap rounded-[8px] py-[12px] px-[20px] text-left hover:surface_tertiary"
               data-option-value="publishedAt"
               type="button"
               onClick={() => {
@@ -93,10 +93,10 @@ const ComboBox = ({ setSort, setComboVisible }) => {
               최신순
             </button>
           </li>
-          <li class="undefined" data-option-value="likes" tabindex="-1">
+          <li className="undefined" data-option-value="likes" tabindex="-1">
             <button
               aria-label="dropdown option"
-              class="surface_primary content_primary font_label_regular_lg w-full overflow-hidden text-ellipsis whitespace-nowrap rounded-[8px] py-[12px] px-[20px] text-left hover:surface_tertiary"
+              className="surface_primary content_primary font_label_regular_lg w-full overflow-hidden text-ellipsis whitespace-nowrap rounded-[8px] py-[12px] px-[20px] text-left hover:surface_tertiary"
               data-option-value="likes"
               type="button"
               onClick={() => {

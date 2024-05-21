@@ -11,7 +11,7 @@ const MypageButton = () => {
         fontSize: '14px',
     };
     return (
-        <div class="hidden lg:block">
+        <div className="hidden lg:block">
             <button aria-label="button" type="button" style={style}>
                 크리에이터 센터
             </button>

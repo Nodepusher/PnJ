@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 const Modal = ({ type, modalState, closeModal }) => {
   const [modalObj, setModalObj] = useState({
     title: "",
     content: "",
-    state: modalState,
     modalStyle: { display: "none" }
   });
 
@@ -12,7 +11,6 @@ const Modal = ({ type, modalState, closeModal }) => {
     const checkType = {
       title: "",
       content: "",
-      state: modalState,
       modalStyle: { display: "none" }
     };
 
@@ -55,21 +53,20 @@ const Modal = ({ type, modalState, closeModal }) => {
         break;
     }
 
-    setModalObj(prev => ({
-      ...prev,
+    setModalObj({
       title: checkType.title,
       content: checkType.content,
       modalStyle: checkType.modalStyle
-    }));
+    });
 
-  }, [type, modalState]);  // 여기에서 checkType 대신 type과 modalState를 사용합니다.
+  }, [type, modalState]);
 
-  const onClickClose = () => {
-    closeModal();  // 부모 컴포넌트의 closeModal 함수를 호출
-  };
+  const onClickClose = useCallback(() => {
+    closeModal();
+  }, [closeModal]);
 
   return (
-    <div className="z-0" style={!modalObj.state ? { display: "none" } : { display: "block" }}>
+    <div className="z-0" style={modalObj.modalStyle}>
       <div
         className="surface_primary border_primary fixed top-1/2 left-1/2 z-50 box-border flex min-w-[360px]
         -translate-y-1/2 -translate-x-1/2 transform flex-col items-center justify-center rounded-[16px] border p-[32px] shadow-s"
@@ -98,4 +95,4 @@ const Modal = ({ type, modalState, closeModal }) => {
   );
 };
 
-export default Modal;
+export default React.memo(Modal);

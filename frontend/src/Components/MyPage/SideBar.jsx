@@ -102,7 +102,7 @@ const PostMenu = ({postState}) => {
         <svg
             viewBox="0 0 24 25"
             xmlns="http://www.w3.org/2000/svg"
-            class="h-[24px] w-[24px] mr-[10px] content_accent_active"
+            className="h-[24px] w-[24px] mr-[10px] content_accent_active"
         >
             <path d="M21.38 2.768a1.726 1.726 0 0 0-2.441 0L17.807 3.9l2.442 2.441L21.38 5.21a1.727 1.727 0 0 0 0-2.441ZM19.141 7.449 16.7 5.007l-6.542 6.541-1.193 2.573c-.314.676.386 1.376 1.062 1.062L12.6 13.99l6.541-6.541Z"></path>
             <path d="M16.015 3.233A5.662 5.662 0 0 0 15.4 3.2H8.6A5.6 5.6 0 0 0 3 8.8v6.8a5.6 5.6 0 0 0 5.6 5.6h6.8a5.6 5.6 0 0 0 5.6-5.6V8.8c0-.247-.016-.49-.047-.729l-7.397 7.075a.447.447 0 0 1-.127.086l-2.764 1.228a2.281 2.281 0 0 1-3.034-2.959l.915-2.205a4.805 4.805 0 0 1 1.02-1.536l6.449-6.527Z"></path>
@@ -119,7 +119,7 @@ const MyInfo = ({myInfoState}) => {
         <svg
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
-          class="h-[24px] w-[24px] mr-[10px] content_secondary"
+          className="h-[24px] w-[24px] mr-[10px] content_secondary"
         >
           <path
             fill-rule="evenodd"

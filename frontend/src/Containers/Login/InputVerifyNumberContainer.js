@@ -1,11 +1,15 @@
 import React, {useState, useEffect} from "react";
 import BackButton from "../../Components/Login/BackButton";
 import { LoginCommonButton } from "../../Components/Login/LoginCommonButton";
+
 import CommonSectionContainer from "./CommonSectionContainer";
 import LoginInput from "../../Components/Login/LoginInput";
 import { useNavigate, Prompt } from "react-router-dom";
 import AuthTimer from "../../Components/Login/AuthTimer";
 import { useUser } from "../../Context/UserContext"
+const CommonButton = React.lazy(() =>
+  import("../../Components/Button/CommonButton")
+);
 
 const InputVerifyNumberContainer = () => {
 
