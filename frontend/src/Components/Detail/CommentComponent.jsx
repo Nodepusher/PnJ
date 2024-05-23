@@ -8,6 +8,10 @@ const CommentComponent = ({ comments }) => {
         setActiveReply((prev) => (prev === commentId ? null : commentId));
     };
 
+    const hideReplyInputComment = () => {
+        setActiveReply(false);
+    };
+
     const StImg = {
         position: 'absolute',
         height: '100%',
@@ -93,6 +97,7 @@ const CommentComponent = ({ comments }) => {
                     <div className="h-[12px]"></div>
                     <ReplyComponent
                         showReply={activeReply === comment.id}
+                        hideReply={hideReplyInputComment}
                         StBtn={StBtn}
                         StImg={StImg}
                         replies={comment.replies}

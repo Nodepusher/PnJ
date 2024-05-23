@@ -1,7 +1,7 @@
 import React from 'react';
 import InputCommentComponent from './InputCommentComponent';
 
-const ReplyComponent = ({ showReply, StBtn, StImg, replies }) => {
+const ReplyComponent = ({ showReply, hideReply, StBtn, StImg, replies }) => {
     /* 
     Post 작성자의 id와 댓글 작성자의 id를 매칭하는 로직 필요 
     적절한 데이터 값을 받아오면 54번째 줄 아래와 같이 수정 필요
@@ -9,6 +9,10 @@ const ReplyComponent = ({ showReply, StBtn, StImg, replies }) => {
     */
     const isAuthor = true;
     const type = 'reply';
+
+    const replyCallback = () => {
+        hideReply();
+    };
 
     return (
         <div className="pl-[41px]">
@@ -90,7 +94,7 @@ const ReplyComponent = ({ showReply, StBtn, StImg, replies }) => {
                 </ul>
                 {showReply && (
                     <div className="reply-input-section">
-                        <InputCommentComponent type={type} />
+                        <InputCommentComponent type={type} replyCallback={replyCallback} />
                     </div>
                 )}
             </div>

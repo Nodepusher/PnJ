@@ -51,7 +51,6 @@ horizontal line
 code block
 \`\`\`
     `;
-    console.log(markdownText);
     return (
         <div className="border_secondary mt-[24px] border-t pt-[32px]">
             <div>

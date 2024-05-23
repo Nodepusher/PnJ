@@ -30,10 +30,11 @@ const HeaderContainer = ({ search, login, mypage }) => {
         height: '58px',
         justifyContent: 'space-between',
         alignItems: 'center',
+        zIndex: 50,
     };
 
     return (
-        <nav className="sticky" style={Stnav}>
+        <nav className="sticky shadow-[0px_-2px_20px_rgba(0,0,0,0.08)]" style={Stnav}>
             <Logo />
             <div style={Stdiv}>
                 {search && <SearchButton />}
