@@ -1,4 +1,4 @@
-import React, {memo} from "react";
+import React, { memo, useState } from 'react';
 
 /* const ValidLabelStyle = {
     borderStyle: "solid",
@@ -26,27 +26,44 @@ const InvalidLabelStyle = {
 } */
 
 // 아오 스타일 안먹네;;
-const ValidLabelStyle = "relative flex overflow-hidden rounded-[8px] border-solid border-[1px] border_black_opacity surface_primary disabled:content_disabled"
-const InValidLabelStyle = "relative flex overflow-hidden rounded-[8px] border-solid border-[2px] border_negative_active focus:border_negative_active disabled:content_disabled"
-const ValidInputStyle = "h-[48px] w-full px-[20px] outline-none font_body_regular_md";
-const InValidInputStyle ="h-[48px] w-full px-[20px] outline-none font_body_regular_md content_primary placeholder:content_disabled disabled:surface_tertiary disabled:border_black_opacity"
+const FocusedLabelStyle =
+    'relative flex overflow-hidden rounded-[8px] border-solid border-[2px] border_accent_active disabled:content_disabled';
+const ValidLabelStyle =
+    'relative flex overflow-hidden rounded-[8px] border-solid border-[1px] border_black_opacity surface_primary disabled:content_disabled';
+const InValidLabelStyle =
+    'relative flex overflow-hidden rounded-[8px] border-solid border-[2px] border_negative_active focus:border_negative_active disabled:content_disabled';
+const ValidInputStyle = 'h-[48px] w-full px-[20px] outline-none font_body_regular_md';
+const InValidInputStyle =
+    'h-[48px] w-full px-[20px] outline-none font_body_regular_md content_primary placeholder:content_disabled disabled:surface_tertiary disabled:border_black_opacity';
 
 const UserInput = ({ name, placeholder, type, value, handleInputChange, isValid }) => {
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
+    };
+
     console.log(`${name} isValid: ${isValid}`);
-  return (
-    <>
-      <label className={isValid === false ? InValidLabelStyle : ValidLabelStyle }>
-        <input
-            className={isValid === false ? InValidInputStyle : ValidInputStyle}
-            name={name}
-            placeholder={placeholder}
-            type={type}
-            value={value}
-            onChange={handleInputChange}
-        />
-      </label>
-    </>
-  );
+    return (
+        <>
+            <label className={isValid === false ? InValidLabelStyle : isFocused ? FocusedLabelStyle : ValidLabelStyle}>
+                <input
+                    className={isValid === false ? InValidInputStyle : ValidInputStyle}
+                    name={name}
+                    placeholder={placeholder}
+                    type={type}
+                    value={value}
+                    onChange={handleInputChange}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                />
+            </label>
+        </>
+    );
 };
 
 export default React.memo(UserInput);

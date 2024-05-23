@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const InputCommentComponent = ({ type }) => {
+const InputCommentComponent = ({ type, replyCallback }) => {
     const nav = useNavigate();
     const moveToLoginPage = () => {
         nav('/login');
@@ -9,13 +9,20 @@ const InputCommentComponent = ({ type }) => {
     const isLoggedIn = true;
 
     const [comment, setComment] = useState('');
+
     const handleChange = (e) => {
         setComment(e.target.value);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        type === 'comment' ? console.log('Comment submitted:', comment) : console.log('Reply submitted:', comment);
+
+        if (type === 'comment') {
+            console.log('Comment submitted:', comment);
+        } else if (type === 'reply') {
+            console.log('Reply submitted:', comment);
+            replyCallback();
+        }
         setComment('');
     };
 

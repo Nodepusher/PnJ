@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import PostListPage from '../Pages/PostListPage';
 import PostDetailPage from '../Pages/PostDetailPage';
@@ -16,30 +16,12 @@ import LoginMainPage from '../Pages/LoginMainPage';
 
 import MyPage from '../Pages/MyPage/MyPage';
 import PostWritepage from '../Pages/PostWritepage';
-import PrivateRoute from './PrivateRoute'
+import PrivateRoute from './PrivateRoute';
+import FindPasswordPage from '../Pages/FindPasswordPage';
+import ExpiredLinkPage from '../Pages/ExpiredLinkPage';
+import ResetPasswordPage from '../Pages/ResetPasswordPage';
 
 const MainRouter = () => {
-    {
-        /* 리덕스나 컨텍스트로 전달할 것
-    const nav = useNavigate();
-
-    const moveToPrev = () => {
-        nav(-1)
-    }
-
-    const moveToList = () => {
-        nav('/')
-    }
-
-    const moveToLogin = () => {
-        nav('/login');
-    };
-
-    const moveToDetail = () => {
-        nav('/detail');
-    };
-    */
-    }
     return (
         <Routes>
             {/* 목록 페이지 */}
@@ -56,8 +38,11 @@ const MainRouter = () => {
                 <Route path="success-verify-email/:token" element={<EmailAuthSuccessPage />} />
                 <Route path="email-auth" element={<EmailAuthPage />} />
                 <Route path="email-sign-up" element={<EmailSignUpPage />} />
+                <Route path="find-password" element={<FindPasswordPage />} />
+                <Route path="reset-password" element={<ResetPasswordPage />} />
+                <Route path="expired" element={<ExpiredLinkPage />} />
             </Route>
-            <Route path="/myPage" element={<PrivateRoute />} >
+            <Route path="/myPage" element={<PrivateRoute />}>
                 <Route path="" element={<MyPage />} />
             </Route>
             <Route path="/myPage" element={<MyPage />} />

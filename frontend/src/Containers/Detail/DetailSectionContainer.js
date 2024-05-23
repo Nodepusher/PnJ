@@ -7,8 +7,6 @@ import PostList from '../../Components/List/PostList';
 import PostHeader from '../../Components/Detail/PostHeader';
 import { useSelector } from 'react-redux';
 
-// 작성자 최신포스트와 카테고리 최신 포스트는 겹치는 부분이 많아 재사용 가능성이 있음
-
 const DetailSectionContainer = () => {
     const userName = '토야';
     const category = '스터디해요';
@@ -17,8 +15,7 @@ const DetailSectionContainer = () => {
         StfirstPost: 'first:pt-[8px]',
         StUlMargin: 'mt-[8px]',
     };
-    const { authorPosts, categoryPosts } = useSelector((state) => state.detail);
-
+    const { authorPosts, categoryPosts } = useSelector((state) => state.detail.postData);
     return (
         <div className="py-[16px] px-[16px]">
             <main class="min-w-screen surface_primary relative mx-auto flex w-full min-w-[320px] max-w-main flex-col">
