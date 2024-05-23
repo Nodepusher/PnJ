@@ -15,8 +15,7 @@ const DetailSectionContainer = () => {
         StfirstPost: 'first:pt-[8px]',
         StUlMargin: 'mt-[8px]',
     };
-    const { authorPosts, categoryPosts } = useSelector((state) => state.detail);
-    console.log(authorPosts, categoryPosts);
+    const { authorPosts, categoryPosts } = useSelector((state) => state.detail.postData);
     return (
         <div className="py-[16px] px-[16px]">
             <main class="min-w-screen surface_primary relative mx-auto flex w-full min-w-[320px] max-w-main flex-col">
