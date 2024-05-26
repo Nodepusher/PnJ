@@ -47,6 +47,7 @@ const MainRouter = () => {
             </Route>
             <Route path="/myPage" element={<MyPage />} />
             <Route path="/write" element={<PostWritepage />} />
+            <Route path="*" element={<NotFoundPage />} />
         </Routes>
     );
 };
