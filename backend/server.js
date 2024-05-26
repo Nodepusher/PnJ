@@ -3,7 +3,7 @@ const cors = require('cors');
 var path = require('path');
 var logger = require('morgan');
 
-var routerTest = require('./routes/userRoutes');
+var userRouter = require('./routes/userRoutes');
 
 var app = express();
 
@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
-app.use('/', routerTest);
+app.use('/', userRouter);
 
 // app.use(function(req, res, next) {
 //   next(createError(404));
