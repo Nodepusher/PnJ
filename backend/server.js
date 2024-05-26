@@ -3,7 +3,7 @@ const cors = require('cors');
 var path = require('path');
 var logger = require('morgan');
 
-var routerTest = require('./routes/router');
+var routerTest = require('./routes/userRoutes');
 
 var app = express();
 
