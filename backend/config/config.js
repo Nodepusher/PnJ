@@ -9,7 +9,7 @@ const dbConfig = {
     password: 'P!77sw0rd!',
     database: 'P&J',
     dialect: 'mysql',
-};
+}
 
 const srvDBConfig = {
     port: 3306,
@@ -18,9 +18,9 @@ const srvDBConfig = {
     password: '2024homeserver',
     database: 'PnJdb',
     dialect: 'mysql',
-};
+}
 
 module.exports = {
     dbConfig,
     srvDBConfig,
-};
+}
