@@ -13,6 +13,7 @@ import EmailAuthSuccessPage from '../Pages/EmailAuthSuccessPage';
 import EmailAuthPage from '../Pages/EmailAuthPage';
 import EmailSignUpPage from '../Pages/EmailSignUpPage';
 import LoginMainPage from '../Pages/LoginMainPage';
+import PostWritepage from '../Pages/PostWritepage';
 
 import MyPage from '../Pages/MyPage/MyPage';
 import PostWritepage from '../Pages/PostWritepage';
