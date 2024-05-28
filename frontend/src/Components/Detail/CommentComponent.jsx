@@ -27,6 +27,64 @@ const CommentComponent = ({ comments }) => {
         outline: 'none',
     };
 
+    const comments = [
+        {
+            id:1,
+            content:'댓글내용1',
+            userInfo:{userName:'유저닉네임1'},
+            replies: [{
+                id:1,
+                content:'대댓글내용1',
+                userInfo:{userName:'유저닉네임2'},
+                updateTime: '2024. 3. 8. 08:15'
+            },
+            {
+                id:2,
+                content:'대댓글내용2',
+                userInfo:{userName:'유저닉네임1'},
+                updateTime: '2024. 3. 8. 08:50'
+            }
+        
+        ],
+            updateTime: '2024. 3. 8. 07:50'
+        },
+        {
+            id:1,
+            content:'댓글내용2',
+            userInfo:{userName:'유저닉네임1'},
+            replies: [{
+                id:1,
+                content:'대댓글내용1',
+                userInfo:{userName:'유저닉네임2'},
+                updateTime: '2024. 3. 8. 08:15'
+            },
+            {
+                id:2,
+                content:'대댓글내용2',
+                userInfo:{userName:'유저닉네임1'},
+                updateTime: '2024. 3. 8. 08:50'
+            },
+            {
+                id:2,
+                content:'대댓글내용2',
+                userInfo:{userName:'유저닉네임1'},
+                updateTime: '2024. 3. 8. 08:50'
+            }
+        
+        ],
+            updateTime: '2024. 3. 8. 07:50'
+        },
+        {
+            id:3,
+            content:'댓글내용3',
+            userInfo:{userName:'유저닉네임3'},
+            replies: [
+        ],
+            updateTime: '2024. 3. 8. 07:50'
+        },
+
+    ]
+
     return (
         <ul>
             {comments.map((comment, i) => (
