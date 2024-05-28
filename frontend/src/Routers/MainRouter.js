@@ -1,26 +1,29 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import PrivateRoute from './PrivateRoute';
+
 import PostListPage from '../Pages/PostListPage';
 import PostDetailPage from '../Pages/PostDetailPage';
 import LoginPage from '../Pages/LoginPage';
+import MyPage from '../Pages/MyPage/MyPage';
+import PostWritepage from '../Pages/PostWritepage';
 
+import LoginMainPage from '../Pages/LoginMainPage';
+import FindPasswordPage from '../Pages/FindPasswordPage';
+import ResetPasswordPage from '../Pages/ResetPasswordPage';
+import EmailSignUpPage from '../Pages/EmailSignUpPage';
 import EmailLoginPage from '../Pages/EmailLoginPage';
+import EmailAuthPage from '../Pages/EmailAuthPage';
+import EmailAuthSuccessPage from '../Pages/EmailAuthSuccessPage';
 import LoginPhoneVerifyPage from '../Pages/LoginPhoneVerifyPage';
 import InputVerifyNumberPage from '../Pages/InputVerifyNumberPage';
 import ExistingAccountPage from '../Pages/ExistingAccountPage';
-import EmailAuthSuccessPage from '../Pages/EmailAuthSuccessPage';
-import EmailAuthPage from '../Pages/EmailAuthPage';
-import EmailSignUpPage from '../Pages/EmailSignUpPage';
-import LoginMainPage from '../Pages/LoginMainPage';
-import PostWritepage from '../Pages/PostWritepage';
 
-import MyPage from '../Pages/MyPage/MyPage';
-import PrivateRoute from './PrivateRoute';
-import FindPasswordPage from '../Pages/FindPasswordPage';
 import ExpiredLinkPage from '../Pages/ExpiredLinkPage';
-import ResetPasswordPage from '../Pages/ResetPasswordPage';
 import NotFoundPage from '../Pages/NotFoundPage/NotFoundPage';
+
+
 
 const MainRouter = () => {
     return (
