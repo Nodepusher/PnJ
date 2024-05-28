@@ -2,7 +2,6 @@
   "dependencies": {
     "create-react-app": "^5.0.1",
     "express-generator": "^4.16.1",
-    "fs": "^0.0.1-security",
-    "yarn": "^1.22.22"
+    "fs": "^0.0.1-security"
   }
 }

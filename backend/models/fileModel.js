@@ -6,6 +6,7 @@ const File = sequelize.define('File', {
     uuid: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true
     },
     uploadPath: {
         type: DataTypes.STRING,
