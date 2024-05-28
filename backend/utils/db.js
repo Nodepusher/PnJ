@@ -6,7 +6,7 @@ const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.p
     host: dbConfig.host,
     port: dbConfig.port,
     dialect: dbConfig.dialect,
-    logging: console.log,
+    /* logging: console.log, */
     define: {
         freezeTableName: true /* 테이블 이름 미지정시 복수의 모델 이름으로 생성되는데 테이블 이름을 그대로 가져가는 옵션 */,
         timestamps: true,

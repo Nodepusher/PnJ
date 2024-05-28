@@ -25,8 +25,9 @@ app.use(helmet.xssFilter()); // xss 방지
 const startServer = async () => {
   try {
     await connectDB();
-    console.log('Models:', sequelize.models); // 모델 정의 로그 추가
-    await sequelize.sync({ force: true }); // true는 기존 테이블을 삭제하고 새로 생성
+    // console.log('Models:', sequelize.models); // 모델 정의 로그 추가
+    // await sequelize.sync({ force: true }); // true는 기존 테이블을 삭제하고 새로 생성
+    await sequelize.sync({ alter: true, /* logging: console.log */ }); // 테이블 안정화 후 손실 없이 모델 변경사항 반영
     console.log('db sync');
 
     app.listen(4000, () => {
