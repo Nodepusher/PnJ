@@ -6,6 +6,8 @@
  */
 const express = require('express');
 const { connectDB, sequelize } = require('./utils/db');
+const helmet = require('helmet') // 보안 관련 미들웨어
+
 const cors = require('cors');
 
 const db = require('./models'); // *** models/index.js를 참고함
@@ -15,6 +17,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
+app.use(helmet.frameguard({ action: 'deny' })); // 클릭재킹 방지
+// app.use(helmet.hsts({ maxAge: 31536000 }));
+app.use(helmet.noSniff()); // 스니프 방지
+app.use(helmet.xssFilter()); // xss 방지
 
 const startServer = async () => {
   try {
