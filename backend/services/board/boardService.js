@@ -1,15 +1,13 @@
-const Board = require('../../models/boardModel');
+const boardRepository = require('../../repositories/board/boardRepository');
 
-const getAllBoards = async () => {
-  try {
-    const boards = await Board.findAll();
-    console.log(boards)
-    return boards;
-  } catch (error) {
-    throw new Error('Error fetching boards');
+module.exports = {
+  getAllBoardsByCategory : async (category) => {
+    try {
+        return await boardRepository.findAllByCategory(category);
+      } catch (error) {
+        throw new Error(error.message);
+      }
   }
 };
 
-module.exports = {
-  getAllBoards
-};
+
