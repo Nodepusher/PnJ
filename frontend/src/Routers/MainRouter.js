@@ -16,11 +16,11 @@ import LoginMainPage from '../Pages/LoginMainPage';
 import PostWritepage from '../Pages/PostWritepage';
 
 import MyPage from '../Pages/MyPage/MyPage';
-import PostWritepage from '../Pages/PostWritepage';
 import PrivateRoute from './PrivateRoute';
 import FindPasswordPage from '../Pages/FindPasswordPage';
 import ExpiredLinkPage from '../Pages/ExpiredLinkPage';
 import ResetPasswordPage from '../Pages/ResetPasswordPage';
+import NotFoundPage from '../Pages/NotFoundPage/NotFoundPage';
 
 const MainRouter = () => {
     return (
