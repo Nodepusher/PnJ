@@ -1,13 +1,20 @@
-const userService = require('../services/userService');
+const userService = require('../services/user/userService')
 
-exports.loginUser = async (req, res) => {
-    try {
-        const token = await userService.loginUser(req.body);
-        // res.status(200).json({ token });
-        console.log("test")
-    } catch (error) {
-        // res.status(400).json({ message: error.message });
-        console.log("test")
-      }
-
+module.exports = {
+    login: (req, res) => {
+        const { email, password } = req.body
+        try {
+            const result = userService.login(email, password)
+            if (result.success) {
+                res.status(200).json(result)
+            } else {
+                res.status(401).json(result)
+            }
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: 'An unexpected error occurred',
+            })
+        }
+    },
 }
