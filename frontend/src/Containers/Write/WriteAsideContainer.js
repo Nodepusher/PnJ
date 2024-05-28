@@ -39,8 +39,6 @@ const WriteAsideContainer = () => {
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter' && inputTag.trim() !== '') {
-            if() {return}
-            else if() {return}
             setTagList([...tagList, inputTag.trim()]);
             setInputTag('');
             console.log(tagList);
