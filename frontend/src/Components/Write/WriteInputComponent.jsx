@@ -1,6 +1,6 @@
 import React from 'react';
 
-const WriteInputComponent = ({ value, onChange, placeholder, addClass }) => {
+const WriteInputComponent = ({ value, onChange, onKeyDown, placeholder, addClass }) => {
     return (
         <label className="relative flex overflow-hidden rounded-[8px] border-solid border-[1px] border_black_opacity surface_primary disabled:content_disabled">
             <input
@@ -11,6 +11,7 @@ const WriteInputComponent = ({ value, onChange, placeholder, addClass }) => {
                 type="text"
                 value={value}
                 onChange={onChange}
+                onKeyDown={onKeyDown}
             />
         </label>
     );

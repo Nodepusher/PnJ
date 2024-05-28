@@ -26,6 +26,10 @@ const TuiEditor = ({ editorRef, content }) => {
         editorRef.current?.getInstance().setMarkdown(content);
     }, [content]);
 
+    const TempFunction = (temp1, temp2) => {
+        console.log('토스트ui모듈에 임시함수가 있습니다.')
+        console.log(temp1, temp2)
+    }
     return (
         <>
             <Editor
