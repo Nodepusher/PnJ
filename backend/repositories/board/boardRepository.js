@@ -19,22 +19,41 @@ module.exports = {
             throw new Error(error.message)
         }
     },
-    findAllForInfiniteScroll: async (limit, page, category) => {
+    findAllForInfiniteScroll: async (limit, page, category ) => {
         try {
+            console.log("category",category === "false")
+            // var test = category
+            // if(!category){
+            //     test = ''
+            // }
             const offset = (page - 1) * limit;
-            const infiniteScroll = await Board.findAll({
-                limit: limit,
-                offset: offset,
-                order: [['created_at', 'DESC']],
-                include: {
-                    model: User,
-                    attributes: ['id', 'name']
-                },
-                where : {
-                    category : category
-                }
-            });
-            return infiniteScroll;
+            if(category === "false"){
+                let infiniteScroll = await Board.findAll({
+                    limit: limit,
+                    offset: offset,
+                    order: [['created_at', 'DESC']],
+                    include: {
+                        model: User,
+                        attributes: ['id', 'name']
+                    },
+                });
+                return infiniteScroll
+            }else{
+                let infiniteScroll = await Board.findAll({
+                    limit: limit,
+                    offset: offset,
+                    order: [['created_at', 'DESC']],
+                    include: {
+                        model: User,
+                        attributes: ['id', 'name']
+                    },
+                    // option
+                    where: {
+                        category : category
+                    }
+                });
+                return infiniteScroll;
+            }
         } catch (error) {
             throw new Error(error.message);
         }

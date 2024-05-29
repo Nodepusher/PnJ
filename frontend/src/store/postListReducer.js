@@ -10,16 +10,21 @@ export const selectCategory = (category) => ({
     payload: category,
 });
 
-export const getPostData = () => {
+export const getPostData = (category) => {
+    console.log("category in getPostData:", category); 
     return async (dispatch) => {
         try {
-            const response = await axios.get('http://localhost:4000/posts');
+            const response = await axios.get('http://localhost:4000/board',{
+                params: {
+                    category
+                }
+            });
             dispatch({
                 type: GET_POST_DATA,
                 payload: response.data,
             });
         } catch (error) {
-            const categories = ['study', 'info', 'qa'];
+            const categories = ['study', 'info', 'qna'];
             const postData = [];
             for (let i = 0; i < 50; i++) {
                 postData.push({

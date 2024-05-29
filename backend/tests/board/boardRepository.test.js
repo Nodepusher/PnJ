@@ -55,8 +55,8 @@ describe("서비스 테스트", () => {
     // expect(boards[1].title).toBe("Test Title");
   });
 
-    test("더미데이터 생성", async () => {
-      for (let i = 0; i < 10; i++) {
+    test.only("더미데이터 생성", async () => {
+      for (let i = 0; i < 5; i++) {
         await Board.create({
           category: "qna",
           title: "Test qna Title" + ":::" + i,
@@ -66,6 +66,7 @@ describe("서비스 테스트", () => {
           category: "study",
           title: "Test study Title" + ":::" + i,
           content: "Test study Content" + ":::" + i,
+          user_id : i
         });
         await Board.create({
           category: "info",
@@ -98,9 +99,14 @@ describe("서비스 테스트", () => {
   });
 
 
-  test.only('무한스크롤 레포 테스트', async() => {
+  test('무한스크롤 레포 테스트', async() => {
+    const option = {
+      where : {
+        category : ''
+      }
+    }
     const limit = 8;
-    const page = 6;
+    const page = 1;
     const offset = (page - 1) * limit;
     const infiniteScroll = await Board.findAll({
         limit : limit,
@@ -109,10 +115,13 @@ describe("서비스 테스트", () => {
         include : {
             model : User,
             attributes: ['id', 'name']
-        }
+        },
+        option
+        
     })
-    
-    console.log(infiniteScroll.map(board => board.dataValues))
+    let category ="";
+    await boardRepository.findAllForInfiniteScroll(limit, page, category)
+    console.log(infiniteScroll.map(board => board.dataValues.category))
     console.log(infiniteScroll.length)
   })
 });
