@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 const ListContentContainer = () => {
     const postData = useSelector((state) => state.postList.filteredPosts);
+    
     return (
         <div className="mx-auto min-h-screen max-w-main">
             <SortPost />

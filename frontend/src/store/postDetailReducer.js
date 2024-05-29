@@ -19,7 +19,7 @@ export const getPostData = () => {
                 },
             });
         } catch (error) {
-            const categories = ['study', 'info', 'qa'];
+            const categories = ['study', 'info', 'qna'];
             const authorPosts = [];
             const categoryPosts = [];
             for (let i = 0; i < 5; i++) {
