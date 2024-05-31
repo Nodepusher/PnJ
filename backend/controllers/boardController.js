@@ -1,27 +1,29 @@
 const boardService = require('../services/board/boardService');
 
 module.exports = {
-    // getAllBoardByCategory : async (req, res, next) => {
-    //     const category = req.params.category
-    //     console.log(category)
-    //     try {
-    //         const board = await boardService.getAllBoardsByCategory(category)
-    //         console.log(board)
-    //         res.status(200).json(board)
-    //     } catch (error) {
-    //         res.status(500).json({error: error.message})
-    //     }
-    // },
+    getAllCount : async (req, res, next) => {
+        var category = req.body.category
+        if(category === ''){
+            category = "all";
+        }
+        try {
+            const board = await boardService.getAllCount(category)
+            console.log(board)
+            res.status(200).json(board)
+        } catch (error) {
+            res.status(500).json({error: error.message})
+        }
+    },
     getAllForInfiniteScroll: async (req, res, next) => {
         const option = {};
-        console.log(req.query);
-
+        console.log("::::::::::: 1"+req.query.category);
+        
         var category = req.query.category;
-        if (!req.query.category) {
-            category = "false";
+        console.log("!category2" , (req.query.category === ''))
+        if(category === ''){
+            category = "all";
         }
-        console.log(category);
-
+        console.log(category)
         const limit = 8;
         const page = parseInt(req.query.page) || 1;
 

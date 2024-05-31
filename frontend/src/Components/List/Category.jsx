@@ -16,7 +16,7 @@ function Category() {
     };
 
     const categories = [
-        { name: '전체' },
+        { name: '전체', value:'all' },
         { name: '스터디해요', value: 'study' },
         { name: '정보 공유', value: 'info' },
         { name: 'Q&A', value: 'qna' },

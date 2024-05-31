@@ -11,6 +11,7 @@ const PostListPage = () => {
     useEffect(() => {
         dispatch(getPostData(category));
     }, [dispatch, category]);
+    
 
     return (
         <>

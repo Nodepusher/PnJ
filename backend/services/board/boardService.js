@@ -1,9 +1,9 @@
 const boardRepository = require('../../repositories/board/boardRepository');
 
 module.exports = {
-  getAllBoardsByCategory : async (category) => {
+  getAllCount : async (category) => {
     try {
-        return await boardRepository.findAllByCategory(category);
+        return await boardRepository.findAllCount(category);
       } catch (error) {
         throw new Error(error.message);
       }
