@@ -24,7 +24,7 @@ export const getPostData = (category) => {
                 payload: response.data,
             });
         } catch (error) {
-            const categories = ['study', 'info', 'qna'];
+            const categories = ['all','study', 'info', 'qna'];
             const postData = [];
             for (let i = 0; i < 50; i++) {
                 postData.push({

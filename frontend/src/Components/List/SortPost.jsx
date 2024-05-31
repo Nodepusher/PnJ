@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import DropdownList from './DropdownList';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const SortPost = () => {
     const postData = useSelector((state) => state.postList.filteredPosts);
-
+    const category = useSelector(state => state.postList.category);
     const [isOpen, setIsOpen] = useState(false);
     const [dropdownState, setDropdownState] = useState('인기');
+    const [postCount, setPostCount] = useState();
     const dropdownRef = useRef();
 
     const handleMenuClick = (selected) => {
@@ -29,6 +32,37 @@ const SortPost = () => {
         };
     },[isOpen])
 
+    useEffect((e)=>{
+        try {
+            console.log(category)
+            let getCount = async() => {
+               const res =  await axios.post('/board/count',{'category': category})
+                console.log(res.data)
+                setPostCount(res.data)
+            }
+            if(category){
+                getCount()
+            }
+            
+        } catch (error) {
+            console.log(error.message)
+        }
+    },[category])
+    // 최초 렌더링
+    useEffect((e)=>{
+        try {
+            let getCount = async() => {
+            const res =  await axios.post('/board/count',{'category': 'all'})
+                console.log(res.data)
+                setPostCount(res.data)
+            }
+            getCount()
+            
+        } catch (error) {
+            console.log(error.message)
+        }
+    },[])
+
     const propsClassName = 'absolute top-[42px] right-0 z-10 w-[248px]';
 
     const propsList = [
@@ -41,7 +75,7 @@ const SortPost = () => {
 
     return (
         <div className="flex h-[44px] items-center justify-between px-[16px] md:p-0">
-            <h5 className="font_title_bold_md">포스트 {postData.length}</h5>
+            <h5 className="font_title_bold_md">포스트 {postCount}</h5>
             <div className="relative"
                 ref={dropdownRef}
                 onClick={() => {

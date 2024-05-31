@@ -3,11 +3,11 @@
  *
  */
 const dbConfig = {
-    port: 3306,
-    host: 'localhost',
-    username: 'root',
-    password: 'P!77sw0rd!',
-    database: 'P&J',
+    port: 22300,
+    host: 'slow-developer.h.mooo.com',
+    username: 'PnJuser',
+    password: '2024homeserver',
+    database: 'PnJdb',
     dialect: 'mysql',
 }
 
