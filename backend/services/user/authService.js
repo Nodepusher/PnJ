@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer')
 const ejs = require('ejs')
 const crypto = require('crypto')
 const path = require('path')
+require('dotenv').config()
 
 module.exports = {
     // 폰 인증코드 보내기
@@ -11,8 +12,8 @@ module.exports = {
         const msgModule = require('coolsms-node-sdk').default
 
         // 인증을 위해 발급받은 본인의 API Key를 사용합니다.
-        const apiKey = 'NCSOVQUCURQNJCG8'
-        const apiSecret = 'ONFRQODRFUQEZNQIYROTWAGBDUCYXHGG'
+        const apiKey = process.env.COOL_API
+        const apiSecret = process.env.COOL_API_SECRET
 
         const verifyCode = '000111'
         const messageService = new msgModule(apiKey, apiSecret)
@@ -45,39 +46,48 @@ module.exports = {
             //해시코드 생성
             const code = crypto.randomBytes(3).toString('hex')
             //DB에 해당 유저 튜플에 코드 값 UPDATE 코드 .. 생략
-            console.log('서비스단 crypto code', code)
 
             //발송 할 ejs 준비
             let emailTemplate
             ejs.renderFile(
                 path.join(__dirname, '../../utils/registerVerify.ejs'), //ejs파일 위치
-                { email: userEmail, code: code }
-                /*            (err, data) => {
-                //ejs mapping
-                if (err) {
-                    console.log(err)
+                { email: userEmail, code: code },
+                (err, data) => {
+                    //ejs mapping
+                    if (err) {
+                        console.log(err)
+                    }
+                    emailTemplate = data
                 }
-                emailTemplate = data
-            }*/
             )
 
             let transporter = nodemailer.createTransport({
                 service: 'gmail',
-                // host를 gmail로 설정
                 host: 'smtp.gmail.com',
                 port: 587,
+                secure: true,
                 auth: {
-                    user: process.env.EMAIL_USER,
-                    pass: process.env.EMAIL_PASS,
+                    type: 'OAuth2',
+                    user: process.env.GMAIL_USER,
+                    clientId: process.env.GMAIL_OAUTH_CLIENT_ID,
+                    clientSecret: process.env.GAMIL_OAUTH_CLIENT_SECRET,
+                    refreshToken: process.env.GAMIL_OAUTH_REFRESH_TOKEN,
                 },
             })
 
-            // send mail
-            transporter.sendMail({
-                from: '닉네임<PnJ@example.com>',
+            let mailOptions = {
+                from: 'PnJ_admin <PnJ_admin@PnJ.com>',
                 to: userEmail,
                 subject: '[PnJ] 회원가입 인증메일 입니다.',
                 html: emailTemplate,
+            }
+
+            // send mail
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error)
+                }
+                console.log('Message sent: %s', info.messageId)
             })
             return { success: true, message: '서비스단 메일 전송 성공' }
         } catch (error) {

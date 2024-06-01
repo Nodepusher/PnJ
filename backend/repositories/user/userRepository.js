@@ -3,6 +3,7 @@ const User = require('../../models/userModel')
 module.exports = {
     // 이메일 확인
     getUserByUserEmail: async (inputEmail) => {
+        console.log(inputEmail)
         try {
             const user = await User.findOne({ where: { email: inputEmail } }) // 조건을 객체로 전달
             return user
