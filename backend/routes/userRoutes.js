@@ -5,6 +5,8 @@ const authController = require('../controllers/authController')
 const router = express.Router()
 
 router.post('/login', userController.login)
-router.post('./email-verify', authController.emailAuthentication)
+router.post('/email-verify', authController.emailAuthentication)
+router.post('/send-phone-verify', authController.sendVerifyPhoneCode)
+router.post('/phone-verify', authController.phoneAuthentication)
 
 module.exports = router
