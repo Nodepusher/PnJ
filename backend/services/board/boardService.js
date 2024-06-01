@@ -8,7 +8,8 @@ module.exports = {
         throw new Error(error.message);
       }
   },
-  getAllForInfiniteScroll : async (limit, page, category,) => {
+  getAllForInfiniteScroll : async (limit, page, category) => {
+    console.log("category: " + category, "limit: " + limit, "page: " + page)
     try {
       return await boardRepository.findAllForInfiniteScroll(limit, page, category);
     } catch (error) {

@@ -25,30 +25,12 @@ module.exports = {
     findAllForInfiniteScroll: async (limit, page, category ) => {
         try {
             console.log("category",category === "false")
-            // var test = category
-            // if(!category){
-            //     test = ''
-            // }
 
             whereCondition = {};
             if (category !== 'all') {
                 whereCondition = { category: category };
             }
             const offset = (page - 1) * limit;
-            // if(category === "all"){
-            //     let infiniteScroll = await Board.findAll({
-            //         limit: limit,
-            //         offset: offset,
-            //         order: [['created_at', 'DESC']],
-            //         include: {
-            //             model: User,
-            //             attributes: ['id', 'name']
-            //         },
-            //     });
-            //     return infiniteScroll
-            // }else{
-               
-            // }
 
             let infiniteScroll = await Board.findAll({
                 limit: limit,

@@ -8,6 +8,7 @@ import ListFooterContainer from '../Containers/List/ListFooterContainer';
 const PostListPage = () => {
     const dispatch = useDispatch();
     const category = useSelector(state => state.postList.category);
+    const postData = useSelector((state) => state.postList.filteredPosts);
     useEffect(() => {
         dispatch(getPostData(category));
     }, [dispatch, category]);
@@ -16,7 +17,7 @@ const PostListPage = () => {
     return (
         <>
             <ListHeaderContainer search={true} login={true} mypage={true} />
-            <ListContentContainer />
+            <ListContentContainer postData={postData} category={category}/>
             <ListFooterContainer />
         </>
     );

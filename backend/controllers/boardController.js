@@ -15,25 +15,23 @@ module.exports = {
         }
     },
     getAllForInfiniteScroll: async (req, res, next) => {
-        const option = {};
         console.log("::::::::::: 1"+req.query.category);
-        
+        console.log(req.query)
         var category = req.query.category;
         console.log("!category2" , (req.query.category === ''))
         if(category === ''){
             category = "all";
         }
         console.log(category)
-        const limit = 8;
+        const limit = parseInt(req.query.limit);
         const page = parseInt(req.query.page) || 1;
 
         try {
             const board = await boardService.getAllForInfiniteScroll(limit, page, category);
-
             if (!board) {
                 return res.status(404).json({ error: 'No boards found' });
             }
-
+            console.log(":::::::::::::::: : ",board)
             console.log(board.map(v => v.dataValues.category));
             console.log(board.length);
 
