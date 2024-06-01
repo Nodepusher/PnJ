@@ -1,10 +1,11 @@
 const userService = require('../services/user/userService')
 
 module.exports = {
-    login: (req, res) => {
+    login: async (req, res) => {
         const { email, password } = req.body
         try {
-            const result = userService.login(email, password)
+            const result = await userService.login(email, password)
+            console.log('result', result)
             if (result.success) {
                 res.status(200).json(result)
             } else {

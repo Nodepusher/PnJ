@@ -1,13 +1,9 @@
 const User = require('../../models/userModel')
 
 module.exports = {
-    getUserByUserEmail: (email) => {
+    getUserByUserEmail: async (inputEmail) => {
         try {
-            const user = User.findByEmail(email)
-            console.log('userRepo', user)
-            if (!user) {
-                throw new Error('유저를 찾지 못함')
-            }
+            const user = await User.findOne({ where: { email: inputEmail } }) // 조건을 객체로 전달
             return user
         } catch (error) {
             throw error

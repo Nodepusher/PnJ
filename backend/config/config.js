@@ -6,8 +6,10 @@ const dbConfig = {
     port: 3306,
     host: 'localhost',
     username: 'root',
-    password: 'P!77sw0rd!',
-    database: 'P&J',
+    //password: 'P!77sw0rd!',
+    password: '1234',
+    database: 'PnJdb',
+    //database: 'P&J',
     dialect: 'mysql',
 }
 
@@ -20,7 +22,15 @@ const srvDBConfig = {
     dialect: 'mysql',
 }
 
+const redisConfig = {
+    REDIS_HOST: 'dev-imoong.mooo.com',
+    REDIS_PORT: '6379',
+    REDIS_USERNAME: 'default',
+    REDIS_PASSWORD: '1234',
+}
+
 module.exports = {
     dbConfig,
     srvDBConfig,
+    redisConfig,
 }
