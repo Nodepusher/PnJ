@@ -5,7 +5,7 @@ const authController = {
     emailAuthentication: async (req, res) => {
         const { userEmail } = req.body
         try {
-            const result = await authService.verifyEmail(userEmail)
+            const result = await authService.SendVerifyEmail(userEmail)
             if (result.success) {
                 res.status(200).json({
                     code: 200,
