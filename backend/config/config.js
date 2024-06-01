@@ -13,14 +13,22 @@ const dbConfig = {
 
 const srvDBConfig = {
     port: 3306,
-    host: '192.168.55.227',
+    host: 'dev-imoong.mooo.com',
     username: 'PnJuser',
     password: '2024homeserver',
     database: 'PnJdb',
     dialect: 'mysql',
 }
 
+const redisConfig = {
+    REDIS_HOST: 'dev-imoong.mooo.com',
+    REDIS_PORT: '6379',
+    REDIS_USERNAME: 'default',
+    REDIS_PASSWORD: '1234',
+}
+
 module.exports = {
     dbConfig,
     srvDBConfig,
+    redisConfig,
 }
