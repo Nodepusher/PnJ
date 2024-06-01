@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../../style/List.css';
 import '../../style/List2.css';
 import { useDispatch } from 'react-redux';
-import { selectCategory } from '../../store/postListReducer';
+import { selectCategory, getPostData } from '../../store/postListReducer';
 
 function Category() {
     const dispatch = useDispatch();
@@ -12,13 +12,14 @@ function Category() {
     const handleSelectCategory = (category, i) => {
         setActiveBtn(i);
         dispatch(selectCategory(category.value));
+        // dispatch(getPostData(category.value));
     };
 
     const categories = [
-        { name: '전체' },
+        { name: '전체', value:'all' },
         { name: '스터디해요', value: 'study' },
         { name: '정보 공유', value: 'info' },
-        { name: 'Q&A', value: 'qa' },
+        { name: 'Q&A', value: 'qna' },
     ];
 
     const StDefaultBtn = {

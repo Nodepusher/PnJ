@@ -3,6 +3,7 @@ import axios from 'axios';
 // 액션 타입 정의
 const SELECT_CATEGORY = 'post/SELECT_CATEGORY';
 const GET_POST_DATA = 'post/GET_POST_DATA';
+const APPEND_POST_DATA = 'post/APPEND_POST_DATA';
 
 // 액션 생성
 export const selectCategory = (category) => ({
@@ -10,16 +11,23 @@ export const selectCategory = (category) => ({
     payload: category,
 });
 
-export const getPostData = () => {
+export const getPostData = (category, page = 1) => {
+    console.log("category in getPostData:", category); 
     return async (dispatch) => {
         try {
-            const response = await axios.get('http://localhost:4000/posts');
+            const response = await axios.get('http://localhost:4000/board',{
+                params: {
+                    category,
+                    page,
+                    limit: 8,
+                }
+            });
             dispatch({
-                type: GET_POST_DATA,
+                type: page === 1 ? GET_POST_DATA : APPEND_POST_DATA,
                 payload: response.data,
             });
         } catch (error) {
-            const categories = ['study', 'info', 'qa'];
+            const categories = ['all','study', 'info', 'qna'];
             const postData = [];
             for (let i = 0; i < 50; i++) {
                 postData.push({
@@ -42,6 +50,7 @@ const initialState = {
     category: '',
     postsData: [],
     filteredPosts: [],
+    hasMore: true,
 };
 
 // 리듀서
@@ -62,6 +71,14 @@ const postListReducer = (state = initialState, action) => {
                 ...state,
                 postsData: action.payload,
                 filteredPosts: action.payload,
+                hasMore: action.payload.length >= 8,
+            };
+        case APPEND_POST_DATA:
+            return {
+                ...state,
+                postsData: [...state.postsData, ...action.payload],
+                filteredPosts: [...state.filteredPosts, ...action.payload],
+                hasMore: action.payload.length >= 8,
             };
         default:
             return state;

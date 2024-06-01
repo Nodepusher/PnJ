@@ -3,19 +3,17 @@
  *
  */
 const dbConfig = {
-    port: 3306,
-    host: 'localhost',
-    username: 'root',
-    //password: 'P!77sw0rd!',
-    password: '1234',
+    port: 22300,
+    host: 'slow-developer.h.mooo.com',
+    username: 'PnJuser',
+    password: '2024homeserver',
     database: 'PnJdb',
-    //database: 'P&J',
     dialect: 'mysql',
 }
 
 const srvDBConfig = {
     port: 3306,
-    host: '192.168.55.227',
+    host: 'dev-imoong.mooo.com',
     username: 'PnJuser',
     password: '2024homeserver',
     database: 'PnJdb',

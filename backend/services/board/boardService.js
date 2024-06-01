@@ -1,12 +1,21 @@
 const boardRepository = require('../../repositories/board/boardRepository');
 
 module.exports = {
-  getAllBoardsByCategory : async (category) => {
+  getAllCount : async (category) => {
     try {
-        return await boardRepository.findAllByCategory(category);
+        return await boardRepository.findAllCount(category);
       } catch (error) {
         throw new Error(error.message);
       }
+  },
+  getAllForInfiniteScroll : async (limit, page, category) => {
+    console.log("category: " + category, "limit: " + limit, "page: " + page)
+    try {
+      return await boardRepository.findAllForInfiniteScroll(limit, page, category);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+
   }
 };
 
