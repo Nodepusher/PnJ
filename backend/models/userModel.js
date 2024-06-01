@@ -5,7 +5,7 @@ const User = sequelize.define('User', {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: 'email'
+        unique: 'email',
     },
     phone: {
         type: DataTypes.STRING,
@@ -17,10 +17,6 @@ const User = sequelize.define('User', {
     },
     name: {
         type: DataTypes.STRING(30),
-        allowNull: false,
-    },
-    age: {
-        type: DataTypes.INTEGER(5),
         allowNull: false,
     },
     status: {
