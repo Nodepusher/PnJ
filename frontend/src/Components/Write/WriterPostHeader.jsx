@@ -9,7 +9,7 @@ const WriterPostHeader = ({ handleSubmit }) => {
     }
     return (
         <header className="surface_primary border_primary flex h-[68px] items-center border-b">
-            <div className="mx-auto flex min-w-desktop-grid items-center justify-between">
+            <div className="header mx-auto flex min-w-desktop-grid items-center justify-between">
                 <div className="content_primary flex items-center">
                     <button
                         className="surface_tertiary mr-[16px] flex h-[32px] w-[32px] items-center justify-center rounded-full"

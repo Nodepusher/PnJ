@@ -4,11 +4,11 @@ import DropdownList from './DropdownList';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
-const SortPost = () => {
+const SortPost = ({dropdownState, setDropdownState}) => {
     const postData = useSelector((state) => state.postList.filteredPosts);
     const category = useSelector(state => state.postList.category);
     const [isOpen, setIsOpen] = useState(false);
-    const [dropdownState, setDropdownState] = useState('인기');
+    // const [dropdownState, setDropdownState] = useState('최신순');
     const [postCount, setPostCount] = useState();
     const dropdownRef = useRef();
 
@@ -67,10 +67,10 @@ const SortPost = () => {
 
     const propsList = [
         {
-            dataOptionValue: 'popular',
-            content: '인기',
+            dataOptionValue: 'old',
+            content: '오래된순',
         },
-        { dataOptionValue: 'time', content: '최신' },
+        { dataOptionValue: 'latest', content: '최신순' },
     ];
 
     return (
