@@ -66,7 +66,6 @@ describe("서비스 테스트", () => {
           category: "study",
           title: "Test study Title" + ":::" + i,
           content: "Test study Content" + ":::" + i,
-          user_id : i
         });
         await Board.create({
           category: "info",

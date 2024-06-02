@@ -1,0 +1,12 @@
+.aside {
+    margin-left: 115px;
+}
+.header {
+    min-width: 1450px;
+}
+.editor{
+    width: 1450px;
+}
+.editor > .col-span-10{
+    width: 1070px;
+}

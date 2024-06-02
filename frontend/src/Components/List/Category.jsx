@@ -13,6 +13,7 @@ function Category() {
         setActiveBtn(i);
         dispatch(selectCategory(category.value));
         // dispatch(getPostData(category.value));
+        window.scrollTo(0, 0);
     };
 
     const categories = [

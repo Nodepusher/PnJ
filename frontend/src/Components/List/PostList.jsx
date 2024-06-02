@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostData } from '../../store/postListReducer';
 
-const PostList = ({ StProps, postData, category }) => {
+const PostList = ({ StProps, postData, category, dropdownState }) => {
     const nav = useNavigate();
     const dispatch = useDispatch();
     const moveToDetail = () => {
@@ -21,16 +21,19 @@ const PostList = ({ StProps, postData, category }) => {
     };
 
     const [page, setPage] = useState(2);
-    const posts = useSelector((state) => state.postList.filteredPosts);
+    const posts = useSelector((state) => state.postList.postsData);
     const hasMore = useSelector((state) => state.postList.hasMore);
 
     useEffect(() =>{
         setPage(2);
     },[category]);
+    
     const fetchData = () => {
-        dispatch(getPostData(category, page));
+        dispatch(getPostData(category, page, dropdownState));
         setPage(page + 1)
     }
+
+
     return (
         <InfiniteScroll
             dataLength={[posts.length]}

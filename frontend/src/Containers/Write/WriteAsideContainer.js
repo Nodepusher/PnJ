@@ -88,7 +88,7 @@ const WriteAsideContainer = ({ setModalOn }) => {
     )
 
     return (
-        <section className="col-span-5 col-start-11 ml-[15px]">
+        <section className="aside col-span-5 col-start-11 ml-[15px]">
             <section className="border_primary flex flex-col rounded-[12px] border">
                 <AsideMenuTitle text={'카테고리'} />
                 <AsideCategory

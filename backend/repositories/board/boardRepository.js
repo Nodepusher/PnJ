@@ -22,7 +22,7 @@ module.exports = {
             throw new Error(error.message)
         }
     },
-    findAllForInfiniteScroll: async (limit, page, category ) => {
+    findAllForInfiniteScroll: async (limit, page, category,sort ) => {
         try {
             console.log("category",category === "false")
 
@@ -35,7 +35,7 @@ module.exports = {
             let infiniteScroll = await Board.findAll({
                 limit: limit,
                 offset: offset,
-                order: [['created_at', 'DESC']],
+                order: [['created_at', `${sort}`]],
                 include: {
                     model: User,
                     attributes: ['id', 'name']
