@@ -21,17 +21,17 @@ const LOAD_POST_DATA_FAIL = "post/LOAD_POST_DATA_FAIL";
 
 // action 생성
 // 1. 서버와 통신
-export const savePostData = (postData, isEdit = false) => {
+export const savePostData = (postData, isEdit = false, files) => {
   return async (dispatch) => {
     dispatch(postingData())
     try {
-      console.log(postData)
-      const response = isEdit ? 
-        await axios.put(`/board/${postData.id}`, postData) : 
-        await axios.post("/board/write", postData);
-        dispatch(postingDataSuccess(response.data));
+      console.log(files)
+      // const response = isEdit ? 
+      //   await axios.put(`/board/${postData.id}`, postData) : 
+      //   await axios.post("/board/write", postData);
+      //   dispatch(postingDataSuccess(response.data));
     } catch (error) {
-        dispatch(postingDataFailure(error.message))
+        // dispatch(postingDataFailure(error.message))
     }
   };
 };
@@ -86,11 +86,11 @@ export const loadPostDataFail = (error) => ({
 const initialState = {
   userId: "",
   inputData: {
-    title: "",
-    content: "",
+    title: "타이틀",
+    content: "본문",
     category: "",
     // image : '',
-    file: "",
+    tag:[]
   },
   loading: false,
   error: null,

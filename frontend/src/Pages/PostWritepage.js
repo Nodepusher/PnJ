@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { savePostData, fetchPostData, updatePostData } from '../store/postWriteReducer'
 import WriteHeaderContainer from '../Containers/Write/WriteHeaderContainer';
@@ -7,6 +7,7 @@ import styles from '../style/writePage.css'
 const PostWritepage = ({match}) => { // match : parameter 값을 가져옴
     const editorRef = useRef(null);
     const dispatch = useDispatch();
+    const [selectedFiles, setSelectedFiles] = useState([])
     const { inputData, loading } = useSelector(state => state.write);
 
     try {
@@ -17,17 +18,15 @@ const PostWritepage = ({match}) => { // match : parameter 값을 가져옴
         
     }
     useEffect(() => {
-        if(isEdit){ // 수정 게시물
+        if(!isEdit){ // 수정 게시물
             dispatch(fetchPostData(postId))
         } else {
             dispatch(updatePostData({
                 id: '',
-                title: '',
-                content: '',
+                title: '타이틀',
+                content: '본문',
                 category: '',
-                // tags: [],
-                // image: '',
-                file: null,
+                tags: [],
                 isEdit : isEdit
             }))
         }
@@ -51,13 +50,13 @@ const PostWritepage = ({match}) => { // match : parameter 값을 가져옴
             htmlContent: htmlContent
         };
 
-        dispatch(savePostData(postData, isEdit));
+        dispatch(savePostData(postData, isEdit, selectedFiles));
     };
 
     return (
         <>
             <WriteHeaderContainer handleSubmit={handleSubmit} />
-            <WriteSectionContainer editorRef={editorRef}/>
+            <WriteSectionContainer editorRef={editorRef} selectedFiles={selectedFiles} setSelectedFiles={setSelectedFiles}/>
         </>
     );
 };
