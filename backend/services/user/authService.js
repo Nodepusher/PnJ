@@ -25,7 +25,7 @@ module.exports = {
             })
             .then((res) => console.log(res))
     },
-    // 폰 인증
+    // 폰 인증코드 확인
     verifyPhone: async (verifyCode) => {
         try {
             if (verifyCode === '000111') {
@@ -94,4 +94,5 @@ module.exports = {
             return { success: false, message: error.message }
         }
     },
+    // 인증메일 확인
 }

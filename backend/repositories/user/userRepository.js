@@ -12,7 +12,7 @@ module.exports = {
         }
     },
     // 유저 생성
-    createUser: async (email, phone, password, name, status, profile) => {
+    createUser: async (email, phone, password, name) => {
         try {
             const result = User.create({
                 email: email,
@@ -20,7 +20,7 @@ module.exports = {
                 password: password,
                 name: name,
                 status: 'require_verify',
-                profile: profile || null,
+                profile: 'default_image',
             })
         } catch (error) {
             throw error
