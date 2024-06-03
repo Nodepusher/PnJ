@@ -5,10 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { updatePostData } from "../../store/postWriteReducer";
 const WriteEditorContainer = ({ editorRef }) => {
   const dispatch = useDispatch();
+  const { isEdit, inputData } = useSelector((state) => state.write);
 
   const [inputTitle, setInputTitle] = useState("");
   const [content, setContent] = useState("");
-  const { isEdit, postData } = useSelector((state) => state.write);
 
   const handleChange = (e) => {
     const text = e.target.value;
@@ -30,13 +30,13 @@ const WriteEditorContainer = ({ editorRef }) => {
     // };
     // axiosData();
     if (isEdit) {
-      setInputTitle(postData.title);
-      setContent(postData.content);
+      setInputTitle(inputData.title);
+      setContent(inputData.content);
     } else {
       setInputTitle("타이틀");
       setContent("텍스트");
     }
-  }, []);
+  }, [isEdit]);
   useEffect(() => {
     dispatch(
       updatePostData({

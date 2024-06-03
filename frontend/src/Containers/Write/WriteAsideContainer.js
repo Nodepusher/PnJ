@@ -7,8 +7,10 @@ import AsideRadioBtn from '../../Components/Write/AsideRadioBtn'
 import AsideInputTag from '../../Components/Write/AsideInputTag'
 import AsideCategory from '../../Components/Write/AsideCategory'
 
-const WriteAsideContainer = ({ setModalOn }) => {
+const WriteAsideContainer = ({ setModalOn, selectedFiles, setSelectedFiles }) => {
     const dispatch = useDispatch();
+    const { isEdit, inputData } = useSelector((state) => state.write);
+
     const [isOpen, setIsOpen] = useState(false)
     const [dropdownState, setDropdownState] = useState(null)
     const [tagList, setTagList] = useState([])
@@ -21,12 +23,7 @@ const WriteAsideContainer = ({ setModalOn }) => {
     const handleMenuClick = (selected) => {
         setDropdownState(selected)
     }
-    useEffect(()=> {
-        dispatch(updatePostData({
-            category  : dropdownState
-        }))
-    },[dropdownState, dispatch])
-
+  
     const handleChange = (e) => {
         const text = e.target.value
         if (text.length <= 20) {
@@ -48,7 +45,6 @@ const WriteAsideContainer = ({ setModalOn }) => {
                 setTagList([...tagList, inputTag.trim()])
                 setInputTag('')
             }
-            console.log(inputTag)
         },
         [inputTag, tagList]
     )
@@ -67,7 +63,7 @@ const WriteAsideContainer = ({ setModalOn }) => {
         }
     }
 
-    const [selectedFiles, setSelectedFiles] = useState([])
+    // const [selectedFiles, setSelectedFiles] = useState([])
 
     const selectFile = useCallback(
         (e) => {
@@ -82,6 +78,19 @@ const WriteAsideContainer = ({ setModalOn }) => {
         },
         []
     )
+    useEffect(()=> {
+        console.log(selectedFiles)
+
+    },[selectedFiles])
+    useEffect(() => {
+        if (isEdit) {
+            setTagList(inputData.tag);
+            setDropdownState(inputData.category);
+        } else {
+            setTagList([]);
+            setDropdownState(null);
+        }
+      }, [isEdit]);
 
     useEffect(
         (e) => {
@@ -95,6 +104,17 @@ const WriteAsideContainer = ({ setModalOn }) => {
         },
         [isOpen]
     )
+    
+    useEffect(()=> {
+        dispatch(updatePostData({
+            category  : dropdownState,
+        }))
+    },[dropdownState, dispatch])
+    useEffect(()=> {
+        dispatch(updatePostData({
+            tag : tagList,
+        }))
+    },[dispatch, tagList])
 
     return (
         <section className="aside col-span-5 col-start-11 ml-[15px]">
