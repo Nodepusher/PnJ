@@ -1,11 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import DropdownList from '../../Components/List/DropdownList'
+import { useDispatch, useSelector } from 'react-redux';
+import { savePostData, fetchPostData, updatePostData } from '../../store/postWriteReducer'
 import ToastMsg from '../../utils/ToastMsg'
 import AsideRadioBtn from '../../Components/Write/AsideRadioBtn'
 import AsideInputTag from '../../Components/Write/AsideInputTag'
 import AsideCategory from '../../Components/Write/AsideCategory'
 
 const WriteAsideContainer = ({ setModalOn }) => {
+    const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false)
     const [dropdownState, setDropdownState] = useState(null)
     const [tagList, setTagList] = useState([])
@@ -18,6 +21,11 @@ const WriteAsideContainer = ({ setModalOn }) => {
     const handleMenuClick = (selected) => {
         setDropdownState(selected)
     }
+    useEffect(()=> {
+        dispatch(updatePostData({
+            category  : dropdownState
+        }))
+    },[dropdownState, dispatch])
 
     const handleChange = (e) => {
         const text = e.target.value
