@@ -32,12 +32,12 @@ const PostWritepage = ({match}) => { // match : parameter 값을 가져옴
             }))
         }
     }, [dispatch, isEdit, postId])
-    const handleChange = (e) => {
-        const {name, value, files} = e.target
-        dispatch(updatePostData({
-            [name] : files ? files[0] : value
-        }))
-    }
+    // const handleChange = (e) => {
+    //     const {name, value, files} = e.target
+    //     dispatch(updatePostData({
+    //         [name] : files ? files[0] : value
+    //     }))
+    // }
     const handleSubmit = () => {
         let markdownContent = editorRef.current?.getInstance().getMarkdown();
         let htmlContent = editorRef.current?.getInstance().getHTML();
@@ -57,7 +57,7 @@ const PostWritepage = ({match}) => { // match : parameter 값을 가져옴
     return (
         <>
             <WriteHeaderContainer handleSubmit={handleSubmit} />
-            <WriteSectionContainer editorRef={editorRef} handleChange={handleChange}/>
+            <WriteSectionContainer editorRef={editorRef}/>
         </>
     );
 };
