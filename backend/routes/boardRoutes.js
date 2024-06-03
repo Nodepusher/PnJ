@@ -23,4 +23,7 @@ router.get('/:category?', boardController.getAllForInfiniteScroll);
 router.post('/uploadImg', upload.single('image'), boardController.saveUploadImg);
 // router.post('/createBoard', upload.single('file'), boardController.createBoard);
 
+
+
+
 module.exports = router;
