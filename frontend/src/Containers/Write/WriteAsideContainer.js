@@ -1,11 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import DropdownList from '../../Components/List/DropdownList'
+import { useDispatch, useSelector } from 'react-redux';
+import { updatePostData } from '../../store/postWriteReducer'
 import ToastMsg from '../../utils/ToastMsg'
 import AsideRadioBtn from '../../Components/Write/AsideRadioBtn'
 import AsideInputTag from '../../Components/Write/AsideInputTag'
 import AsideCategory from '../../Components/Write/AsideCategory'
 
 const WriteAsideContainer = ({ setModalOn }) => {
+    const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false)
     const [dropdownState, setDropdownState] = useState(null)
     const [tagList, setTagList] = useState([])
@@ -18,6 +21,11 @@ const WriteAsideContainer = ({ setModalOn }) => {
     const handleMenuClick = (selected) => {
         setDropdownState(selected)
     }
+    useEffect(()=> {
+        dispatch(updatePostData({
+            category  : dropdownState
+        }))
+    },[dropdownState, dispatch])
 
     const handleChange = (e) => {
         const text = e.target.value
@@ -40,8 +48,9 @@ const WriteAsideContainer = ({ setModalOn }) => {
                 setTagList([...tagList, inputTag.trim()])
                 setInputTag('')
             }
+            console.log(inputTag)
         },
-        [inputTag]
+        [inputTag, tagList]
     )
 
     const onClickDelete = (index, type) => {
@@ -71,7 +80,7 @@ const WriteAsideContainer = ({ setModalOn }) => {
             ])
             e.target.value = ''
         },
-        [selectedFiles]
+        []
     )
 
     useEffect(
@@ -202,7 +211,7 @@ const AsideMenuTitle = ({
     )
 }
 
-const AsideTagList = ({ tagList, onClickDelete }) => {
+const AsideTagList = React.memo(({ tagList, onClickDelete }) => {
     return (
         <ul className="mb-[12px] flex flex-wrap px-[16px]">
             {tagList.map((tag, i) => (
@@ -232,7 +241,7 @@ const AsideTagList = ({ tagList, onClickDelete }) => {
             ))}
         </ul>
     )
-}
+})
 
 const ExistAttachFile = ({ selectedFiles, onClickDelete }) => {
     return (

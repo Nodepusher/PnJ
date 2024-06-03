@@ -17,7 +17,7 @@ const WriteHeaderContainer = ({ handleSubmit }) => {
     };
 
     return (
-        <div className="sticky top-0 z-10">
+        <div className="sticky top-0 z-10 z-100" >
             <WriteNavigation StImg={StImg} />
             <WriterPostHeader handleSubmit={handleSubmit} />
             <div className="surface_accent translate-x-0 animate-slideLeftToRight" style={StTemp}></div>
