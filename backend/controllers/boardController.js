@@ -68,5 +68,9 @@ module.exports = {
             console.error('Error processing image:', error);
             res.status(500).json({ message: 'Error processing image' });
         }
+    },
+    createPost : async (req, res, next) => {
+        console.log(req.files)
+        console.log(req.body)
     }
 }

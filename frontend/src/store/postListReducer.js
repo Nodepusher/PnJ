@@ -56,7 +56,7 @@ const initialState = {
 
 // 리듀서
 const postListReducer = (state = initialState, action) => {
-  switch (action.type) {
+  switch (action.type) { 
     case SELECT_CATEGORY:
       const filteredPosts =
         action.payload === undefined
