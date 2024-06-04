@@ -24,4 +24,4 @@ const PostListPage = () => {
     );
 };
 
-export default PostListPage;
+export default React.memo(PostListPage);

@@ -42,6 +42,7 @@ const PostList = ({ StProps, postData, category, dropdownState }) => {
         >
 
             <ul className={`col-span-full flex flex-col ${StUlMargin}`}>
+                {console.log(posts)}
                 {posts.map((post, i) => (
                     <li
                         key={post.id}
@@ -63,19 +64,9 @@ const PostList = ({ StProps, postData, category, dropdownState }) => {
                                             alt="멜빵바지를 입은 볼빵빵 아기토끼 키링뜨기 (글도안+부분영상+사진+첨부파일 추가)"
                                             sizes="(max-width: 500px) 72px, 90px"
                                             srcSet="
-                                                    /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fcreator-posts%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FcreatorPostImage%2F5d6d6e7a-cb08-483d-b1ef-b5438e71f987.jpeg%3Fauto%3Dformat%252Ccompress%26fit%3Dmax%26lossless%3Dtrue%26w%3D1240&amp;w=16&amp;q=75     16w,
-                                                    /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fcreator-posts%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FcreatorPostImage%2F5d6d6e7a-cb08-483d-b1ef-b5438e71f987.jpeg%3Fauto%3Dformat%252Ccompress%26fit%3Dmax%26lossless%3Dtrue%26w%3D1240&amp;w=32&amp;q=75     32w,
-                                                    /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fcreator-posts%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FcreatorPostImage%2F5d6d6e7a-cb08-483d-b1ef-b5438e71f987.jpeg%3Fauto%3Dformat%252Ccompress%26fit%3Dmax%26lossless%3Dtrue%26w%3D1240&amp;w=48&amp;q=75     48w,
-                                                    /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fcreator-posts%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FcreatorPostImage%2F5d6d6e7a-cb08-483d-b1ef-b5438e71f987.jpeg%3Fauto%3Dformat%252Ccompress%26fit%3Dmax%26lossless%3Dtrue%26w%3D1240&amp;w=64&amp;q=75     64w,
-                                                    /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fcreator-posts%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FcreatorPostImage%2F5d6d6e7a-cb08-483d-b1ef-b5438e71f987.jpeg%3Fauto%3Dformat%252Ccompress%26fit%3Dmax%26lossless%3Dtrue%26w%3D1240&amp;w=96&amp;q=75     96w,
-                                                    /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fcreator-posts%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FcreatorPostImage%2F5d6d6e7a-cb08-483d-b1ef-b5438e71f987.jpeg%3Fauto%3Dformat%252Ccompress%26fit%3Dmax%26lossless%3Dtrue%26w%3D1240&amp;w=128&amp;q=75   128w,
-                                                    /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fcreator-posts%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FcreatorPostImage%2F5d6d6e7a-cb08-483d-b1ef-b5438e71f987.jpeg%3Fauto%3Dformat%252Ccompress%26fit%3Dmax%26lossless%3Dtrue%26w%3D1240&amp;w=256&amp;q=75   256w,
-                                                    /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fcreator-posts%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FcreatorPostImage%2F5d6d6e7a-cb08-483d-b1ef-b5438e71f987.jpeg%3Fauto%3Dformat%252Ccompress%26fit%3Dmax%26lossless%3Dtrue%26w%3D1240&amp;w=384&amp;q=75   384w,
-                                                    /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fcreator-posts%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FcreatorPostImage%2F5d6d6e7a-cb08-483d-b1ef-b5438e71f987.jpeg%3Fauto%3Dformat%252Ccompress%26fit%3Dmax%26lossless%3Dtrue%26w%3D1240&amp;w=500&amp;q=75   500w,
-                                                    /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fcreator-posts%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FcreatorPostImage%2F5d6d6e7a-cb08-483d-b1ef-b5438e71f987.jpeg%3Fauto%3Dformat%252Ccompress%26fit%3Dmax%26lossless%3Dtrue%26w%3D1240&amp;w=768&amp;q=75   768w,
-                                                    /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fcreator-posts%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FcreatorPostImage%2F5d6d6e7a-cb08-483d-b1ef-b5438e71f987.jpeg%3Fauto%3Dformat%252Ccompress%26fit%3Dmax%26lossless%3Dtrue%26w%3D1240&amp;w=1024&amp;q=75 1024w
+                                                   
                                                 "
-                                            src="/_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fcreator-posts%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FcreatorPostImage%2F5d6d6e7a-cb08-483d-b1ef-b5438e71f987.jpeg%3Fauto%3Dformat%252Ccompress%26fit%3Dmax%26lossless%3Dtrue%26w%3D1240&amp;w=1024&amp;q=75"
+                                            src=""
                                             decoding="async"
                                             data-nimg="fill"
                                             className="rounded-[8px]"

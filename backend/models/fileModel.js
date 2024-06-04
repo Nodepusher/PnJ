@@ -12,7 +12,7 @@ const File = sequelize.define('File', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    fileName: {
+    fileName: { // Original file name
         type: DataTypes.STRING,
         allowNull: false,
     },

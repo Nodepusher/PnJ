@@ -31,16 +31,20 @@ export const savePostData = (postData, isEdit = false, files) => {
       //   formData.append('files', e)
       //   console.log(e)
       // });
+      const userId = 1;
+      postData.UserId = userId;
       files.map(e => formData.append('files', e))
+      // formData.append('postData', postData)
       formData.append('postData', JSON.stringify(postData))
+      // formData.append('userId', userId) 
       console.log("postData ::::: ",postData)
       console.log("formData ::::: ", formData)
       const response = isEdit ? 
         await axios.put(`/board/${postData.id}`, postData) : 
         await axios.post("/board/createPost", formData, {headers : 'multipart/form-data'});
-        dispatch(postingDataSuccess(response.data));
+      dispatch(postingDataSuccess(response.data));
     } catch (error) {
-        dispatch(postingDataFailure(error.message))
+      dispatch(postingDataFailure(error.message))
     }
   };
 };

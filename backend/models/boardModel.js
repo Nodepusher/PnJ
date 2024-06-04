@@ -16,6 +16,10 @@ const Board = sequelize.define('Board', {
         type: DataTypes.TEXT,
         allowNull: false,
     },
+    tag: {
+        type: DataTypes.JSON,
+        allowNull: true,
+    }
 });
 
 module.exports = Board;

@@ -21,9 +21,11 @@ module.exports = {
         console.log(req.query);
         var category = req.query.category;
         var sort = req.query.dropdownState === '최신순' ? 'DESC' : 'ASC';
-        if(category === ''){
+        console.log(":::cate",!category)
+        if(!category){
             category = "all";
         }
+        console.log(category)
         const limit = parseInt(req.query.limit);
         const page = parseInt(req.query.page) || 1;
 
@@ -32,10 +34,10 @@ module.exports = {
             if (!board) {
                 return res.status(404).json({ error: 'No boards found' });
             }
-            console.log(board.length);
+            console.log(":::::: ",board.length);
             res.status(200).json(board);
         } catch (error) {
-            console.error(error);
+            console.error("1234 :::::::",error);
             res.status(500).json({ error: error.message });
         }
     },
@@ -72,5 +74,14 @@ module.exports = {
     createPost : async (req, res, next) => {
         console.log(req.files)
         console.log(req.body)
+        const fileJson = req.files.files
+        const postData = JSON.parse(req.body.postData)
+        const result = await boardService.createPost(postData, fileJson)
+        if(result.success){
+            res.status(200).json(result)
+        }else{
+            res.status(400).json(result)
+        }
+
     }
 }
