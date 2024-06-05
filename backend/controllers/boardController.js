@@ -18,16 +18,16 @@ module.exports = {
         }
     },
     getAllForInfiniteScroll: async (req, res, next) => {
-        console.log(req.query);
-        var category = req.query.category;
-        var sort = req.query.dropdownState === '최신순' ? 'DESC' : 'ASC';
+        console.log(req.body.params);
+        var category = req.body.category;
+        var sort = req.body.dropdownState === '최신순' ? 'DESC' : 'ASC';
         console.log(":::cate",!category)
         if(!category){
             category = "all";
         }
         console.log(category)
-        const limit = parseInt(req.query.limit);
-        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.body.limit);
+        const page = parseInt(req.body.page) || 1;
 
         try {
             const board = await boardService.getAllForInfiniteScroll(limit, page, category, sort);
