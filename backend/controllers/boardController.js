@@ -83,5 +83,9 @@ module.exports = {
             res.status(400).json(result)
         }
 
+    },
+    updatePostById : async (req, res, next) => {
+        console.log(req.body)
+        res.send("test")
     }
 }

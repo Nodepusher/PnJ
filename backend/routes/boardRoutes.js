@@ -31,9 +31,10 @@ const storageFile = multer.diskStorage({
 const uploadImage = multer({ storage: storageImg });
 const uploadFile = multer({storage: storageFile});
 router.post('/count', boardController.getAllCount);
-router.post('/:category?', boardController.getAllForInfiniteScroll);
+router.post('/list/:category?', boardController.getAllForInfiniteScroll);
 router.post('/uploadImg', uploadImage.single('image'), boardController.saveUploadImg);
 router.post('/createPost', uploadFile.fields([{name : 'files'}]), boardController.createPost);
+router.post('/update', boardController.updatePostById);
 
 
 

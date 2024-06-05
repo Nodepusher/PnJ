@@ -26,11 +26,6 @@ export const savePostData = (postData, isEdit = false, files) => {
     dispatch(postingData())
     try {
       const formData = new FormData();
-      // formData.append('files', files)
-      // files.array.forEach(e => {
-      //   formData.append('files', e)
-      //   console.log(e)
-      // });
       const userId = 1;
       postData.UserId = userId;
       files.map(e => formData.append('files', e))
@@ -50,9 +45,13 @@ export const savePostData = (postData, isEdit = false, files) => {
 };
 export const fetchPostData = (postId) => {
   return async (dispatch) => {
+    console.log("postId :: ",postId);
       dispatch(loadPostData());
+      let data = {id : postId}
+      const response = await axios.post(`http://localhost:4000/board/update`,data);
       try {
-          const response = await axios.get(`/board/${postId}`);
+          // const response = await axios.get(`/board/update/${postId}`);
+
           dispatch(loadPostDataSuccess(response.data));
       } catch (error) {
           dispatch(loadPostDataFail(error.message));

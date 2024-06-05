@@ -1,24 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { savePostData, fetchPostData, updatePostData } from '../store/postWriteReducer'
 import WriteHeaderContainer from '../Containers/Write/WriteHeaderContainer';
 import WriteSectionContainer from '../Containers/Write/WriteSectionContainer';
 import styles from '../style/writePage.css'
 const PostWritepage = ({match}) => { // match : parameter 값을 가져옴
+    let [query, setQuery] = useSearchParams();
     const editorRef = useRef(null);
     const dispatch = useDispatch();
     const [selectedFiles, setSelectedFiles] = useState([])
     const { inputData, loading } = useSelector(state => state.write);
+    console.log(query.get('postId'))
+    var postId = query.get('postId')
+    // try {
+    //     var postId = query.get('postId')
+        
+    // } catch (error) {
+    //     isEdit = !!postId // Id가 null 이거나 undefine이면 !!undefine : !true : false
+        
+    // }
+    var isEdit = postId ? true : false 
 
-    try {
-        var postId = match.params.id 
-        
-    } catch (error) {
-        var isEdit = !!postId // Id가 null 이거나 undefine이면 !!undefine : !true : false
-        
-    }
+    console.log()
     useEffect(() => {
-        if(!isEdit){ // 수정 게시물
+        if(isEdit){ // 수정 게시물
             dispatch(fetchPostData(postId))
         } else {
             dispatch(updatePostData({
