@@ -46,6 +46,9 @@ module.exports = {
     
 
     return await boardRepository.InsertPost(postData, fileJson);
+  },
+  findBoardById : async (boardId) => {
+    return await boardRepository.findByBoradId(boardId)
   }
 };
 

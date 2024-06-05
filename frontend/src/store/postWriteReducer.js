@@ -43,13 +43,12 @@ export const savePostData = (postData, isEdit = false, files) => {
     }
   };
 };
-export const fetchPostData = (postId) => {
+export const fetchPostData = (boardId) => {
   return async (dispatch) => {
-    console.log("postId :: ",postId);
       dispatch(loadPostData());
-      let data = {id : postId}
-      const response = await axios.post(`http://localhost:4000/board/update`,data);
+      let data = {boardId : boardId}
       try {
+        const response = await axios.post(`http://localhost:4000/board/writeData`,data);
           // const response = await axios.get(`/board/update/${postId}`);
 
           dispatch(loadPostDataSuccess(response.data));

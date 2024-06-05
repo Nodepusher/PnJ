@@ -84,8 +84,8 @@ module.exports = {
         }
 
     },
-    updatePostById : async (req, res, next) => {
+    getBoradById : async (req, res, next) => {
         console.log(req.body)
-        res.send("test")
+        boardService.findBoardById(req.body.boardId)
     }
 }

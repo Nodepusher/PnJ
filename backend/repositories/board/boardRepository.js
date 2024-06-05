@@ -82,5 +82,8 @@ module.exports = {
             console.log('[boardRepository]' + '게시물 작성 오류 :::: ',error)
             return {success : false , message : '게시물 작성 실패', error}
         }
+    },
+    findBoardById : async(boardId) => {
+        // return await Board.findAll()
     }
 }
