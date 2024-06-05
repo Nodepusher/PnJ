@@ -25,13 +25,26 @@ export const savePostData = (postData, isEdit = false, files) => {
   return async (dispatch) => {
     dispatch(postingData())
     try {
-      console.log(files)
-      // const response = isEdit ? 
-      //   await axios.put(`/board/${postData.id}`, postData) : 
-      //   await axios.post("/board/write", postData);
-      //   dispatch(postingDataSuccess(response.data));
+      const formData = new FormData();
+      // formData.append('files', files)
+      // files.array.forEach(e => {
+      //   formData.append('files', e)
+      //   console.log(e)
+      // });
+      const userId = 1;
+      postData.UserId = userId;
+      files.map(e => formData.append('files', e))
+      // formData.append('postData', postData)
+      formData.append('postData', JSON.stringify(postData))
+      // formData.append('userId', userId) 
+      console.log("postData ::::: ",postData)
+      console.log("formData ::::: ", formData)
+      const response = isEdit ? 
+        await axios.put(`/board/${postData.id}`, postData) : 
+        await axios.post("/board/createPost", formData, {headers : 'multipart/form-data'});
+      dispatch(postingDataSuccess(response.data));
     } catch (error) {
-        // dispatch(postingDataFailure(error.message))
+      dispatch(postingDataFailure(error.message))
     }
   };
 };

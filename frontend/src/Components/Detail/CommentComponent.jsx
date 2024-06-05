@@ -47,11 +47,9 @@ const CommentComponent = ({ comments }) => {
                                         alt="선영"
                                         sizes="(max-width: 240px) 100vw, 240px"
                                         srcset="
-                                    /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fprofiles%2F28c0845c-9406-4167-b341-f7800d702f0c%2FprofileImage%2Faa7691d4-1677-4caa-a74c-758475197fba.jpg%3Fauto%3Dformat%252Ccompress%26fm%3Djpg%26h%3D300%26lossless%3Dtrue%26w%3D300&amp;w=500&amp;q=75   500w,
-                                    /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fprofiles%2F28c0845c-9406-4167-b341-f7800d702f0c%2FprofileImage%2Faa7691d4-1677-4caa-a74c-758475197fba.jpg%3Fauto%3Dformat%252Ccompress%26fm%3Djpg%26h%3D300%26lossless%3Dtrue%26w%3D300&amp;w=768&amp;q=75   768w,
-                                    /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fprofiles%2F28c0845c-9406-4167-b341-f7800d702f0c%2FprofileImage%2Faa7691d4-1677-4caa-a74c-758475197fba.jpg%3Fauto%3Dformat%252Ccompress%26fm%3Djpg%26h%3D300%26lossless%3Dtrue%26w%3D300&amp;w=1024&amp;q=75 1024w
+                                 
                                 "
-                                        src="/_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fprofiles%2F28c0845c-9406-4167-b341-f7800d702f0c%2FprofileImage%2Faa7691d4-1677-4caa-a74c-758475197fba.jpg%3Fauto%3Dformat%252Ccompress%26fm%3Djpg%26h%3D300%26lossless%3Dtrue%26w%3D300&amp;w=1024&amp;q=75"
+                                        src=""
                                         decoding="async"
                                         data-nimg="fill"
                                         className="rounded-full"

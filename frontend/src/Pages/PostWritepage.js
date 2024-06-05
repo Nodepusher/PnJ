@@ -47,7 +47,6 @@ const PostWritepage = ({match}) => { // match : parameter 값을 가져옴
         const postData = {
             ...inputData,
             content: markdownContent,
-            htmlContent: htmlContent
         };
 
         dispatch(savePostData(postData, isEdit, selectedFiles));
@@ -61,4 +60,4 @@ const PostWritepage = ({match}) => { // match : parameter 값을 가져옴
     );
 };
 
-export default PostWritepage;
+export default React.memo(PostWritepage);

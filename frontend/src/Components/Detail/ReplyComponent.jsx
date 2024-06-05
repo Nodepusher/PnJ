@@ -36,11 +36,9 @@ const ReplyComponent = ({ showReply, hideReply, StBtn, StImg, replies }) => {
                                                 alt="뉴크로셰"
                                                 sizes="(max-width: 240px) 100vw, 240px"
                                                 srcset="
-                                                /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fprofiles%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FprofileImage%2F3b1c4b3e-b460-4670-ad69-c2a071216470.png%3Fauto%3Dformat%252Ccompress%26fm%3Djpg%26h%3D300%26lossless%3Dtrue%26w%3D300&amp;w=500&amp;q=75   500w,
-                                                /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fprofiles%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FprofileImage%2F3b1c4b3e-b460-4670-ad69-c2a071216470.png%3Fauto%3Dformat%252Ccompress%26fm%3Djpg%26h%3D300%26lossless%3Dtrue%26w%3D300&amp;w=768&amp;q=75   768w,
-                                                /_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fprofiles%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FprofileImage%2F3b1c4b3e-b460-4670-ad69-c2a071216470.png%3Fauto%3Dformat%252Ccompress%26fm%3Djpg%26h%3D300%26lossless%3Dtrue%26w%3D300&amp;w=1024&amp;q=75 1024w
+                                                
                                             "
-                                                src="/_next/image?url=https%3A%2F%2Fsteadio.imgix.net%2Fprofiles%2Ff7261458-bcc0-4313-88a9-c1a86625ecee%2FprofileImage%2F3b1c4b3e-b460-4670-ad69-c2a071216470.png%3Fauto%3Dformat%252Ccompress%26fm%3Djpg%26h%3D300%26lossless%3Dtrue%26w%3D300&amp;w=1024&amp;q=75"
+                                                src=""
                                                 decoding="async"
                                                 data-nimg="fill"
                                                 className="rounded-full"

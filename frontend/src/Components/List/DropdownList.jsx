@@ -25,4 +25,4 @@ const DropdownList = ({ onClick, propsClassName, props }) => {
     );
 };
 
-export default DropdownList;
+export default React.memo(DropdownList);

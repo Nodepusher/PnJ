@@ -316,4 +316,4 @@ const ExistAttachFile = ({ selectedFiles, onClickDelete }) => {
     )
 }
 
-export default WriteAsideContainer
+export default React.memo(WriteAsideContainer)

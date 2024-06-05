@@ -19,11 +19,15 @@ const path = require('path');
 
 const uploadsDir = path.join(__dirname, 'uploads');
 const tempUploadsDir = path.join(__dirname, 'uploads', 'temp');
+const fileUploadsDir = path.join(__dirname, 'uploads', 'file');
 if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir);
 }
 if (!fs.existsSync(tempUploadsDir)) {
     fs.mkdirSync(tempUploadsDir);
+}
+if (!fs.existsSync(fileUploadsDir)) {
+    fs.mkdirSync(fileUploadsDir);
 }
 
 app.use(express.json())
@@ -38,6 +42,7 @@ app.use('/board', boardRoutes)
 app.use('/user', userRoutes)
 app.use('/uploads', express.static(uploadsDir));
 app.use('/uploads/temp', express.static(tempUploadsDir));
+app.use('/uploads/file', express.static(fileUploadsDir));
 
 const startServer = async () => {
     try {
