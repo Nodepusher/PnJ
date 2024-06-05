@@ -15,14 +15,14 @@ export const getPostData = (category, page = 1, dropdownState = "최신순") => 
   console.log("category in getPostData:", category);
   return async (dispatch) => {
     try {
-      const response = await axios.get("http://localhost:4000/board", {
-        params: {
+      const response = await axios.post("http://localhost:4000/board", {
+        
           dropdownState,
           category,
           page,
           limit: 8,
         },
-      });
+      );
       dispatch({
         type: page === 1 ? GET_POST_DATA : APPEND_POST_DATA,
         payload: response.data,
@@ -56,7 +56,7 @@ const initialState = {
 
 // 리듀서
 const postListReducer = (state = initialState, action) => {
-  switch (action.type) {
+  switch (action.type) { 
     case SELECT_CATEGORY:
       const filteredPosts =
         action.payload === undefined

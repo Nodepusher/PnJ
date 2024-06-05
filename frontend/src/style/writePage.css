@@ -10,3 +10,6 @@
 .editor > .col-span-10{
     width: 1070px;
 }
+.z-100 {
+    z-index: 100;
+}

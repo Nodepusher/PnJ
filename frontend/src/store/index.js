@@ -5,7 +5,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authReducer';
 import postListReducer from './postListReducer';
 import postDetailReducer from './postDetailReducer';
-
+import postWriteReducer from './postWriteReducer';
 // configureStore 함수를 사용하여 Redux 스토어를 생성
 const store = configureStore({
     // Redux DevTools를 자동으로 설정
@@ -17,6 +17,7 @@ const store = configureStore({
         auth: authReducer,
         postList: postListReducer,
         detail: postDetailReducer,
+        write : postWriteReducer
     },
 });
 

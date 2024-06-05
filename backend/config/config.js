@@ -5,7 +5,7 @@
 
 const dbConfig = {
     port: 22300,
-    host: 'slow-developer.h.mooo.com',
+    host: '124.59.38.48',
     username: 'PnJuser',
     password: '2024homeserver',
     database: 'PnJdb',

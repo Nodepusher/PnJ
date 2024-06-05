@@ -6,21 +6,36 @@ const { v4: uuidv4 } = require('uuid');
 
 const router = express.Router();
 
-const storage = multer.diskStorage({
+const storageImg = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/temp/');
     },
     filename: function (req, file, cb) {
-        const uniqueName = uuidv4() + path.extname(file.originalname);
-        cb(null, uniqueName);
+        let uniqueName = uuidv4() + path.extname(file.originalname);
+        cb(null, file.originalname);
     },
 });
+const storageFile = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/file/');
+    },
+    filename: function (req, file, cb) {
+        let uniqueName = uuidv4() + path.extname(file.originalname);
+        cb(null, uniqueName);
+    },
+})
 
-const upload = multer({ storage: storage });
+// 이미지는 원래 filename으로 저장
+// file Table에 저장할때 uuid 
 
+const uploadImage = multer({ storage: storageImg });
+const uploadFile = multer({storage: storageFile});
 router.post('/count', boardController.getAllCount);
-router.get('/:category?', boardController.getAllForInfiniteScroll);
-router.post('/uploadImg', upload.single('image'), boardController.saveUploadImg);
-// router.post('/createBoard', upload.single('file'), boardController.createBoard);
+router.post('/:category?', boardController.getAllForInfiniteScroll);
+router.post('/uploadImg', uploadImage.single('image'), boardController.saveUploadImg);
+router.post('/createPost', uploadFile.fields([{name : 'files'}]), boardController.createPost);
+
+
+
 
 module.exports = router;

@@ -1,11 +1,16 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import DropdownList from '../../Components/List/DropdownList'
+import { useDispatch, useSelector } from 'react-redux';
+import { updatePostData } from '../../store/postWriteReducer'
 import ToastMsg from '../../utils/ToastMsg'
 import AsideRadioBtn from '../../Components/Write/AsideRadioBtn'
 import AsideInputTag from '../../Components/Write/AsideInputTag'
 import AsideCategory from '../../Components/Write/AsideCategory'
 
-const WriteAsideContainer = ({ setModalOn }) => {
+const WriteAsideContainer = ({ setModalOn, selectedFiles, setSelectedFiles }) => {
+    const dispatch = useDispatch();
+    const { isEdit, inputData } = useSelector((state) => state.write);
+
     const [isOpen, setIsOpen] = useState(false)
     const [dropdownState, setDropdownState] = useState(null)
     const [tagList, setTagList] = useState([])
@@ -18,7 +23,7 @@ const WriteAsideContainer = ({ setModalOn }) => {
     const handleMenuClick = (selected) => {
         setDropdownState(selected)
     }
-
+  
     const handleChange = (e) => {
         const text = e.target.value
         if (text.length <= 20) {
@@ -41,7 +46,7 @@ const WriteAsideContainer = ({ setModalOn }) => {
                 setInputTag('')
             }
         },
-        [inputTag]
+        [inputTag, tagList]
     )
 
     const onClickDelete = (index, type) => {
@@ -58,7 +63,7 @@ const WriteAsideContainer = ({ setModalOn }) => {
         }
     }
 
-    const [selectedFiles, setSelectedFiles] = useState([])
+    // const [selectedFiles, setSelectedFiles] = useState([])
 
     const selectFile = useCallback(
         (e) => {
@@ -71,8 +76,21 @@ const WriteAsideContainer = ({ setModalOn }) => {
             ])
             e.target.value = ''
         },
-        [selectedFiles]
+        []
     )
+    useEffect(()=> {
+        console.log(selectedFiles)
+
+    },[selectedFiles])
+    useEffect(() => {
+        if (isEdit) {
+            setTagList(inputData.tag);
+            setDropdownState(inputData.category);
+        } else {
+            setTagList([]);
+            setDropdownState(null);
+        }
+      }, [isEdit]);
 
     useEffect(
         (e) => {
@@ -86,6 +104,17 @@ const WriteAsideContainer = ({ setModalOn }) => {
         },
         [isOpen]
     )
+    
+    useEffect(()=> {
+        dispatch(updatePostData({
+            category  : dropdownState,
+        }))
+    },[dropdownState, dispatch])
+    useEffect(()=> {
+        dispatch(updatePostData({
+            tag : tagList,
+        }))
+    },[dispatch, tagList])
 
     return (
         <section className="aside col-span-5 col-start-11 ml-[15px]">
@@ -202,7 +231,7 @@ const AsideMenuTitle = ({
     )
 }
 
-const AsideTagList = ({ tagList, onClickDelete }) => {
+const AsideTagList = React.memo(({ tagList, onClickDelete }) => {
     return (
         <ul className="mb-[12px] flex flex-wrap px-[16px]">
             {tagList.map((tag, i) => (
@@ -232,7 +261,7 @@ const AsideTagList = ({ tagList, onClickDelete }) => {
             ))}
         </ul>
     )
-}
+})
 
 const ExistAttachFile = ({ selectedFiles, onClickDelete }) => {
     return (
@@ -287,4 +316,4 @@ const ExistAttachFile = ({ selectedFiles, onClickDelete }) => {
     )
 }
 
-export default WriteAsideContainer
+export default React.memo(WriteAsideContainer)
