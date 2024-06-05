@@ -21,12 +21,12 @@ module.exports = {
     try {
       decoded = jwt.verify(token, secret);
       return {
-        ok: true,
+        success: true,
         email: decoded.email,
       };
     } catch (err) {
       return {
-        ok: false,
+        success: false,
         message: err.message,
       };
     }

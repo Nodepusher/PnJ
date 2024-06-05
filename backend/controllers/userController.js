@@ -1,6 +1,7 @@
 const userService = require("../services/user/userService");
-const jwt = require("./utils/jwtUtil");
-const redisClient = require("./utils/redis");
+const jwt = require("../utils/jwtUtil");
+const redisClient = require("../utils/redisClient");
+const crypto = require("crypto");
 
 module.exports = {
   login: async (req, res) => {
@@ -9,11 +10,13 @@ module.exports = {
       const login = await userService.login(email, password);
       if (login.success) {
         // access token과 refresh token을 발급합니다.
-        const accessToken = jwt.sign(login.email);
+        // const accessToken = jwt.sign(login.email);
+        const accessToken = jwt.sign(email);
         const refreshToken = jwt.refresh();
 
         // 발급한 refresh token을 redis에 key를 user의 id로 하여 저장합니다.
-        redisClient.set(login.email, refreshToken);
+        //redisClient.set(login.email, refreshToken);
+        redisClient.set(email, refreshToken);
 
         res.status(200).send({
           // client에게 토큰 모두를 반환합니다.
@@ -52,5 +55,4 @@ module.exports = {
       });
     }
   },
-  updatePassword: async (req, res) => {},
 };
