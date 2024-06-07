@@ -16,6 +16,10 @@ module.exports = {
       throw new Error(error.message);
     }
 
+  },
+  getPostById : async (id) => {
+    
+    return await boardRepository.findPostById(id);
   }
 };
 

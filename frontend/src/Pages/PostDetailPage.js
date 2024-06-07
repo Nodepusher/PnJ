@@ -10,13 +10,13 @@ const PostDetailPage = () => {
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
     const postId = searchParams.get("post")
-
-    const currentPostId = 2;
+    console.log("test")
+    // const currentPostId = 2;
     useEffect(() => {
         dispatch(getPostData(postId));
         // dispatch(getPostStatsData());
         // dispatch(setPageState(postId));
-    }, [dispatch, postId]);
+    }, [postId]);
 
     return (
         <>
@@ -27,4 +27,4 @@ const PostDetailPage = () => {
     );
 };
 
-export default PostDetailPage;
+export default React.memo(PostDetailPage);
