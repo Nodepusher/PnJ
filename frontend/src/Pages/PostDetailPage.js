@@ -10,13 +10,12 @@ const PostDetailPage = () => {
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
     const postId = searchParams.get("post")
-    console.log("test")
     // const currentPostId = 2;
     useEffect(() => {
         dispatch(getPostData(postId));
         // dispatch(getPostStatsData());
         // dispatch(setPageState(postId));
-    }, [postId]);
+    }, [postId, dispatch]);
 
     return (
         <>

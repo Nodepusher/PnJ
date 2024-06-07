@@ -11,13 +11,19 @@ export const getPostData = (postId) => {
     console.log(postId)
     return async (dispatch) => {
         try {
-            const response = await axios.get(`board/detail/${postId}`);
-            const { authorPosts, categoryPosts } = response.data;
+            const getPost = await axios.get(`board/detail/${postId}`); // 현재 게시판 정보와 작성한 user의 게시물
+            const latestPost = await axios.get(`board/latestPost/`, getPost.category)
+            
+            
+            const authorPosts = getPost.data;
+            const post = getPost.data;
+            const categoryPosts= latestPost.data;
             dispatch({
                 type: GET_POST_DATA,
                 payload: {
                     authorPosts,
                     categoryPosts,
+                    post
                 },
             });
         } catch (error) {
@@ -108,9 +114,11 @@ export const getPostId = (postId) => {
 // 초기 스테이트
 const initialState = {
     postId : "",
+
     postData: {
         authorPosts: [],
         categoryPosts: [],
+        post : {}
     },
     postStats: {
         likes: 0,

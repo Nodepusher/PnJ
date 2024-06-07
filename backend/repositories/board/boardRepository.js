@@ -2,6 +2,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("../../utils/db").sequelize;
 const Board = require("../../models/boardModel");
 const User = require("../../models/userModel");
+const File = require("../../models/fileModel");
 const db = require('../../models')
 
 module.exports = {
@@ -50,5 +51,36 @@ module.exports = {
     },
     createPost : async () => {
         
+    },
+
+
+
+    findPostById: async (id) => {
+        const t = sequelize.transaction()
+        try {
+            const postData = await Board.findOne({
+                where: { id: id },
+                include: [
+                    { model: User },
+                    { model: File }
+                ],
+            },{transaction :t});
+
+            const userId = postData.User.id
+            const allUserPost = await Board.findAll({
+                where:{ UserId : userId},
+                limit: 3
+            },{transaction: t})
+
+            await t.commit()
+            return {post : postData, userPost : allUserPost};
+            return postData;
+        } catch (error) {
+            // 오류 처리
+            console.error(error);
+            await t.rollback()
+            throw error;
+        }
     }
+    
 }
