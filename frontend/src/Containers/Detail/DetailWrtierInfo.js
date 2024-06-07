@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DetailWrtierInfo = () => {
+const DetailWrtierInfo = ({name}) => {
     const StImg = {
         position: 'absolute',
         height: '100%',
@@ -28,13 +28,13 @@ const DetailWrtierInfo = () => {
             </div>
             <div>
                 <div className="flex flex-col gap-[4px] px-[40px]">
-                    <button className="font_title_bold_lg text-center">뉴크로셰</button>
+                    <button className="font_title_bold_lg text-center">{name}</button>
                     <p className="content_quaternary font_label_regular_md break-all text-center md:w-[404px]">
                         코바늘을 사용 해 창작해낼 수 있는, 보다 새로운 것들
                     </p>
                 </div>
             </div>
-            <div className="flex flex-row items-center gap-[8px] whitespace-nowrap">
+            {/* <div className="flex flex-row items-center gap-[8px] whitespace-nowrap">
                 <div className="font_label_bold_lg relative mx-auto flex h-[32px]">
                     <button
                         aria-label="follow button"
@@ -59,7 +59,7 @@ const DetailWrtierInfo = () => {
                         </div>
                     </button>
                 </div>
-            </div>
+            </div> */}
         </section>
     );
 };

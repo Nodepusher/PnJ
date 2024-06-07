@@ -110,4 +110,10 @@ module.exports = {
     const data = await boardService.getPostById(req.params.id);
     res.json(data);
   },
+  getPostByCategory : async (req, res, next) => {
+    console.log("::::::: ",req.query);
+    const data = await boardService.getPostByCategory(req.query.category);
+    res.json(data)
+
+  }
 };

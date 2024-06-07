@@ -1,26 +1,27 @@
 import axios from 'axios';
 
 // 액션 타입 정의
-const GET_POST_DATA = 'detail/GET_POST_DATA';
+const GET_POST_DATA_REQUEST = 'detail/GET_POST_DATA_REQUEST';
+const GET_POST_DATA_SUCCESS = 'detail/GET_POST_DATA_SUCCESS';
+const GET_POST_DATA_FAILURE = 'detail/GET_POST_DATA_FAILURE';
 const GET_POST_STATS_DATA = 'detail/GET_POST_STATS_DATA';
 const SET_PAGE_STATE = 'detail/SET_PAGE_STATE';
-const POSTIID_INPUT_DATA = 'detail/POSTIID_INPUT_DATA';
+const POST_ID_INPUT_DATA = 'detail/POST_ID_INPUT_DATA';
 
 // 액션 생성
 export const getPostData = (postId) => {
-    console.log(postId)
     return async (dispatch) => {
+        dispatch({ type: GET_POST_DATA_REQUEST });
         try {
             const getPost = await axios.get(`board/detail/${postId}`); // 현재 게시판 정보와 작성한 user의 게시물
+            const category = getPost.data.category;
+            const latestPost = await axios.get(`board/latest?category=${category}`);
             
-            const latestPost = await axios.get(`board/latestPost/`, getPost.category)
-            
-            
-            const authorPosts = getPost.data;
-            const post = getPost.data;
-            const categoryPosts= latestPost.data;
+            const authorPosts = getPost.data.userPost;
+            const post = getPost.data.postData;
+            const categoryPosts = latestPost.data;
             dispatch({
-                type: GET_POST_DATA,
+                type: GET_POST_DATA_SUCCESS,
                 payload: {
                     authorPosts,
                     categoryPosts,
@@ -28,30 +29,10 @@ export const getPostData = (postId) => {
                 },
             });
         } catch (error) {
-            console.log(error)
-            const categories = ['study', 'info', 'qna'];
-            const authorPosts = [];
-            const categoryPosts = [];
-            for (let i = 0; i < 5; i++) {
-                authorPosts.push({
-                    id: i + 1,
-                    title: `작성자 게시글 제목${i + 1}`,
-                    content: `작성자 게시글 내용${i + 1}`,
-                    category: categories[i % 3],
-                });
-                categoryPosts.push({
-                    id: i + 1,
-                    title: `최근 게시글 제목${i + 1}`,
-                    content: `최근 게시글 내용${i + 1}`,
-                    category: categories[i % 3],
-                });
-            }
+            console.error(error);
             dispatch({
-                type: GET_POST_DATA,
-                payload: {
-                    authorPosts,
-                    categoryPosts,
-                },
+                type: GET_POST_DATA_FAILURE,
+                payload: error.message,
             });
         }
     };
@@ -71,15 +52,13 @@ export const getPostStatsData = () => {
                 },
             });
         } catch (error) {
-            const likes = '좋아요 수 데이터';
-            const commentCount = '댓글 수 데이터';
-            const views = '조회 수 데이터';
+            console.error(error);
             dispatch({
                 type: GET_POST_STATS_DATA,
                 payload: {
-                    likes,
-                    commentCount,
-                    views,
+                    likes: 0,
+                    commentCount: 0,
+                    views: 0,
                 },
             });
         }
@@ -104,22 +83,19 @@ export const setPageState = (currentPostId) => {
 };
 
 export const getPostId = (postId) => {
-    console.log('updatePostData called with:', postId);
     return {
-      type: POSTIID_INPUT_DATA,
+      type: POST_ID_INPUT_DATA,
       payload: postId,
     };
-  };
-
+};
 
 // 초기 스테이트
 const initialState = {
-    postId : "",
-
+    postId: "",
     postData: {
         authorPosts: [],
         categoryPosts: [],
-        post : {}
+        post: {}
     },
     postStats: {
         likes: 0,
@@ -131,25 +107,43 @@ const initialState = {
         prevPostId: null,
         nextPostId: null,
     },
+    loading: false,
+    error: null,
 };
 
 // 리듀서
 const postDetailReducer = (state = initialState, action) => {
     switch (action.type) {
-        case GET_POST_DATA:
+        case GET_POST_DATA_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                error: null,
+            };
+        case GET_POST_DATA_SUCCESS:
             return {
                 ...state,
                 postData: {
+                    ...state.postData,
                     authorPosts: action.payload.authorPosts,
                     categoryPosts: action.payload.categoryPosts,
+                    post: action.payload.post
                 },
+                loading: false,
+            };
+        case GET_POST_DATA_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
             };
         case GET_POST_STATS_DATA:
             return {
                 ...state,
                 postStats: {
+                    ...state.postStats,
                     likes: action.payload.likes,
-                    commentCount: action.payload.commentCount, // Here, we use commentCount instead of comments
+                    commentCount: action.payload.commentCount,
                     views: action.payload.views,
                 },
             };
@@ -157,17 +151,17 @@ const postDetailReducer = (state = initialState, action) => {
             return {
                 ...state,
                 pageState: {
+                    ...state.pageState,
                     currentPostId: action.payload.currentPostId,
                     prevPostId: action.payload.prevPostId,
                     nextPostId: action.payload.nextPostId,
                 },
             };
-        case POSTIID_INPUT_DATA : {
+        case POST_ID_INPUT_DATA:
             return {
                 ...state,
-                postId : action.payload,
-            }
-        }
+                postId: action.payload,
+            };
         default:
             return state;
     }

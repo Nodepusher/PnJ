@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getPostData, getPostStatsData, setPageState } from '../store/postDetailReducer';
 import { useSearchParams } from 'react-router-dom';
 import HeaderContainer from '../Containers/Common/HeaderContainer';
@@ -8,6 +8,7 @@ import DetailSectionContainer from '../Containers/Detail/DetailSectionContainer'
 
 const PostDetailPage = () => {
     const dispatch = useDispatch();
+    const state = useSelector(state => state.detail)
     const [searchParams, setSearchParams] = useSearchParams();
     const postId = searchParams.get("post")
     // const currentPostId = 2;
@@ -16,6 +17,9 @@ const PostDetailPage = () => {
         // dispatch(getPostStatsData());
         // dispatch(setPageState(postId));
     }, [postId, dispatch]);
+    useEffect(() => {
+        window.scrollTo(0, 0); // 페이지 이동 시 맨 위로 스크롤
+    }, [postId]);
 
     return (
         <>

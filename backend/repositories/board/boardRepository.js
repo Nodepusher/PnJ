@@ -115,6 +115,7 @@ module.exports = {
           where: { UserId: userId },
           order: [["createdAt", "DESC"]],
           limit: 3,
+          include: { model: User },
         },
         { transaction: t }
       );
@@ -128,4 +129,17 @@ module.exports = {
       throw error;
     }
   },
+  findPostByCategory : async (category) => {
+    try {
+      const postData = await Board.findAll({
+        where : {category: category},
+        order: [["createdAt", "DESC"]],
+        limit : 5,
+        include: { model: User },
+      },)
+      return postData;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 };

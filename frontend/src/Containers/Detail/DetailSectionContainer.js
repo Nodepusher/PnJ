@@ -8,20 +8,41 @@ import PostHeader from '../../Components/Detail/PostHeader';
 import { useSelector } from 'react-redux';
 
 const DetailSectionContainer = () => {
-    const userName = '토야';
-    const category = '스터디해요';
-    const writerHeaderData = `${userName} 님의`;
+    const { authorPosts, categoryPosts, post } = useSelector((state) => state.detail.postData);
+    const loading = useSelector((state) => state.detail.loading);
+    const error = useSelector((state) => state.detail.error);
+
+    // 로딩 중일 때 로딩 메시지를 표시
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    // 오류가 발생했을 때 오류 메시지를 표시
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    // post 객체가 존재하지 않으면 null 반환
+    if (!post || !post.User) {
+        return <div>No data available</div>;
+    }
+
+    const name = post.User.name;
+    const {title, tags, createdAt} = post
+    const category = post.category === 'info' ? '정보 공유' 
+        : post.category === 'study' ? '스터디해요' : 'Q&A';
+    const writerHeaderData = `${name} 님의`;
     const StProps = {
         StfirstPost: 'first:pt-[8px]',
         StUlMargin: 'mt-[8px]',
     };
-    const { authorPosts, categoryPosts } = useSelector((state) => state.detail.postData);
+
     return (
         <div className="py-[16px] px-[16px]">
-            <main class="min-w-screen surface_primary relative mx-auto flex w-full min-w-[320px] max-w-main flex-col">
-                <DetailSectionTop />
-                <DetailSectionContent />
-                <DetailWrtierInfo />
+            <main className="min-w-screen surface_primary relative mx-auto flex w-full min-w-[320px] max-w-main flex-col">
+                <DetailSectionTop category={category} title={title} createdAt={createdAt} name={name}/>
+                <DetailSectionContent content={post.content} tags={tags}/>
+                <DetailWrtierInfo name={name} />
                 <div className="border-t border_primary"></div>
                 <div className="h-[28px]"></div>
                 <DetailReplyContainer />

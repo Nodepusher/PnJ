@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DetailWrtierInfoTop = () => {
+const DetailWrtierInfoTop = ({name, createdAt}) => {
     const url =
         'https://steadio.imgix.net/profiles/f7261458-bcc0-4313-88a9-c1a86625ecee/profileImage/3b1c4b3e-b460-4670-ad69-c2a071216470.png?auto=format%2Ccompress&amp;fm=jpg&amp;h=300&amp;lossless=true&amp;w=300';
     const StProfileImg = {
@@ -22,7 +22,7 @@ const DetailWrtierInfoTop = () => {
                 <div>
                     <div>
                         <a className="content_secondary font_label_bold_md" href="/creator/newcrochet">
-                            뉴크로셰
+                            {name}
                         </a>
                     </div>
                     <div className="mt-[2px] flex items-center">
@@ -30,7 +30,8 @@ const DetailWrtierInfoTop = () => {
                             className="content_quaternary font_label_regular_sm flex items-center"
                             href="/creator/newcrochet"
                         >
-                            <span>2024. 3. 4. 20:56</span>
+                            <span>{(new Date(createdAt)).toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' })}</span>
+                            
                         </a>
                         <svg
                             viewBox="0 0 24 24"

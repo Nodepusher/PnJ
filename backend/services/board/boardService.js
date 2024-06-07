@@ -52,8 +52,11 @@ module.exports = {
     const data = await boardRepository.findPostById(id)
     const category = data.postData.category;
     data.category = category
-    console.log(data)
+    // console.log(data)
     return data;
+  },
+  getPostByCategory : async (category) => {
+    return await boardRepository.findPostByCategory(category)
   }
 };
 

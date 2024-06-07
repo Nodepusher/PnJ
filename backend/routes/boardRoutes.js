@@ -37,7 +37,7 @@ router.post('/createPost', uploadFile.fields([{name : 'files'}]), boardControlle
 router.post('/writeData', boardController.getBoardById);
 
 router.get('/detail/:id', boardController.getPostById);
-router.get('/latest', boardController.getPostById);
+router.get('/latest', boardController.getPostByCategory);
 
 
 module.exports = router;
