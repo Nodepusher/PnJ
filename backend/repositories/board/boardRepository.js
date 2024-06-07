@@ -69,12 +69,12 @@ module.exports = {
             const userId = postData.User.id
             const allUserPost = await Board.findAll({
                 where:{ UserId : userId},
+                order: [['createdAt', 'DESC']],
                 limit: 3
             },{transaction: t})
 
             await t.commit()
-            return {post : postData, userPost : allUserPost};
-            return postData;
+            return {postData : postData, userPost : allUserPost};
         } catch (error) {
             // 오류 처리
             console.error(error);
