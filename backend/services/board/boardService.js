@@ -43,9 +43,20 @@ module.exports = {
       console.log("fileJson :: ",fileJson)
     }
     
-    
-
     return await boardRepository.InsertPost(postData, fileJson);
+  },
+  findBoardById : async (boardId) => {
+    return await boardRepository.findBoardById(boardId)
+  },
+  getPostById : async (id) => {
+    const data = await boardRepository.findPostById(id)
+    const category = data.postData.category;
+    data.category = category
+    // console.log(data)
+    return data;
+  },
+  getPostByCategory : async (category) => {
+    return await boardRepository.findPostByCategory(category)
   }
 };
 
