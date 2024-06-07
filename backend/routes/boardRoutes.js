@@ -36,7 +36,8 @@ router.post('/uploadImg', uploadImage.single('image'), boardController.saveUploa
 router.post('/createPost', uploadFile.fields([{name : 'files'}]), boardController.createPost);
 router.post('/writeData', boardController.getBoardById);
 
-
+router.get('/detail/:id', boardController.getPostById);
+router.get('/latest', boardController.getPostById);
 
 
 module.exports = router;
