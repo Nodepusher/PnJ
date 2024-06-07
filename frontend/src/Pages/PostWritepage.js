@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { savePostData, fetchPostData, updatePostData } from '../store/postWriteReducer'
+import { savePostData, fetchPostData, updatePostData, updateIsEdit } from '../store/postWriteReducer'
 import WriteHeaderContainer from '../Containers/Write/WriteHeaderContainer';
 import WriteSectionContainer from '../Containers/Write/WriteSectionContainer';
 import styles from '../style/writePage.css'
@@ -21,9 +21,10 @@ const PostWritepage = ({match}) => { // match : parameter 값을 가져옴
         
     // }
     var isEdit = postId ? true : false 
-
+    
     console.log()
     useEffect(() => {
+        dispatch(updateIsEdit(isEdit))
         if(isEdit){ // 수정 게시물
             dispatch(fetchPostData(postId))
         } else {

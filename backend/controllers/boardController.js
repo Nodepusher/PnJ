@@ -84,8 +84,9 @@ module.exports = {
         }
 
     },
-    getBoradById : async (req, res, next) => {
+    getBoardById : async (req, res, next) => {
         console.log(req.body)
-        boardService.findBoardById(req.body.boardId)
+        const boardData = await boardService.findBoardById(req.body.boardId)
+        res.json(boardData)
     }
 }

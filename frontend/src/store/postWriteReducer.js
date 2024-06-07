@@ -18,6 +18,7 @@ const POST_DATA_FAIL = "post/POST_DATA_FAIL";
 const LOAD_POST_DATA = "post/LOAD_POST_DATA";
 const LOAD_POST_DATA_SUCCESS = "post/LOAD_POST_DATA_SUCCESS";
 const LOAD_POST_DATA_FAIL = "post/LOAD_POST_DATA_FAIL";
+const UPDATE_IS_EDIT = "post/UPDATE_IS_EDIT"; // 추가
 
 // action 생성
 // 1. 서버와 통신
@@ -50,13 +51,17 @@ export const fetchPostData = (boardId) => {
       try {
         const response = await axios.post(`http://localhost:4000/board/writeData`,data);
           // const response = await axios.get(`/board/update/${postId}`);
-
+          console.log(response.data);
           dispatch(loadPostDataSuccess(response.data));
       } catch (error) {
           dispatch(loadPostDataFail(error.message));
       }
   };
 };
+export const updateIsEdit = (isEdit) => ({
+  type: UPDATE_IS_EDIT,
+  payload: isEdit,
+});
 
 
 // 2. update post data
@@ -110,7 +115,6 @@ const initialState = {
 };
 
 //
-
 // 리듀서
 const postWriteReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -119,15 +123,20 @@ const postWriteReducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
-      case UPDATE_INPUT_DATA:
-        console.log('Reducer received payload:', action.payload);
-        return {
-          ...state,
-          inputData: {
-            ...state.inputData,
-            ...action.payload,
-          },
-        };
+    case UPDATE_INPUT_DATA:
+      console.log('Reducer received payload:', action.payload);
+      return {
+        ...state,
+        inputData: {
+          ...state.inputData,
+          ...action.payload,
+        },
+      };
+    case UPDATE_IS_EDIT: // 추가
+      return {
+        ...state,
+        isEdit: action.payload,
+      };
     case POST_DATA_SUCCESS:
       return {
         ...state,
@@ -140,24 +149,29 @@ const postWriteReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
-      case LOAD_POST_DATA:
-        return {
-            ...state,
-            loading: true,
-            error: null
-        };
+    case LOAD_POST_DATA:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
     case LOAD_POST_DATA_SUCCESS:
-        return {
-            ...state,
-            loading: false,
-            inputData: action.payload
-        };
+      return {
+        ...state,
+        loading: false,
+        inputData: {
+          title: action.payload.title,
+          content: action.payload.content,
+          category: action.payload.category,
+          tag: action.payload.tag,
+        },
+      };
     case LOAD_POST_DATA_FAIL:
-        return {
-            ...state,
-            loading: false,
-            error: action.payload
-        };
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

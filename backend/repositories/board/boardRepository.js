@@ -84,6 +84,16 @@ module.exports = {
         }
     },
     findBoardById : async(boardId) => {
-        // return await Board.findAll()
+        try {
+            const board = await Board.findOne({
+                where:{id : boardId},
+                include : {model : File}
+            })
+            console.log(board.dataValues)
+            return board.dataValues
+        } catch (error) {
+            console.log(error)
+            return {success : false , message : '에러'}
+        }
     }
 }
