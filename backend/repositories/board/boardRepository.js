@@ -56,7 +56,7 @@ module.exports = {
 
 
     findPostById: async (id) => {
-        const t = sequelize.transaction()
+        const t = await sequelize.transaction()
         try {
             const postData = await Board.findOne({
                 where: { id: id },

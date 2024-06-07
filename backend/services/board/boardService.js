@@ -22,6 +22,7 @@ module.exports = {
     const category = data.postData.category;
     data.category = category
     console.log(data)
+    return data;
   }
 };
 

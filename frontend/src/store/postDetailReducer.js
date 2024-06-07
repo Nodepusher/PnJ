@@ -12,6 +12,7 @@ export const getPostData = (postId) => {
     return async (dispatch) => {
         try {
             const getPost = await axios.get(`board/detail/${postId}`); // 현재 게시판 정보와 작성한 user의 게시물
+            
             const latestPost = await axios.get(`board/latestPost/`, getPost.category)
             
             

@@ -80,7 +80,7 @@ module.exports = {
 
     getPostById : async(req, res, next) => {
         console.log(req.params)
-        const postData = await boardService.getPostById(req.params.id);
-        // console.log(postData)
+        const data = await boardService.getPostById(req.params.id);
+        res.json(data);
     }
 }
