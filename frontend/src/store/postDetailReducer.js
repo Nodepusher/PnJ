@@ -4,12 +4,14 @@ import axios from 'axios';
 const GET_POST_DATA = 'detail/GET_POST_DATA';
 const GET_POST_STATS_DATA = 'detail/GET_POST_STATS_DATA';
 const SET_PAGE_STATE = 'detail/SET_PAGE_STATE';
+const POSTIID_INPUT_DATA = 'detail/POSTIID_INPUT_DATA';
 
 // 액션 생성
-export const getPostData = () => {
+export const getPostData = (postId) => {
+    console.log(postId)
     return async (dispatch) => {
         try {
-            const response = await axios.get('http://localhost:4000/detail');
+            const response = await axios.get(`board/detail/${postId}`);
             const { authorPosts, categoryPosts } = response.data;
             dispatch({
                 type: GET_POST_DATA,
@@ -19,6 +21,7 @@ export const getPostData = () => {
                 },
             });
         } catch (error) {
+            console.log(error)
             const categories = ['study', 'info', 'qna'];
             const authorPosts = [];
             const categoryPosts = [];
@@ -93,8 +96,18 @@ export const setPageState = (currentPostId) => {
     };
 };
 
+export const getPostId = (postId) => {
+    console.log('updatePostData called with:', postId);
+    return {
+      type: POSTIID_INPUT_DATA,
+      payload: postId,
+    };
+  };
+
+
 // 초기 스테이트
 const initialState = {
+    postId : "",
     postData: {
         authorPosts: [],
         categoryPosts: [],
@@ -140,6 +153,12 @@ const postDetailReducer = (state = initialState, action) => {
                     nextPostId: action.payload.nextPostId,
                 },
             };
+        case POSTIID_INPUT_DATA : {
+            return {
+                ...state,
+                postId : action.payload,
+            }
+        }
         default:
             return state;
     }

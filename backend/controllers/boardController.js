@@ -72,5 +72,13 @@ module.exports = {
     createPost : async (req, res, next) => {
         console.log(req.files)
         console.log(req.body)
+    },
+
+
+
+
+
+    getPostDetailById : async(req, res, next) => {
+        console.log(req.params)
     }
 }

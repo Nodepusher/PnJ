@@ -35,7 +35,7 @@ router.get('/:category?', boardController.getAllForInfiniteScroll);
 router.post('/uploadImg', uploadImage.single('image'), boardController.saveUploadImg);
 router.post('/createPost', uploadFile.fields([{name : 'files'}]), boardController.createPost);
 
-
+router.get('/detail/:id', boardController.getPostDetailById);
 
 
 module.exports = router;

@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostData } from '../../store/postListReducer';
 
 const PostList = ({ StProps, postData, category, dropdownState }) => {
     const nav = useNavigate();
     const dispatch = useDispatch();
-    const moveToDetail = () => {
-        nav('/detail');
+    const location = useLocation();
+    const moveToDetail = (postId) => {
+        nav(`/detail?post=${postId}`);
     };
     const { StfirstPost = '', StUlMargin = '' } = StProps || {};
     const StImg = {
@@ -35,6 +35,7 @@ const PostList = ({ StProps, postData, category, dropdownState }) => {
 
 
     return (
+        location.pathname === '/' && (
         <InfiniteScroll
             dataLength={[posts.length]}
             next={fetchData}
@@ -47,7 +48,7 @@ const PostList = ({ StProps, postData, category, dropdownState }) => {
                         key={post.id}
                         className={`border_secondary border-t py-[20px] first:border-0 md:py-[24px] ${StfirstPost}`}
                     >
-                        <div onClick={moveToDetail}>
+                        <div onClick={() => moveToDetail(post.id)}>
                             <button aria-label="post card" className="block w-full text-left" type="button">
                                 <div className="flex gap-x-[16px]">
                                     <div className="h-[73px] w-full break-all xl:h-auto">
@@ -125,6 +126,7 @@ const PostList = ({ StProps, postData, category, dropdownState }) => {
                 ))}
             </ul>
         </InfiniteScroll>
+        )
     );
 };
 
