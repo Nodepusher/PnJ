@@ -2,7 +2,7 @@ import React from "react";
 import { TuiViewer } from "../../Modules/ToastUI";
 import AttachFile from "../../Components/Detail/AttachedFile";
 
-const DetailSectionContent = ({ content, tags }) => {
+const DetailSectionContent = ({ content, tags, files }) => {
   console.log(content);
 
   return (
@@ -27,7 +27,7 @@ const DetailSectionContent = ({ content, tags }) => {
           ))}
         </div>
       )}
-      <AttachFile />
+      <AttachFile files={files} />
     </div>
   );
 };

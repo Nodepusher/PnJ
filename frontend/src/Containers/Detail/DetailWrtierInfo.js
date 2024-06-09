@@ -17,8 +17,7 @@ const DetailWrtierInfo = ({name}) => {
                     <img
                         alt="프로필 이미지"
                         sizes="100vw"
-                        srcset="
-                        "
+                        srcset=""
                         decoding="async"
                         data-nimg="fill"
                         loading="lazy"
@@ -30,7 +29,7 @@ const DetailWrtierInfo = ({name}) => {
                 <div className="flex flex-col gap-[4px] px-[40px]">
                     <button className="font_title_bold_lg text-center">{name}</button>
                     <p className="content_quaternary font_label_regular_md break-all text-center md:w-[404px]">
-                        코바늘을 사용 해 창작해낼 수 있는, 보다 새로운 것들
+                        {/* 코바늘을 사용 해 창작해낼 수 있는, 보다 새로운 것들 */}
                     </p>
                 </div>
             </div>

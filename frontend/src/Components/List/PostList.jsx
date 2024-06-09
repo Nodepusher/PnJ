@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostData } from '../../store/postListReducer';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 
 const PostList = ({ StProps, postData, category, dropdownState }) => {
     const nav = useNavigate();
@@ -32,7 +34,14 @@ const PostList = ({ StProps, postData, category, dropdownState }) => {
         dispatch(getPostData(category, page, dropdownState));
         setPage(page + 1)
     }
-
+    // 마크다운을 텍스트로 변환
+    const extractTextFromMarkdown = (markdown) => {
+        const html = marked(markdown); 
+        const cleanHTML = DOMPurify.sanitize(html); 
+        const tempElement = document.createElement('div');
+        tempElement.innerHTML = cleanHTML;
+        return tempElement.textContent || tempElement.innerText || '';
+    };
 
     return (
         location.pathname === '/' ? (
@@ -57,7 +66,7 @@ const PostList = ({ StProps, postData, category, dropdownState }) => {
                                             {post.title}
                                         </h2>
                                         <p className="content_quaternary font_label_regular_lg mt-[4px] mb-[18px] overflow-hidden xl:mt-[6px] text-ellipsis-1 xl:text-ellipsis-2">
-                                            {post.content}
+                                            {extractTextFromMarkdown(post.content)}
                                         </p>
                                     </div>
                                     <div className="relative h-[72px] w-[72px] shrink-0 rounded-[8px] md:h-[90px] md:w-[90px]">
@@ -119,7 +128,6 @@ const PostList = ({ StProps, postData, category, dropdownState }) => {
         </InfiniteScroll>
         ) : (
             <ul className={`col-span-full flex flex-col ${StUlMargin}`}>
-                {console.log(postData)}
                 {postData.map((post, i) => (
                     <li
                         key={post.id}
@@ -133,7 +141,7 @@ const PostList = ({ StProps, postData, category, dropdownState }) => {
                                             {post.title}
                                         </h2>
                                         <p className="content_quaternary font_label_regular_lg mt-[4px] mb-[18px] overflow-hidden xl:mt-[6px] text-ellipsis-1 xl:text-ellipsis-2">
-                                            {post.content}
+                                            {extractTextFromMarkdown(post.content)}
                                         </p>
                                     </div>
                                     <div className="relative h-[72px] w-[72px] shrink-0 rounded-[8px] md:h-[90px] md:w-[90px]">

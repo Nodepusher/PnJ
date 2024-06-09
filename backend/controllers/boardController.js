@@ -111,9 +111,19 @@ module.exports = {
     res.json(data);
   },
   getPostByCategory : async (req, res, next) => {
-    console.log("::::::: ",req.query);
+    // console.log("::::::: ",req.query);
     const data = await boardService.getPostByCategory(req.query.category);
     res.json(data)
 
+  },
+  getCommentById : async (req, res, next) => {
+    console.log("::::::: ",req.params);
+    const data = await boardService.getAllCommentById(req.params.id);
+    if(data.error){
+      res.status(404).send(data)
+    }else{
+      res.status(200).json(data)
+
+    }
   }
 };

@@ -11,6 +11,7 @@ const helmet = require('helmet') // 보안 관련 미들웨어
 const cors = require('cors')
 const boardRoutes = require('./routes/boardRoutes')
 const userRoutes = require('./routes/userRoutes')
+// const fileRoute = require('./routes/fileRoute')
 const db = require('./models') // *** models/index.js를 참고함
 
 const app = express()
@@ -40,6 +41,7 @@ app.use(helmet.xssFilter()) // xss 방지
 
 app.use('/board', boardRoutes)
 app.use('/user', userRoutes)
+// app.use('/download', fileRoute)
 app.use('/uploads', express.static(uploadsDir));
 app.use('/uploads/temp', express.static(tempUploadsDir));
 app.use('/uploads/file', express.static(fileUploadsDir));

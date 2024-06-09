@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import ReplyComponent from './ReplyComponent';
+import { useSelector } from 'react-redux';
 
-const CommentComponent = ({ comments }) => {
+const CommentComponent = ({commentData}) => {
     const [activeReply, setActiveReply] = useState(null);
-
+    // const commentData = useSelector(state => state.detail.postStats);
     const showReplyInputComment = (commentId) => {
         setActiveReply((prev) => (prev === commentId ? null : commentId));
     };
 
     const hideReplyInputComment = () => {
-        setActiveReply(false);
+        setActiveReply(null);
     };
 
     const StImg = {
@@ -21,15 +22,27 @@ const CommentComponent = ({ comments }) => {
         objectPosition: 'center center',
         color: 'transparent',
     };
+
     const StBtn = {
         width: '32px',
         height: '32px',
         outline: 'none',
     };
 
+    const formatDateTime = (dateString) => {
+        const options = { 
+            year: 'numeric', 
+            month: '2-digit', 
+            day: '2-digit', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            timeZone: 'Asia/Seoul' 
+        };
+        return new Date(dateString).toLocaleDateString('ko-KR', options).replace(/\./g, '.');
+    };
     return (
         <ul>
-            {comments.map((comment, i) => (
+            {commentData.comments.map((comment, i) => (
                 <li
                     key={comment.id}
                     className="pt-[24px] border-t-[1px] pb-[12px] last:pb-[0px] border_secondary pl-[10px] first:border-t-0"
@@ -44,12 +57,9 @@ const CommentComponent = ({ comments }) => {
                                     style={StBtn}
                                 >
                                     <img
-                                        alt="선영"
+                                        alt={comment.User.name}
                                         sizes="(max-width: 240px) 100vw, 240px"
-                                        srcset="
-                                 
-                                "
-                                        src=""
+                                        src={comment.User.profile || 'default-profile-url'}
                                         decoding="async"
                                         data-nimg="fill"
                                         className="rounded-full"
@@ -64,7 +74,7 @@ const CommentComponent = ({ comments }) => {
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-[4px]">
                                     <div className="content_primary font_label_bold_lg">
-                                        {comment.userInfo.userName}
+                                        {comment.User.name}
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +88,7 @@ const CommentComponent = ({ comments }) => {
                             <div className="flex gap-[13px]">
                                 <div className="flex items-center">
                                     <span className="content_quaternary font_label_regular_sm">
-                                        {comment.updateTime}
+                                        {formatDateTime(comment.updatedAt)}
                                     </span>
                                 </div>
                                 <button
@@ -98,7 +108,8 @@ const CommentComponent = ({ comments }) => {
                         hideReply={hideReplyInputComment}
                         StBtn={StBtn}
                         StImg={StImg}
-                        replies={comment.replies}
+                        formatDateTime={formatDateTime}
+                        replies={comment.Replies}
                     />
                 </li>
             ))}
