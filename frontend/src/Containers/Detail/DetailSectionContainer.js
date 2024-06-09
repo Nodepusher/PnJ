@@ -26,9 +26,10 @@ const DetailSectionContainer = () => {
     if (!post || !post.User) {
         return <div>No data available</div>;
     }
-
+    const files = post.Files
     const name = post.User.name;
     const {title, tags, createdAt} = post
+    console.log(post)
     const category = post.category === 'info' ? '정보 공유' 
         : post.category === 'study' ? '스터디해요' : 'Q&A';
     const writerHeaderData = `${name} 님의`;
@@ -41,7 +42,7 @@ const DetailSectionContainer = () => {
         <div className="py-[16px] px-[16px]">
             <main className="min-w-screen surface_primary relative mx-auto flex w-full min-w-[320px] max-w-main flex-col">
                 <DetailSectionTop category={category} title={title} createdAt={createdAt} name={name}/>
-                <DetailSectionContent content={post.content} tags={tags}/>
+                <DetailSectionContent content={post.content} tags={tags} files={files}/>
                 <DetailWrtierInfo name={name} />
                 <div className="border-t border_primary"></div>
                 <div className="h-[28px]"></div>

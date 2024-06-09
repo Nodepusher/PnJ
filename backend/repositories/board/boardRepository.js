@@ -1,8 +1,10 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { Sequelize, DataTypes, where } = require("sequelize");
 const sequelize = require("../../utils/db").sequelize;
 const Board = require("../../models/boardModel");
 const User = require("../../models/userModel");
 const File = require("../../models/fileModel");
+const Comment = require("../../models/commentModel");
+const Reply = require("../../models/replyModel");
 const db = require("../../models");
 
 module.exports = {
@@ -53,8 +55,8 @@ module.exports = {
     const transaction = await sequelize.transaction();
     // 게시물 작성
     // Board.create()
-    console.log("postData :::: ", postData);
-    console.log("files :::: ", fileJson.files);
+    // console.log("postData :::: ", postData);
+    // console.log("files :::: ", fileJson.files);
     const fileData = fileJson.files;
     try {
       const newPost = await Board.create(postData, { transaction });
@@ -68,6 +70,7 @@ module.exports = {
               uploadPath: files.uploadPath,
               fileName: files.fileName,
               fileType: files.fileType,
+              fileSize : files.fileSize,
               BoardId: newPost.dataValues.id,
               UserId: postData.UserId,
             },
@@ -104,11 +107,15 @@ module.exports = {
       const postData = await Board.findOne(
         {
           where: { id: id },
-          include: [{ model: User }, { model: File }],
+          include: [{ model: User }],
         },
         { transaction: t }
       );
-
+      const Files = await File.findAll({
+        where: { BoardId: id },
+      },
+      {transaction: t}
+    );
       const userId = postData.User.id;
       const allUserPost = await Board.findAll(
         {
@@ -121,7 +128,11 @@ module.exports = {
       );
 
       await t.commit();
-      return { postData: postData, userPost: allUserPost };
+      // console.log(Files)
+      postData.File = Files
+      // console.log(postData)
+
+      return { postData: postData, userPost: allUserPost, Files : Files };
     } catch (error) {
       // 오류 처리
       console.error(error);
@@ -140,6 +151,37 @@ module.exports = {
       return postData;
     } catch (error) {
       console.error(error);
+    }
+  },
+  findAllCommentById : async (postId) => {
+    try {
+      const comments = await Comment.findAll(
+        {
+          where : {BoardId : postId},
+          include: [
+            {
+              model: Reply,
+              include: [
+                {
+                  model: User,
+                  attributes: ['name', 'profile'],
+                },
+              ],
+            },
+            {
+              model: User,
+              attributes: ['name', 'profile'],
+            },
+          ],
+        });
+      // console.log(comments)
+      const commentCount = comments.length;
+      const replyCount = comments.reduce((acc, comment) => acc + comment.Replies.length, 0);
+      
+      return comments;
+      // console.log(comments.Comment.Replies)
+    } catch (error) {
+      return {error: error.message}
     }
   }
 };

@@ -38,6 +38,7 @@ router.post('/writeData', boardController.getBoardById);
 
 router.get('/detail/:id', boardController.getPostById);
 router.get('/latest', boardController.getPostByCategory);
+router.get('/comment/:id', boardController.getCommentById);
 
 
 module.exports = router;

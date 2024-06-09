@@ -16,9 +16,10 @@ export const getPostData = (postId) => {
             const getPost = await axios.get(`board/detail/${postId}`); // 현재 게시판 정보와 작성한 user의 게시물
             const category = getPost.data.category;
             const latestPost = await axios.get(`board/latest?category=${category}`);
-            
             const authorPosts = getPost.data.userPost;
             const post = getPost.data.postData;
+            post.Files = getPost.data.Files
+            console.log(":::::", post)
             const categoryPosts = latestPost.data;
             dispatch({
                 type: GET_POST_DATA_SUCCESS,
@@ -38,17 +39,19 @@ export const getPostData = (postId) => {
     };
 };
 
-export const getPostStatsData = () => {
+export const getPostStatsData = (postId) => {
     return async (dispatch) => {
+        dispatch({ type: GET_POST_DATA_REQUEST });
         try {
-            const response = await axios.get('http://localhost:4000/detail');
-            const { likes, comments, views } = response.data;
+            const response = await axios.get(`/board/comment/${postId}`);
+            // const { likes, comments, views } = response.data;
+            
             dispatch({
                 type: GET_POST_STATS_DATA,
                 payload: {
-                    likes,
-                    commentCount: comments, // Here, we map comments to commentCount
-                    views,
+                    // likes,
+                    comments: response.data, // Here, we map comments to commentCount
+                    // views,
                 },
             });
         } catch (error) {
@@ -97,10 +100,13 @@ const initialState = {
         categoryPosts: [],
         post: {}
     },
+    // postStats: {
+    //     likes: 0,
+    //     commentCount: 0,
+    //     views: 0,
+    // },
     postStats: {
-        likes: 0,
-        commentCount: 0,
-        views: 0,
+        comments : []
     },
     pageState: {
         currentPostId: null,
@@ -140,12 +146,15 @@ const postDetailReducer = (state = initialState, action) => {
         case GET_POST_STATS_DATA:
             return {
                 ...state,
-                postStats: {
-                    ...state.postStats,
-                    likes: action.payload.likes,
-                    commentCount: action.payload.commentCount,
-                    views: action.payload.views,
-                },
+                // postStats: {
+                //     ...state.postStats,
+                //     likes: action.payload.likes,
+                //     commentCount: action.payload.commentCount,
+                //     views: action.payload.views,
+                // },
+                postStats : {
+                    comments : action.payload.comments,
+                }
             };
         case SET_PAGE_STATE:
             return {

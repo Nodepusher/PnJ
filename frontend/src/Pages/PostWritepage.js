@@ -21,15 +21,13 @@ const PostWritepage = ({match}) => { // match : parameter 값을 가져옴
         
     // }
     var isEdit = postId ? true : false 
-    
-    console.log()
     useEffect(() => {
         dispatch(updateIsEdit(isEdit))
         if(isEdit){ // 수정 게시물
             dispatch(fetchPostData(postId))
         } else {
             dispatch(updatePostData({
-                id: '',
+                // id: '',
                 title: '타이틀',
                 content: '본문',
                 category: '',
