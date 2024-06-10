@@ -16,6 +16,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("../../utils/db").sequelize;
 const Board = require("../../models/boardModel");
 const User = require("../../models/userModel");
+const Reply = require("../../models/replyModel");
 const db = require('../../models')
 
 const boardService = require("../../services/board/boardService");
@@ -55,7 +56,7 @@ describe("서비스 테스트", () => {
     // expect(boards[1].title).toBe("Test Title");
   });
 
-    test.only("더미데이터 생성", async () => {
+    test("더미데이터 생성", async () => {
       for (let i = 0; i < 5; i++) {
         await Board.create({
           category: "qna",
@@ -122,5 +123,16 @@ describe("서비스 테스트", () => {
     await boardRepository.findAllForInfiniteScroll(limit, page, category)
     console.log(infiniteScroll.map(board => board.dataValues.category))
     console.log(infiniteScroll.length)
+  })
+  test.only("test", async() => {
+    const replyContent = { BoardId: '120', content: 'test', UserId: 1, CommentId: 2 }
+    try {
+      // const reply = await Reply.create(replyContent)
+      const reply = await boardRepository.InsertReply(replyContent)
+      console.log(reply)
+    } catch (error) {
+      console.log(error.message)
+    }
+
   })
 });

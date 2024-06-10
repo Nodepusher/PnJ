@@ -174,14 +174,33 @@ module.exports = {
             },
           ],
         });
-      // console.log(comments)
-      const commentCount = comments.length;
-      const replyCount = comments.reduce((acc, comment) => acc + comment.Replies.length, 0);
       
       return comments;
-      // console.log(comments.Comment.Replies)
     } catch (error) {
       return {error: error.message}
+    }
+  },
+  InsertComment : async (commentData) => {
+    console.log(commentData)
+    try {
+      const newComment = await Comment.create(commentData);
+      return newComment
+
+    } catch (error) {
+      console.log(error.message)
+      return {"success": false}
+    }
+  },
+  InsertReply : async (replyData) => {
+    console.log(replyData)
+    console.log(Reply)
+    try {
+      const newReply = await Reply.create(replyData);
+      return newReply
+
+    } catch (error) {
+      console.log(error.message)
+      return {"success": false}
     }
   }
 };

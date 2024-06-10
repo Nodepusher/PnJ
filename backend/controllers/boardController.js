@@ -110,20 +110,36 @@ module.exports = {
     const data = await boardService.getPostById(req.params.id);
     res.json(data);
   },
-  getPostByCategory : async (req, res, next) => {
+  getPostByCategory: async (req, res, next) => {
     // console.log("::::::: ",req.query);
     const data = await boardService.getPostByCategory(req.query.category);
-    res.json(data)
-
+    res.json(data);
   },
-  getCommentById : async (req, res, next) => {
-    console.log("::::::: ",req.params);
+  getCommentById: async (req, res, next) => {
+    console.log("::::::: ", req.params);
     const data = await boardService.getAllCommentById(req.params.id);
-    if(data.error){
-      res.status(404).send(data)
-    }else{
-      res.status(200).json(data)
-
+    if (data.error) {
+      res.status(404).send(data);
+    } else {
+      res.status(200).json(data);
     }
+  },
+  createComment: async (req, res, next) => {
+    console.log(req.body);
+    const data = await boardService.createComment(req.body);
+    if(!data.success){
+      res.status(200).json(data);
+    }else{
+      res.status(400).json(data);
+    }
+    },
+    createReply: async (req, res, next) => {
+      console.log(req.body);
+      const data =await boardService.createReply(req.body);
+      if(!data.success){
+        res.status(200).json(data);
+      }else{
+        res.status(400).json(data);
+      }
   },
 };
