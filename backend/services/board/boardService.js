@@ -61,7 +61,14 @@ module.exports = {
   },
   getAllCommentById : async(postId) => {
     return await boardRepository.findAllCommentById(postId)
+  },
+  createComment : async (commentData) => {
+    return await boardRepository.InsertComment(commentData)
+  },
+  createReply : async (replyData) => {
+    return await boardRepository.InsertReply(replyData)
   }
+
 };
 
 

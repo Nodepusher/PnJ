@@ -1,8 +1,16 @@
+// src/Components/Detail/InputCommentComponent.js
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { createComment, createReply, getPostStatsData } from "../../store/postDetailReducer";
 
 const InputCommentComponent = ({ type, replyCallback }) => {
   const nav = useNavigate();
+  const dispatch = useDispatch();
+  const commentId = useSelector(state => state.detail.commentId);
+  const postId = useSelector(state => state.detail.postId);
+  const userId = 1;
   const moveToLoginPage = () => {
     nav("/login");
   };
@@ -14,16 +22,20 @@ const InputCommentComponent = ({ type, replyCallback }) => {
     setComment(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (type === "comment") {
       console.log("Comment submitted:", comment);
+      await dispatch(createComment(postId, comment, userId));
     } else if (type === "reply") {
+      console.log(commentId);
       console.log("Reply submitted:", comment);
+      await dispatch(createReply(postId, comment, userId, commentId));
       replyCallback();
     }
     setComment("");
+    await dispatch(getPostStatsData(postId)); // 댓글 작성 후 댓글 목록 업데이트
   };
 
   const StBtn = {
@@ -63,9 +75,7 @@ const InputCommentComponent = ({ type, replyCallback }) => {
                 <img
                   alt="임웅빈"
                   sizes="(max-width: 240px) 100vw, 240px"
-                  srcset="
-                                    
-                                "
+                  srcset=""
                   src=""
                   decoding="async"
                   data-nimg="fill"
