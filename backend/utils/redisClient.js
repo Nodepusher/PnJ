@@ -7,6 +7,7 @@ const redisClient = redis.createClient({
     host: process.env.REDIS_HOST,
   },
   password: process.env.REDIS_PASSWORD,
+  legacyMode: true,
 });
 redisClient.on("connect", () => console.log("Connected to Redis!"));
 redisClient.on("error", (err) => console.log("Redis Client Error", err));

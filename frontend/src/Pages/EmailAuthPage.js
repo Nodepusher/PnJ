@@ -4,8 +4,7 @@ import EmailAuthContainer from "../Containers/Login/EmailAuthContainer";
 const EmailAuthPage = () => {
   return (
     <>
-        <EmailAuthContainer />
-  
+      <EmailAuthContainer />
     </>
   );
 };

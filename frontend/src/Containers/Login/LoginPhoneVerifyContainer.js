@@ -4,7 +4,7 @@ import CommonSectionContainer from "./CommonSectionContainer";
 import LoginInput from "../../Components/Login/LoginInput";
 import Modal from "../../Components/Login/Modal";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useHistory } from "react-router-dom";
 import { useUser } from "../../Context/UserContext";
 
 const CommonButton = React.lazy(() =>
@@ -28,18 +28,24 @@ const LoginPhoneVerifyContainer = () => {
 
     if (isValidNumber) {
       try {
-        const res = await axios.post("/api/auth/send-sms", { phoneNumber });
-        console.log(res);
-        if (res.status === 200) {
+        const res = await axios.post(
+          "http://localhost:4000/user/exist-verify",
+          { phone: phoneNumber }
+        );
+
+        if (res.data.redirect === "/verify-phone-token") {
           setCheckedNumber(true);
-          updateUserInfo('phoneNumber', phoneNumber);
+          updateUserInfo("phoneNumber", phoneNumber);
           nav("/login/verify-phone-token");
-        } else {
-          setCheckedNumber(true);
+        } else if (res.data.redirect === "/existing-account") {
+          setCheckedNumber(false);
+          const { email, phone } = res.data;
+          const queryParams = new URLSearchParams({ email, phone }).toString();
+          nav(`/login/existing-account?${queryParams}`);
         }
       } catch (error) {
         setCheckedNumber(true);
-        nav("/login/verify-phone-token");
+        // nav("/login/verify-phone-token");
       }
     }
   }, [phoneNumber, updateUserInfo, nav]);
@@ -64,12 +70,19 @@ const LoginPhoneVerifyContainer = () => {
             </label>
           </div>
           <Suspense fallback={<div>Loading...</div>}>
-            <CommonButton onClickNav={onClickVerifyPhone} text={"인증번호 받기"} />
+            <CommonButton
+              onClickNav={onClickVerifyPhone}
+              text={"인증번호 받기"}
+            />
           </Suspense>
         </div>
       </CommonSectionContainer>
       {checkedNumber && (
-        <Modal type="phone" modalState={checkedNumber} closeModal={closeModal} />
+        <Modal
+          type="phone"
+          modalState={checkedNumber}
+          closeModal={closeModal}
+        />
       )}
     </>
   );

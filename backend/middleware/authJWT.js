@@ -1,9 +1,10 @@
-const { verify } = require("../utils/jwtUtil");
+const jwt = require("../utils/jwtUtil");
 
 const authJWT = (req, res, next) => {
   if (req.headers.authorization) {
     const token = req.headers.authorization.split("Bearer ")[1]; // header에서 access token을 가져옵니다.
-    const result = verify(token); // token을 검증합니다.
+    console.log("token", token);
+    const result = jwt.verify(token); // token을 검증합니다.
     if (result.success) {
       // token이 검증되었으면 req에 값을 세팅하고, 다음 콜백함수로 갑니다.
       req.email = result.email;
