@@ -6,7 +6,7 @@ import { updatePostData } from "../../store/postWriteReducer";
 const WriteEditorContainer = ({ editorRef }) => {
   const dispatch = useDispatch();
   const { isEdit, inputData } = useSelector((state) => state.write);
-
+  console.log(":::::::::::",inputData)
   const [inputTitle, setInputTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -14,7 +14,7 @@ const WriteEditorContainer = ({ editorRef }) => {
     const text = e.target.value;
     setInputTitle(text);
   };
-
+  console.log(":::::::", isEdit)
   const addClass = "font_title_bold_md";
 
   useEffect(() => {

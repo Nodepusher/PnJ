@@ -1,7 +1,7 @@
 import React from 'react';
 import InputCommentComponent from './InputCommentComponent';
 
-const ReplyComponent = ({ showReply, hideReply, StBtn, StImg, replies }) => {
+const ReplyComponent = ({ showReply, hideReply, StBtn, StImg, replies, formatDateTime }) => {
     /* 
     Post 작성자의 id와 댓글 작성자의 id를 매칭하는 로직 필요 
     적절한 데이터 값을 받아오면 54번째 줄 아래와 같이 수정 필요
@@ -53,7 +53,7 @@ const ReplyComponent = ({ showReply, hideReply, StBtn, StImg, replies }) => {
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-[4px]">
                                             <div className="content_primary font_label_bold_lg">
-                                                {reply.userInfo.userName}
+                                                {reply.User.name}
                                             </div>
                                             {isAuthor && (
                                                 <div
@@ -81,7 +81,7 @@ const ReplyComponent = ({ showReply, hideReply, StBtn, StImg, replies }) => {
                                     <div className="flex gap-[13px]">
                                         <div className="flex items-center">
                                             <span className="content_quaternary font_label_regular_sm">
-                                                {reply.updateTime}
+                                                {formatDateTime(reply.updatedAt)}                                                
                                             </span>
                                         </div>
                                     </div>

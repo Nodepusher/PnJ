@@ -20,6 +20,10 @@ const File = sequelize.define('File', {
         type: DataTypes.STRING(5),
         allowNull: false,
     },
+    fileSize: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    }
 });
 
 module.exports = File;

@@ -15,7 +15,7 @@ export const getPostData = (category, page = 1, dropdownState = "최신순") => 
   console.log("category in getPostData:", category);
   return async (dispatch) => {
     try {
-      const response = await axios.post("http://localhost:4000/board", {
+      const response = await axios.post("http://localhost:4000/board/list", {
         
           dropdownState,
           category,

@@ -26,7 +26,7 @@ module.exports = {
       postData.category = "qna"
     }
     console.log("fileData",fileData)
-    console.log(":::::: ",fileData.length)
+    // console.log(":::::: ",fileData.length)
     console.log(":::::: ",!!fileData)
     var fileJson = { files: [] };
     
@@ -37,15 +37,30 @@ module.exports = {
           uuid: file.filename.split('.')[0],
           uploadPath: file.path,
           fileName: file.originalname,
-          fileType: file.mimetype.split('/')[1]
+          fileType: file.mimetype.split('/')[1],
+          fileSize : file.size
         }; 
       });
       console.log("fileJson :: ",fileJson)
     }
     
-    
-
     return await boardRepository.InsertPost(postData, fileJson);
+  },
+  findBoardById : async (boardId) => {
+    return await boardRepository.findBoardById(boardId)
+  },
+  getPostById : async (id) => {
+    const data = await boardRepository.findPostById(id)
+    const category = data.postData.category;
+    data.category = category
+    // console.log(data)
+    return data;
+  },
+  getPostByCategory : async (category) => {
+    return await boardRepository.findPostByCategory(category)
+  },
+  getAllCommentById : async(postId) => {
+    return await boardRepository.findAllCommentById(postId)
   }
 };
 

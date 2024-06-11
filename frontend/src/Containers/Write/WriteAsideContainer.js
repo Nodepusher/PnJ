@@ -19,6 +19,7 @@ const WriteAsideContainer = ({ setModalOn, selectedFiles, setSelectedFiles }) =>
     const [msg, setMsg] = useState('')
     const dropdownRef = useRef()
     const inputFileRef = useRef()
+    const category = inputData.category 
 
     const handleMenuClick = (selected) => {
         setDropdownState(selected)
@@ -84,11 +85,19 @@ const WriteAsideContainer = ({ setModalOn, selectedFiles, setSelectedFiles }) =>
     },[selectedFiles])
     useEffect(() => {
         if (isEdit) {
+            
+
             setTagList(inputData.tag);
-            setDropdownState(inputData.category);
+            // setDropdownState(inputData.category);
+            setDropdownState(
+                category === 'info' ? '정보 공유' : 
+                    category === 'study' ? '스터디 해요' : 'Q&A' 
+            );
+            setTagList(inputData.tag)
         } else {
             setTagList([]);
             setDropdownState(null);
+            setTagList([])
         }
       }, [isEdit]);
 
