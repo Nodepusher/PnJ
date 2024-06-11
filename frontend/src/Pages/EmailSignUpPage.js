@@ -3,13 +3,12 @@ import EmailSignUpContainer from "../Containers/Login/EmailSignUpContainer";
 import BackButton from "../Components/Login/BackButton";
 
 const EmailSignUpPage = () => {
-  return(
+  return (
     <>
-        <BackButton url={"/login/email-login"}/>
-        <EmailSignUpContainer></EmailSignUpContainer>
+      <BackButton url={"/login/email-login"} />
+      <EmailSignUpContainer></EmailSignUpContainer>
     </>
-  )
-  
-}
+  );
+};
 
 export default EmailSignUpPage;

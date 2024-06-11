@@ -1,11 +1,12 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import Modal from "../../Components/Login/Modal";
-const EmailAuthSuccessComponent = ({userEmail}) => {
+import { useUser } from "../../Context/UserContext";
+const EmailAuthSuccessComponent = ({ userEmail }) => {
   return (
-  <>
-    <section className="mx-auto flex h-full w-full max-w-[400px] flex-col justify-start lg:w-[400px]">
+    <>
+      <section className="mx-auto flex h-full w-full max-w-[400px] flex-col justify-start lg:w-[400px]">
         <div className="mt-[62px] flex flex-col items-center justify-center lg:mt-[116px]">
           <svg
             viewBox="0 0 92 89"
@@ -49,11 +50,13 @@ const EmailAuthSuccessComponent = ({userEmail}) => {
           </a>
         </div>
       </section>
-  </>
-  )
-}
+    </>
+  );
+};
 
 const EmailAuthSuccessContainer = () => {
+  const { user } = useUser();
+  /*
   const nav = useNavigate()
   const {token} = useParams();
   const option = {
@@ -109,6 +112,12 @@ const EmailAuthSuccessContainer = () => {
     <>
     {checkModal && <Modal type={emailAuthState} modalState={checkModal} closeModal={closeModal} />}
     {emailAuthState === 'successEmailAuth' && <EmailAuthSuccessComponent userEmail={userEmail}/>}
+    </>
+  );
+  */
+  return (
+    <>
+      <EmailAuthSuccessComponent userEmail={user.email} />
     </>
   );
 };
