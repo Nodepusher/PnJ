@@ -1,8 +1,8 @@
-import React, {memo} from "react";
+import React, { memo } from "react";
 import PostListComponent from "../../Components/MyPage/PostListComponent";
 import MyPagePostHeader from "../../Components/MyPage/MyPagePostHeader";
 import { useState, useReducer, useEffect } from "react";
-import HeaderContainer from "../Common/HeaderContainer"
+import HeaderContainer from "../Common/HeaderContainer";
 import axios from "axios";
 const mockData = [
   {
@@ -35,28 +35,33 @@ const MyPagePostContainer = () => {
   const [post, setPost] = useState(mockData);
   const [postState, setPostState] = useState();
   const [sort, setSort] = useState("최신순");
-    useEffect(() =>{
-        const requestPost = async () => {
-          try {
-            // 요청
-            const res = await axios.get("http://localhost:4000/selectPost")
-            setPost(res.data)
-            post.length > 0 ? setPostState(true) : setPostState(false)
-          } catch (error) {
-            // setPost(mockData)
-            post.length > 0 ? setPostState(true) : setPostState(false)
-          }
-        }
-        requestPost()
-    },[post.length])
+  useEffect(() => {
+    const requestPost = async () => {
+      try {
+        // 요청
+        const res = await axios.get("http://localhost:4000/user/myPost");
+        setPost(res.data);
+        post.length > 0 ? setPostState(true) : setPostState(false);
+      } catch (error) {
+        // setPost(mockData)
+        post.length > 0 ? setPostState(true) : setPostState(false);
+      }
+    };
+    requestPost();
+  }, [post.length]);
 
   return (
     <>
       <div className="shrink-0 grow basis-0 overflow-x-auto">
         <div className="mx-auto grid w-desktop-grid grid-cols-12 gap-x-[16px] gap-y-0 pb-[64px]">
           <div className="col-span-full">
-            <MyPagePostHeader post={post} setSort={setSort} sort={sort}/>
-            <PostListComponent postState={postState} post={post} sort={sort} setPost={setPost}/>
+            <MyPagePostHeader post={post} setSort={setSort} sort={sort} />
+            <PostListComponent
+              postState={postState}
+              post={post}
+              sort={sort}
+              setPost={setPost}
+            />
           </div>
         </div>
       </div>

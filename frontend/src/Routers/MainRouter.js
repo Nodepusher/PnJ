@@ -37,10 +37,7 @@ const MainRouter = () => {
         <Route path="verify-phone" element={<LoginPhoneVerifyPage />} />
         <Route path="verify-phone-token" element={<InputVerifyNumberPage />} />
         <Route path="existing-account" element={<ExistingAccountPage />} />
-        <Route
-          path="success-verify-email/:token"
-          element={<EmailAuthSuccessPage />}
-        />
+        <Route path="success-verify-email" element={<EmailAuthSuccessPage />} />
         <Route path="email-auth" element={<EmailAuthPage />} />
         <Route path="email-sign-up" element={<EmailSignUpPage />} />
         <Route path="find-password" element={<FindPasswordPage />} />
