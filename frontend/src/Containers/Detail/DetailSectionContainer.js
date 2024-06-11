@@ -5,16 +5,16 @@ import DetailSectionContent from './DetailSectionContent';
 import DetailSectionTop from './DetailSectionTop';
 import PostList from '../../Components/List/PostList';
 import PostHeader from '../../Components/Detail/PostHeader';
+import Spinner from '../Common/Spinner'
 import { useSelector } from 'react-redux';
 
 const DetailSectionContainer = () => {
     const { authorPosts, categoryPosts, post } = useSelector((state) => state.detail.postData);
     const loading = useSelector((state) => state.detail.loading);
     const error = useSelector((state) => state.detail.error);
-
     // 로딩 중일 때 로딩 메시지를 표시
     if (loading) {
-        return <div>Loading...</div>;
+        return <div><Spinner/></div>;
     }
 
     // 오류가 발생했을 때 오류 메시지를 표시

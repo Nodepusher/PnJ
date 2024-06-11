@@ -1,10 +1,17 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import InputCommentComponent from '../../Components/Detail/InputCommentComponent';
 import CommentComponent from '../../Components/Detail/CommentComponent';
 import { useSelector } from 'react-redux';
+import Spinner from '../Common/Spinner'
 const DetailReplyContainer = () => {
+    
+    
     const commentData = useSelector(state => state.detail.postStats);
-    console.log("asdfdasfadsfadsfdas",commentData)
+    
+    const loading = useSelector((state) => state.detail.statsLoading);
+    if (loading) {
+        return <div><Spinner/></div>;
+    }
     // const comments = [
     //     {
     //         id: 1,
@@ -68,7 +75,6 @@ const DetailReplyContainer = () => {
     // const totalLength = commentData.comments.reduce((acc, comment) => {
     //     return acc + 1 + comment.replies.length;
     // }, 0);
-
     return (
         <div>
             <h4 className="font_headline_bold_sm content_secondary">
@@ -78,9 +84,9 @@ const DetailReplyContainer = () => {
             {/* 댓글 인풋 컴포넌트 
             만약 댓글 입력 후 게시버튼을 눌렀는데 댓글이 등록이 안되면 게시 버튼 눌렀을때 commentComponent를 리렌더링 시켜야함
             답글 달기의 게시버튼은 버블링때문에 리렌더링 되고있어서 문제 없음 */}
-            <InputCommentComponent type={type} />
+            <InputCommentComponent type={type}  />
             <div className="h-[23px]"></div>
-            <CommentComponent commentData={commentData} />
+            <CommentComponent commentData={commentData}  />
         </div>
     );
 };

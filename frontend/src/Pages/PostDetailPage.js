@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPostData, getPostStatsData, setPageState } from '../store/postDetailReducer';
+import { getPostData, getPostStatsData, setPageState, getPostId } from '../store/postDetailReducer';
 import { useSearchParams } from 'react-router-dom';
 import HeaderContainer from '../Containers/Common/HeaderContainer';
 import DetailFooterContainer from '../Containers/Detail/DetailFooterContainer';
@@ -11,8 +11,11 @@ const PostDetailPage = () => {
     const state = useSelector(state => state.detail)
     const [searchParams, setSearchParams] = useSearchParams();
     const postId = searchParams.get("post")
+    
     // const currentPostId = 2;
     useEffect(() => {
+        console.log(postId)
+        dispatch(getPostId(postId))
         dispatch(getPostData(postId));
         dispatch(getPostStatsData(postId));
         // dispatch(setPageState(postId));
