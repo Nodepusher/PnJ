@@ -1,7 +1,7 @@
 /**
  * action.js 디스패치로 부터 받음
  */
-import { login } from "./action";
+import { login, loadUser } from "./action";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -64,6 +64,21 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         state.loading = false;
         state.user = null;
+      })
+
+      // 유저 로드 관련
+      .addCase(loadUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loadUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.isAuthenticated = action.paylaod;
+      })
+      .addCase(loadUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });

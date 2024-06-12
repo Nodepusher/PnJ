@@ -28,21 +28,23 @@ module.exports = {
         // 발급한 refresh token을 redis에 key를 user의 id로 하여 저장합니다.
         //redisClient.set(login.email, refreshToken);
         redisClient.set(email, refreshToken);
+        redisClient.expire(email, 60 * 60 * 24);
 
-        res.set({
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: "Bearer " + accessToken,
-          Refresh: "Bearer " + refreshToken,
+        res.cookie("accessToken", accessToken, {
+          httpOnly: true,
+          secure: false,
+          sameSite: "strict",
+        });
+
+        res.cookie("refreshToken", refreshToken, {
+          httpOnly: true,
+          secure: false,
+          sameSite: "strict",
         });
 
         res.status(200).send({
           // client에게 토큰 모두를 반환합니다.
           success: true,
-          /*
-          token: {
-            accessToken,
-            refreshToken,
-          },*/
         });
       } else {
         res.status(401).send({
@@ -51,6 +53,33 @@ module.exports = {
         });
       }
     } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        success: false,
+        message: "500",
+      });
+    }
+  },
+
+  logout: async (req, res, next) => {
+    try {
+      // Access Token 및 Refresh Token 변수 선언
+      const accessToken = req.cookies.accessToken;
+      const refreshToken = req.cookies.refreshToken;
+
+      // 쿠키에 담은 토큰들 삭제
+      res.clearCookie("accessToken");
+      res.clearCookie("refreshToken");
+
+      // Redis에서 토큰들 삭제
+      redisClient.del(refreshToken);
+      redisClient.del(accessToken);
+
+      return res.status(200).json({
+        message: "로그아웃 성공",
+      });
+    } catch (err) {
+      console.log(err);
       res.status(500).json({
         success: false,
         message: "500",

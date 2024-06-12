@@ -1,65 +1,96 @@
-const { sign, verify, refreshVerify } = require("../util/jwtUtil");
-const jwt = require("jsonwebtoken");
+const jwt = require("../util/jwtUtil");
+const jsonwebtoken = require("jsonwebtoken");
 
-const refresh = async (req, res) => {
-  // access token과 refresh token의 존재 유무를 체크합니다.
-  if (req.headers.authorization && req.headers.refresh) {
-    const authToken = req.headers.authorization.split("Bearer ")[1];
-    const refreshToken = req.headers.refresh;
+const refresh = async (req, res, next) => {
+  console.log(req.cookies.refreshToken);
+  if (req.cookies.accessToken && req.cookies.refreshToken) {
+    const accessToken = req.cookies.accessToken;
+    const refreshToken = req.cookies.refreshToken;
 
-    // access token 검증 -> expired여야 함.
-    const authResult = verify(authToken);
+    const authResult = jwt.verify(accessToken);
 
-    // access token 디코딩하여 user의 정보를 가져옵니다.
-    const decoded = jwt.decode(authToken);
-
-    // 디코딩 결과가 없으면 권한이 없음을 응답.
+    const decoded = jsonwebtoken.decode(accessToken);
+    console.log("decoded", decoded);
     if (decoded === null) {
       res.status(401).send({
-        success: false,
+        ok: false,
         message: "No authorized!",
       });
     }
 
-    /* access token의 decoding 된 값에서
-      유저의 id를 가져와 refresh token을 검증합니다. */
-    const refreshResult = refreshVerify(refreshToken, decoded.email);
+    const refreshResult = await refreshVerify(refreshToken, decoded.email);
 
-    // 재발급을 위해서는 access token이 만료되어 있어야합니다.
     if (authResult.success === false && authResult.message === "jwt expired") {
-      // 1. access token이 만료되고, refresh token도 만료 된 경우 => 새로 로그인해야합니다.
-      if (refreshResult.success === false) {
+      if (refreshResult.ok === false) {
         res.status(401).send({
           success: false,
-          message: "No authorized!",
+          message: "No authorized",
         });
       } else {
-        // 2. access token이 만료되고, refresh token은 만료되지 않은 경우 => 새로운 access token을 발급
-        const newAccessToken = sign(email);
+        const new_accessToken = jwt.sign({
+          email: decoded.email,
+        });
+
+        res.cookie("accessToken", new_accessToken, {
+          httpOnly: true,
+          secure: false,
+          sameSite: "strict",
+        });
 
         res.status(200).send({
-          // 새로 발급한 access token과 원래 있던 refresh token 모두 클라이언트에게 반환합니다.
           success: true,
           data: {
-            accessToken: newAccessToken,
-            refreshToken,
+            email: decoded.email,
           },
         });
       }
-    } else {
-      // 3. access token이 만료되지 않은경우 => refresh 할 필요가 없습니다.
-      res.status(400).send({
-        success: false,
-        message: "Acess token is not expired!",
-      });
     }
   } else {
-    // access token 또는 refresh token이 헤더에 없는 경우
-    res.status(400).send({
+    res.status(403).send({
       success: false,
-      message: "Access token and refresh token are need for refresh!",
+      error: "토큰이 없습니다.",
     });
   }
 };
 
 module.exports = refresh;
+
+/*
+{
+  // 엑세스 토큰 만료 시 재발급을 위한 미들웨어
+  if (req.expired) {
+    try {
+      const cookies = req.cookies;
+      // 쿠키가 없는 경우
+      if (!cookies?.issuebombomCookie)
+        return res.status(403).send({ msg: '엑세스 토큰 재발급을 위한 쿠키 없음' });
+
+      // 쿠키가 있으면
+      const refreshToken = cookies.issuebombomCookie;
+      // DB에 저장된 쿠키가 있는지 확인
+      const user = await User.findOne({ refreshToken });
+      if (!user) return res.status(403).send({ msg: '해당 쿠키에는 등록된 리프레시 토큰이 없음' });
+      // 쿠키 검증
+      jwt.verify(refreshToken, process.env.REFRESH_TOKEN_KEY, (err, user) => {
+        // refresh token이 만료된 경우 재로그인 안내
+        if (err) return res.status(403).send({ msg: '리프레시 토큰이 만료됨 (재 로그인 필요)' });
+
+        // 신규 토큰 생성
+        const accessToken = jwt.sign(
+          { username: user.username, _id: user._id },
+          process.env.ACCESS_TOKEN_KEY,
+          { expiresIn: '30m' }
+        );
+        // 재발급
+        res.setHeader('Authorization', `Bearer ${accessToken}`);
+        res.status(200).send({ msg: '엑세스 토큰이 만료되어 재발급' });
+      });
+    } catch (err) {
+      console.error(err.name, ':', err.message);
+      return res.status(500).send({ msg: `${err.message}` });
+    }
+  } else {
+    next();
+  }
+}
+*/

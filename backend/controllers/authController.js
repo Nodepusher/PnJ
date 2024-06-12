@@ -1,3 +1,4 @@
+const { getUserByUserEmail } = require("../repositories/user/userRepository");
 const authService = require("../services/user/authService");
 const jwtUtil = require("../utils/jwtUtil");
 
@@ -128,6 +129,71 @@ module.exports = {
       res.status(500).json({
         success: false,
         message: "인증 확인 실패 code 500",
+      });
+    }
+  },
+  authAndRefreshToken: async (req, res) => {
+    try {
+      if (req.cookies.accessToken && req.cookies.refreshToken) {
+        const accessToken = req.cookies.accessToken;
+        const refreshToken = req.cookies.refreshToken;
+
+        // 1. 액세스 토큰 검증
+        const authResult = jwtUtil.verify(accessToken);
+        const refreshResult = await jwtUtil.refreshVerify(
+          refreshToken,
+          authResult.email
+        );
+
+        /*
+        console.log('1. 액세스 토큰 검증 authResult', authResult)
+        if (!authResult.success) {
+          throw new Error(authResult.message); // 검증 실패 시 에러 처리
+        }
+  
+        // 2. 리프레시 토큰 검증
+        const decoded = jsonwebtoken.decode(accessToken);
+        if (!decoded) {
+          throw new Error('Decoding failed'); // 디코딩 실패 시 에러 처리
+        }
+        */
+
+        // 3. 액세스 토큰 만료 시 리프레시 처리
+        if (
+          authResult.success === false &&
+          authResult.message === "jwt expired"
+        ) {
+          if (!refreshResult) {
+            throw new Error("Refresh failed"); // 리프레시 실패 시 에러 처리
+          }
+
+          // 액세스 토큰 만료 & 리프레시 토큰 검증 통과 시 새 액세스 토큰 발급
+          const newAccessToken = jwtUtil.sign({ email: authResult.email });
+
+          // 쿠키에 새 액세스 토큰 저장
+          res.cookie("accessToken", newAccessToken, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "strict",
+          });
+        }
+
+        const user = getUserByUserEmail(authResult.email);
+        // 성공적으로 인증된 경우 클라이언트 사이드로 응답 반환
+        res.status(200).send({
+          isAuthenticated: true,
+          user: user,
+          message: "You are authorized!",
+        });
+      } else {
+        throw new Error("Tokens not found"); // 토큰이 없을 때 에러 처리
+      }
+    } catch (error) {
+      console.error("Authentication error:", error.message);
+      res.status(401).send({
+        isAuthenticated: false,
+        success: false,
+        message: error.message,
       });
     }
   },
