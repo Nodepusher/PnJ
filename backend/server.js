@@ -13,6 +13,7 @@ const boardRoutes = require("./routes/boardRoutes");
 const userRoutes = require("./routes/userRoutes");
 // const fileRoute = require('./routes/fileRoute')
 const db = require("./models"); // *** models/index.js를 참고함
+const refreshMiddleware = require("./middleware/refresh");
 
 const app = express();
 const fs = require("fs");
@@ -45,6 +46,8 @@ app.use(helmet.frameguard({ action: "deny" })); // 클릭재킹 방지
 // app.use(helmet.hsts({ maxAge: 31536000 }));
 app.use(helmet.noSniff()); // 스니프 방지
 app.use(helmet.xssFilter()); // xss 방지
+
+app.use(refreshMiddleware);
 
 app.use("/board", boardRoutes);
 app.use("/user", userRoutes);

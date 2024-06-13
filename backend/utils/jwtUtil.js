@@ -5,7 +5,7 @@ const secret = process.env.JWT_SECRET;
 const refreshSecret = process.env.JWT_REFRESH_SECRET;
 
 module.exports = {
-  sign: (email, tokenType = "default", expiresIn = "15m") => {
+  sign: (email, tokenType = "default", expiresIn = "10s") => {
     const payload = {
       email: email,
       token_type: tokenType,
