@@ -1,7 +1,7 @@
 /**
  * action.js 디스패치로 부터 받음
  */
-import { login } from "./action";
+import { login, loadUser, logout } from "./action";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -32,7 +32,7 @@ const authSlice = createSlice({
             state.isAuthenticated = true;
             state.loading = false;
         },
-        */
+        
     // 인증 에러 시 토큰과 사용자 정보를 초기화하고 인증 상태를 업데이트
     authError: (state) => {
       state.token = null;
@@ -46,7 +46,7 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.loading = false;
       state.user = null;
-    },
+    },*/
   },
   extraReducers: (builder) => {
     builder
@@ -64,11 +64,41 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         state.loading = false;
         state.user = null;
+      })
+
+      // 유저 로드 관련
+      .addCase(loadUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loadUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.isAuthenticated = action.payload.isAuthenticated;
+      })
+      .addCase(loadUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+
+      // 로그아웃 관련 관련
+      .addCase(logout.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = null;
+        state.token = null;
+        state.isAuthenticated = false;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
 // 각 액션 크리에이터는 해당 리듀서를 트리거
-export const { userLoaded, loginSuccess, authError, logout } =
-  authSlice.actions;
+export const { userLoaded, loginSuccess, authError } = authSlice.actions;
 
 export default authSlice.reducer;

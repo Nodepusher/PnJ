@@ -5,11 +5,12 @@
  */
 
 import { createAsyncThunk } from "@reduxjs/toolkit"; // 비동기 작업을 생성하는 Redux Toolkit 함수
+import axios from "axios";
 // import api from "../utils/api";
 // import { userLoaded, loginSuccess, authError } from "./authReducer";
-import axios from "axios";
 
 // 사용자 데이터를 로드하는 비동기 작업 (Thunk)
+/*
 export const loadUser = createAsyncThunk(
   "auth/loadUser",
   async (_, { dispatch }) => {
@@ -26,6 +27,22 @@ export const loadUser = createAsyncThunk(
     }
   }
 );
+*/
+
+// 비동기 액션 생성자 정의
+export const loadUser = createAsyncThunk(
+  "auth/loadUser", // 액션 타입
+  async (_, { dispatch }) => {
+    try {
+      const res = await axios.get("http://localhost:4000/user/check-auth");
+      const { isAuthenticated, user } = res.data;
+      return { isAuthenticated, user }; // 서버에서 받은 데이터 반환
+    } catch (error) {
+      console.log("loadUser error", error);
+      throw error; // 에러 발생 시 throw하여 에러 처리
+    }
+  }
+);
 
 // 사용자 로그인을 처리하는 비동기 작업 (Thunk)
 export const login = createAsyncThunk(
@@ -34,13 +51,11 @@ export const login = createAsyncThunk(
     // 페이로드는 이메일과 비밀번호를 포함하는 객체
 
     try {
-      console.log("액션 들어왔는지");
       // '/auth/login' 엔드포인트로 POST 요청을 보내 로그인을 시도
       const res = await axios.post("http://localhost:4000/user/login", {
         email,
         password,
       });
-
       const { token, success } = res.data;
       return { token, success };
 
@@ -58,6 +73,19 @@ export const login = createAsyncThunk(
       throw err;
       // 에러가 발생하면, authError 액션을 디스패치
       // dispatch(authError());
+    }
+  }
+);
+
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async (_, { dispatch }) => {
+    try {
+      await axios.get("http://localhost:4000/user/logout");
+      return true;
+    } catch (err) {
+      console.log(err);
+      throw err;
     }
   }
 );

@@ -60,8 +60,8 @@ const ComboBoxButton = ({ sort, setSort, comboVisible, setComboVisible }) => {
               className="shrink-0 ml-[4px] w-[10px] h-[10px]"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M3.27 8.42a1.076 1.076 0 0 1 1.587-.13L12 14.832l7.143-6.544a1.076 1.076 0 0 1 1.586.13 1.26 1.26 0 0 1-.122 1.696L12 18l-8.607-7.885A1.26 1.26 0 0 1 3.27 8.42Z"
               ></path>
             </svg>
@@ -79,7 +79,11 @@ const ComboBox = ({ setSort, setComboVisible }) => {
     <>
       <div className="absolute top-[42px] right-0 z-10 w-[248px]">
         <ul className="rounded-[8px] p-[8px] surface_primary shadow-menu false">
-          <li className="undefined" data-option-value="publishedAt" tabindex="-1">
+          <li
+            className="undefined"
+            data-option-value="publishedAt"
+            tabindex="-1"
+          >
             <button
               aria-label="dropdown option"
               className="surface_primary content_primary font_label_regular_lg w-full overflow-hidden text-ellipsis whitespace-nowrap rounded-[8px] py-[12px] px-[20px] text-left hover:surface_tertiary"

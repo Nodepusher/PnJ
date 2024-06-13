@@ -1,11 +1,11 @@
 import React from "react";
 
 const checkedTrue = {
-    backgroundColor: '#7e69fe',
-}
+  backgroundColor: "#7e69fe",
+};
 const checkedFalse = {
-    backgroundColor: 'rgb(232 232 232)',
-}
+  backgroundColor: "rgb(232 232 232)",
+};
 const CheckBoxOption = ({ label, onChange, isChecked }) => {
   return (
     <label className="relative flex w-full items-center false">
@@ -15,15 +15,18 @@ const CheckBoxOption = ({ label, onChange, isChecked }) => {
         checked={isChecked}
         onChange={onChange}
       />
-      <div style={isChecked ? checkedTrue : checkedFalse} className="surface_accent flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-full">
+      <div
+        style={isChecked ? checkedTrue : checkedFalse}
+        className="surface_accent flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-full"
+      >
         <svg
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
           className="content_primary_inverse content_disabled h-[12px] w-[12px]"
         >
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M19.702 7.288a1 1 0 0 1 .01 1.414l-8.59 8.723-5.834-5.923a1 1 0 0 1 1.424-1.404l4.41 4.477 7.166-7.277a1 1 0 0 1 1.414-.01Z"
           ></path>
         </svg>
@@ -37,7 +40,6 @@ const CheckBoxOption = ({ label, onChange, isChecked }) => {
 };
 
 const UserSignUpCheckBox = ({ onChange, options, allChecked }) => {
-
   return (
     <div className="border_primary rounded-[8px] border p-[20px]">
       <div className="border_secondary border-b pb-[16px]">
