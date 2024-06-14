@@ -1,5 +1,6 @@
 const User = require("../../models/userModel");
 const userRepository = require("../../repositories/user/userRepository");
+const path = require("path");
 
 module.exports = {
   login: async (email, password) => {
@@ -56,22 +57,38 @@ module.exports = {
     }
   },
   resetPassword: async (newPassword) => {},
-  getMyPost: async (email) => {
+  getMyPost: async (userId) => {
     try {
-      const user = await userRepository.getUserByUserEmail(email);
-
-      if (!user) {
+      if (!userId) {
         throw new Error("User not found");
       }
 
-      const where = { userId: user.id };
-      const include = [{ model: User, attributes: ["email"] }];
+      const where = { user_id: userId };
+      const include = [{ model: User, attributes: ["id"] }];
 
       const myPosts = await userRepository.getBoards(where, include);
-
       return { success: true, myPosts };
     } catch (error) {
-      console.error("Error in getPostsByUserEmail service:", error);
+      console.error("Error in getMyPost service:", error);
+      return { success: false, message: error.message };
+    }
+  },
+  updateUserInfo: async (email, password, originalname) => {
+    try {
+      if (!email) {
+        throw new Error("User not found");
+      }
+
+      const fileUploadsDir = path.join("uploads", "file");
+      const where = { email: email };
+      const include = {
+        password: password,
+        profile: `${fileUploadsDir}\\${email}_profileImage_${originalname}`,
+      };
+      await userRepository.updateUser(include, where);
+      return { success: true, message: "update user info success" };
+    } catch (error) {
+      console.error("Error in updateUserInfo userService:", error);
       return { success: false, message: error.message };
     }
   },

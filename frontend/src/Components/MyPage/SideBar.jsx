@@ -2,7 +2,7 @@ import React from "react";
 import { usePage } from "../../Context/MyPageContext";
 import { useSearchParams } from "react-router-dom";
 import tempImage from "../../Assets/images/temp.png";
-const SideBar = () => {
+const SideBar = ({ userName, profile }) => {
   const { page, updatePageInfo } = usePage();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -46,7 +46,7 @@ const SideBar = () => {
               <img
                 alt="프로필 이미지"
                 sizes="(max-width: 240px) 100vw, 240px"
-                src={tempImage}
+                src={profile === "default_image" ? tempImage : profile}
                 data-nimg="fill"
                 className="rounded-full profile_image"
                 loading="lazy"
@@ -55,7 +55,7 @@ const SideBar = () => {
             </button>
           </div>
           <h2 className="content_primary font_title_bold_md mb-[12px] text-center">
-            유저 이름
+            {userName}
           </h2>
         </div>
       </div>

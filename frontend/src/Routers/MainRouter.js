@@ -2,11 +2,11 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 
 import PrivateRoute from "./PrivateRoute";
+import MyPage from "../Pages/MyPage/MyPage";
 
 import PostListPage from "../Pages/PostListPage";
 import PostDetailPage from "../Pages/PostDetailPage";
 import LoginPage from "../Pages/LoginPage";
-import MyPage from "../Pages/MyPage/MyPage";
 import PostWritepage from "../Pages/PostWritepage";
 
 import LoginMainPage from "../Pages/LoginMainPage";
@@ -47,7 +47,6 @@ const MainRouter = () => {
       <Route path="/myPage" element={<PrivateRoute />}>
         <Route path="" element={<MyPage />} />
       </Route>
-      <Route path="/myPage" element={<MyPage />} />
       <Route path="/write" element={<PostWritepage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

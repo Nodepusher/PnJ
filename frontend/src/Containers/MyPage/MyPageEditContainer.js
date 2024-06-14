@@ -7,9 +7,13 @@ import EditInputMsg from "../../Components/MyPage/EditInputMsg";
 import SaveInfo from "../../Components/MyPage/SaveInfo";
 import axios from "axios";
 import "./animation.css";
+import { loadUser } from "../../store/action";
 
-const MyPageEditContainer = () => {
+const MyPageEditContainer = ({ user }) => {
+  // 보여주기 위한 스테이트
   const [uploadImage, setUploadImage] = useState(null);
+  // 전송하기 위한 스테이트
+  const [file, setFile] = useState(null);
   const [updateUserInfo, setUpdateUserInfo] = useState({
     password: "",
     passwordCheck: "",
@@ -32,7 +36,7 @@ const MyPageEditContainer = () => {
       ...prevState,
       [name]: value,
     }));
-  },[]);
+  }, []);
 
   useEffect(() => {
     setValid({
@@ -48,7 +52,7 @@ const MyPageEditContainer = () => {
     });
   }, [updateUserInfo]);
 
-  const handleSave = async() => {
+  const handleSave = async () => {
     const isPasswordEmpty =
       !updateUserInfo.password && !updateUserInfo.passwordCheck;
     const isPasswordValid = valid.passwordValid && valid.passwordMatch;
@@ -56,19 +60,21 @@ const MyPageEditContainer = () => {
     const canUpdate = isPasswordEmpty || isPasswordValid;
     if (canUpdate) {
       setUpdateState(true);
+      const formData = new FormData();
+      formData.append("profileImage", file);
+      formData.append("password", updateUserInfo.password);
+
       try {
         // 서버에 업데이트 요청 보내기
-        await axios.post("http://localhost:4000/updateUserInfo", {
-          // userLoginInfo : loginToken --> 로그인된 상태의 정보를 같이 보내서 업데이트
-          // update user info
-          password: updateUserInfo.password,
-          profileImage: uploadImage, // 이미지가 바뀌는경우는 상관없지만 이미지가 동일한 경우 서버에서 어떤식으로 받아서 업데이트를 시킬건지 생각
+        await axios.put("http://localhost:4000/user/updateUserInfo", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         });
         console.log("Update successful");
       } catch (error) {
         console.error("Error updating user info:", error);
       }
-      
     } else {
       setUpdateState(false);
     }
@@ -82,6 +88,14 @@ const MyPageEditContainer = () => {
     }, 2000); // 2초 후에 fadeOut 시작
   };
 
+  useEffect(() => {
+    setUserInfo({
+      email: user.email,
+      phoneNumber: user.phone,
+    });
+  }, [loadUser.fulfilled]);
+
+  /*
   // 렌더링 시, 로그인된 상태의 정보가 있어야함
   const tempLoginData = {};
   useEffect(() => {
@@ -91,130 +105,137 @@ const MyPageEditContainer = () => {
           params: tempLoginData,
         });
         setUserInfo({
-          email: res.data.email,
-          phoneNumber: res.data.phoneNumber,
+          email: user.email,
+          phoneNumber: user.phone,
         });
         if (
           res.data.profileImage !== undefined &&
           res.data.profileImage !== null
         ) {
-          setUploadImage(res.data.profileImage);
+          setUploadImage(user.profile);
         } else {
           setUploadImage(false);
         }
       } catch (error) {
         setUploadImage(false);
         setUserInfo({
-          email: "test@test.com",
-          phoneNumber: "010-1234-1234",
+          email: user.email,
+          phoneNumber: user.phone,
         });
       }
     };
 
     fetchUserInfo();
   }, [updateState]);
-
+  */
   return (
     <>
       <div className="shrink-0 grow basis-0 overflow-x-auto">
         <div className="mx-auto grid w-desktop-grid grid-cols-12 gap-x-[16px] gap-y-0 pb-[64px]">
           <div className="col-span-full">
-            <EditInfo handleSave={handleSave} />
-            <div>
-              <div className="mx-auto grid w-desktop-grid grid-cols-12 gap-x-[16px] gap-y-0 pb-[64px]">
-                <div className="col-span-3 pt-[48px] mobile:pt-[56px] pb-[20px] mobile:pb-[40px]">
-                  <div className="w-[297px]">
-                    <div className="mb-[7px] flex items-center">
-                      <strong className="content_primary font_title_bold_md mr-[6px]">
-                        프로필 사진
-                      </strong>
+            <form
+              onSubmit={handleSave}
+              method="PUT"
+              encType="multipart/form-data"
+            >
+              <EditInfo />
+              <div>
+                <div className="mx-auto grid w-desktop-grid grid-cols-12 gap-x-[16px] gap-y-0 pb-[64px]">
+                  <div className="col-span-3 pt-[48px] mobile:pt-[56px] pb-[20px] mobile:pb-[40px]">
+                    <div className="w-[297px]">
+                      <div className="mb-[7px] flex items-center">
+                        <strong className="content_primary font_title_bold_md mr-[6px]">
+                          프로필 사진
+                        </strong>
+                      </div>
+                      <span className="content_secondary font_body_regular_md">
+                        크리에이터를 대표하는 프로필 사진을 등록 해주세요.
+                      </span>
                     </div>
-                    <span className="content_secondary font_body_regular_md">
-                      크리에이터를 대표하는 프로필 사진을 등록 해주세요.
-                    </span>
                   </div>
-                </div>
-                <div className="col-span-7 col-start-6 mobile:pt-[56px] pb-[40px]">
-                  <div className="flex">
-                    <EditUpdateImage
-                      uploadImage={uploadImage}
-                      setUploadImage={setUploadImage}
-                    />
-                    <div>
-                      <EditUploadImage
+                  <div className="col-span-7 col-start-6 mobile:pt-[56px] pb-[40px]">
+                    <div className="flex">
+                      <EditUpdateImage
                         uploadImage={uploadImage}
                         setUploadImage={setUploadImage}
                       />
+                      <div>
+                        <EditUploadImage
+                          uploadImage={uploadImage}
+                          setUploadImage={setUploadImage}
+                          setFile={setFile}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <hr className="border_secondary col-span-full w-full border-t-[1px]" />
-                <div className="col-span-3 pt-[48px] mobile:pt-[56px] pb-[20px] mobile:pb-[40px]">
-                  <div className="w-[297px]">
-                    <div className="mb-[7px] flex items-center">
-                      <strong className="content_primary font_title_bold_md mr-[6px]">
-                        계정 설정
-                      </strong>
+                  <hr className="border_secondary col-span-full w-full border-t-[1px]" />
+                  <div className="col-span-3 pt-[48px] mobile:pt-[56px] pb-[20px] mobile:pb-[40px]">
+                    <div className="w-[297px]">
+                      <div className="mb-[7px] flex items-center">
+                        <strong className="content_primary font_title_bold_md mr-[6px]">
+                          계정 설정
+                        </strong>
+                      </div>
+                      <span className="content_secondary font_body_regular_md">
+                        사용자 계정 재설정
+                      </span>
                     </div>
-                    <span className="content_secondary font_body_regular_md">
-                      사용자 계정 재설정
-                    </span>
                   </div>
-                </div>
-                <div className="col-span-7 col-start-6 mobile:pt-[56px] pb-[40px]">
-                  <div className="flex flex-col justify-between gap-y-[16px]">
-                    <div>
+                  <div className="col-span-7 col-start-6 mobile:pt-[56px] pb-[40px]">
+                    <div className="flex flex-col justify-between gap-y-[16px]">
+                      <div>
+                        <EditUpdateInput
+                          content={"이메일 아이디"}
+                          type={"text"}
+                          value={userInfo.email}
+                          readOnly={true}
+                          placeholder={""}
+                        />
+                      </div>
+                      <div>
+                        <EditUpdateInput
+                          name={"password"}
+                          content={"비밀번호"}
+                          type={"password"}
+                          value={updateUserInfo.password}
+                          readOnly={false}
+                          onChangeInput={onChangeInput}
+                          placeholder={"비밀번호를 입력해주세요"}
+                        />
+                        <EditInputMsg
+                          text={
+                            "비밀번호는 8자 이상 특수문자 1개 이상 입력해주세요."
+                          }
+                          isValid={valid.passwordValid}
+                        />
+                      </div>
+                      <div>
+                        <EditUpdateInput
+                          name={"passwordCheck"}
+                          content={"비밀번호 재입력"}
+                          type={"password"}
+                          value={updateUserInfo.passwordCheck}
+                          readOnly={false}
+                          onChangeInput={onChangeInput}
+                          placeholder={"다시한번 비밀번호를 입력해주세요"}
+                        />
+                        <EditInputMsg
+                          text={"비밀번호와 일치하지 않습니다."}
+                          isValid={valid.passwordMatch}
+                        />
+                      </div>
                       <EditUpdateInput
-                        content={"이메일 아이디"}
+                        content={"연락처"}
                         type={"text"}
-                        value={userInfo.email}
+                        value={userInfo.phoneNumber}
                         readOnly={true}
-                        placeholder={""}
                       />
                     </div>
-                    <div>
-                      <EditUpdateInput
-                        name={"password"}
-                        content={"비밀번호"}
-                        type={"password"}
-                        value={updateUserInfo.password}
-                        readOnly={false}
-                        onChangeInput={onChangeInput}
-                        placeholder={"비밀번호를 입력해주세요"}
-                      />
-                      <EditInputMsg
-                        text={
-                          "비밀번호는 8자 이상 특수문자 1개 이상 입력해주세요."
-                        }
-                        isValid={valid.passwordValid}
-                      />
-                    </div>
-                    <div>
-                      <EditUpdateInput
-                        name={"passwordCheck"}
-                        content={"비밀번호 재입력"}
-                        type={"password"}
-                        value={updateUserInfo.passwordCheck}
-                        readOnly={false}
-                        onChangeInput={onChangeInput}
-                        placeholder={"다시한번 비밀번호를 입력해주세요"}
-                      />
-                      <EditInputMsg
-                        text={"비밀번호와 일치하지 않습니다."}
-                        isValid={valid.passwordMatch}
-                      />
-                    </div>
-                    <EditUpdateInput
-                      content={"연락처"}
-                      type={"text"}
-                      value={userInfo.phoneNumber}
-                      readOnly={true}
-                    />
                   </div>
+                  <hr className="border_secondary col-span-full w-full border-t-[1px]" />
                 </div>
-                <hr className="border_secondary col-span-full w-full border-t-[1px]" />
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

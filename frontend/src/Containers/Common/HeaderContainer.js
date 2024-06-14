@@ -12,13 +12,15 @@ import Spinner from "./Spinner";
 const HeaderContainer = ({ search = false, login = false, mypage = false }) => {
   const nav = useNavigate();
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const user = useSelector((state) => state.auth.user);
+  const { user } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(true);
+  const profile = user ? user.profile : false;
+  const isAuthenticated =
+    sessionStorage.getItem("isAuthenticated") === "true" ? true : false;
+
   const moveToLoginPage = () => {
     nav("/login");
   };
-
   const moveToMyPage = () => {
     nav("/myPage");
   };
@@ -44,15 +46,17 @@ const HeaderContainer = ({ search = false, login = false, mypage = false }) => {
 
   console.log("공통 헤더 콘솔로그");
   useEffect(() => {
-    const fetchData = async () => {
-      await dispatch(loadUser());
-      setLoading(false);
-    };
-    fetchData();
-  }, [dispatch]);
+    if (isAuthenticated) {
+      console.log("아니 이거 들어오는거 맞음?");
+      const fetchData = async () => {
+        await dispatch(loadUser());
+      };
+      fetchData();
+    }
+    setLoading(false);
+  }, []);
 
   if (loading) {
-    console.log("로딩 몇번 들어오냐");
     return <Spinner />;
   }
 
@@ -64,12 +68,11 @@ const HeaderContainer = ({ search = false, login = false, mypage = false }) => {
       <Logo />
       <div style={Stdiv}>
         {search && <SearchButton />}
-        {login &&
-          (isAuthenticated ? (
-            <LoggedIn onClick={moveToLogout} profile={user.profile} />
-          ) : (
-            <LoginButton onClick={moveToLoginPage} text="로그인" />
-          ))}
+        {login && isAuthenticated ? (
+          <LoggedIn onClick={moveToLogout} profile={profile} />
+        ) : (
+          <LoginButton onClick={moveToLoginPage} text="로그인" />
+        )}
         {mypage && <MypageButton onClick={moveToMyPage} />}
       </div>
     </nav>

@@ -5,7 +5,7 @@ const secret = process.env.JWT_SECRET;
 const refreshSecret = process.env.JWT_REFRESH_SECRET;
 
 module.exports = {
-  sign: (email, tokenType = "default", expiresIn = "10s") => {
+  sign: (email, tokenType = "default", expiresIn = "5m") => {
     const payload = {
       email: email,
       token_type: tokenType,
@@ -39,7 +39,7 @@ module.exports = {
     return jwt.sign({}, refreshSecret, {
       // refresh token은 payload 없이 발급
       algorithm: "HS256",
-      expiresIn: "1h",
+      expiresIn: "1d",
     });
   },
   refreshVerify: async (token, email) => {
