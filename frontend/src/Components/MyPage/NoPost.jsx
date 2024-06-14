@@ -1,6 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const NoPost = () => {
+  const nav = useNavigate();
+  const moveToWritePage = () => {
+    nav("/write");
+  };
   return (
     <>
       <div className="col-span-full mt-[88px] flex flex-col items-center justify-center">
@@ -91,6 +96,7 @@ const NoPost = () => {
             aria-label="button"
             className="font_button_bold_md relative flex items-center justify-center h-[32px] rounded-[16px] content_primary_inverse surface_accent hover:surface_accent_active active:surface_accent_active disabled:surface_disabled px-[16px] false disabled:content_disabled"
             type="button"
+            onClick={moveToWritePage}
           >
             포스트 작성하기
           </button>

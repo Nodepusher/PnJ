@@ -36,6 +36,10 @@ export const loadUser = createAsyncThunk(
     try {
       const res = await axios.get("http://localhost:4000/user/check-auth");
       const { isAuthenticated, user } = res.data;
+      sessionStorage.setItem(
+        "isAuthenticated",
+        JSON.stringify(isAuthenticated)
+      );
       return { isAuthenticated, user }; // 서버에서 받은 데이터 반환
     } catch (error) {
       console.log("loadUser error", error);
@@ -57,6 +61,7 @@ export const login = createAsyncThunk(
         password,
       });
       const { token, success } = res.data;
+      sessionStorage.setItem("isAuthenticated", JSON.stringify(true));
       return { token, success };
 
       // 성공하면, 응답 데이터를 포함하여 loginSuccess 액션을 디스패치
@@ -82,6 +87,7 @@ export const logout = createAsyncThunk(
   async (_, { dispatch }) => {
     try {
       await axios.get("http://localhost:4000/user/logout");
+      sessionStorage.removeItem("isAuthenticated");
       return true;
     } catch (err) {
       console.log(err);

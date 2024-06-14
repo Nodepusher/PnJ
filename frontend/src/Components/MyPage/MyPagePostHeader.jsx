@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const MyPagePostHeader = ({ post, sort, setSort }) => {
   const [comboVisible, setComboVisible] = useState(false);
+  const nav = useNavigate();
+
+  const moveToWritePage = () => {
+    nav("/write");
+    console.log("들어가기");
+  };
 
   return (
     <>
       <div className="surface_primary sticky top-0 z-10">
         <header className="flex items-center justify-between pt-[40px]">
           <h1 className="content_primary font_headline_bold_lg">포스트</h1>
-          <PostButton />
+          <PostButton moveToWritePage={moveToWritePage} />
         </header>
         <div className="mt-[26px]">
           <ul className="border_black_opacity flex h-[36px] gap-x-[20px] border-b">
@@ -116,7 +123,8 @@ const ComboBox = ({ setSort, setComboVisible }) => {
     </>
   );
 };
-const PostButton = () => {
+
+const PostButton = ({ moveToWritePage }) => {
   return (
     <>
       <div>
@@ -125,6 +133,7 @@ const PostButton = () => {
             aria-label="button"
             className="font_button_bold_md relative flex items-center justify-center h-[40px] rounded-[20px] content_primary_inverse surface_primary_inverse hover:surface_primary_inverse_active active:surface_primary_inverse_active disabled:surface_disabled px-[16px] false disabled:content_disabled"
             type="button"
+            onClick={moveToWritePage}
           >
             작성
           </button>

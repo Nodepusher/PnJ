@@ -105,13 +105,16 @@ module.exports = {
 
   getMyPost: async (req, res) => {
     try {
-      const post = await userService.getMyPost(email);
+      const { user } = req.auth;
+      console.log(user);
+      const post = await userService.getMyPost(user.id);
       if (!post) {
         res.status(400).json(post);
         return;
       }
       res.status(200).json(post);
     } catch (error) {
+      console.log(error);
       res.status(500).json({
         success: false,
         message: "500",
@@ -124,6 +127,34 @@ module.exports = {
       res.status(200).json(req.auth);
     } catch (error) {
       res.status(500).json({
+        success: false,
+        message: "500",
+      });
+    }
+  },
+
+  updateUserInfo: async (req, res) => {
+    try {
+      const { email } = req.auth.user;
+      const { password } = req.body;
+      const { originalname } = req.file;
+      const update = await userService.updateUserInfo(
+        email,
+        password,
+        originalname
+      );
+
+      if (!update) {
+        res.status(400).json({ success: false });
+        return;
+      }
+      res.status(200).json({
+        success: true,
+      });
+    } catch (error) {
+      console.log("updateUserInfo Controller Error", error);
+      res.status(500).json({
+        file: req.file,
         success: false,
         message: "500",
       });

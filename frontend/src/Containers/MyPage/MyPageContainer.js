@@ -5,16 +5,12 @@ import MyPageEditContainer from "./MyPageEditContainer";
 import MyPagePostContainer from "./MyPagePostContainer";
 import { usePage } from "../../Context/MyPageContext";
 import { useSelector } from "react-redux";
+import Spinner from "../Common/Spinner";
 
 const MyPageContainer = () => {
   const { page, updatePageInfo } = usePage();
   const [searchParams] = useSearchParams();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  console.log("Mypage isAuthenticated", isAuthenticated);
-
-  if (!isAuthenticated) {
-    console.log("몇번 들어오나 보자");
-  }
+  const { user, loading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const myPost = searchParams.get("myPost") === "true";
@@ -25,12 +21,19 @@ const MyPageContainer = () => {
       updatePageInfo("myInfo", myInfo);
     }
   }, [searchParams, page.myPost, page.myInfo, updatePageInfo]);
+  console.log("마이페이지 컨테이너");
 
+  if (loading) {
+    return <Spinner />;
+  }
   return (
     <>
-      <SideBar />
+      <SideBar
+        userName={user ? user.name : ""}
+        profile={user ? user.profile : ""}
+      />
       {page.myPost && <MyPagePostContainer />}
-      {page.myInfo && <MyPageEditContainer />}
+      {page.myInfo && <MyPageEditContainer user={user} />}
     </>
   );
 };

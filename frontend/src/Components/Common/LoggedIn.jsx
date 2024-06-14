@@ -10,14 +10,15 @@ const LoggedIn = ({ onClick, profile }) => {
     inset: "0px",
     color: "transparent",
   };
+
   return (
     <div className="flex">
-      <div className="relative mr-[6px]">
+      <div className="relative mr-[16px]">
         <button className="relative block h-[32px] w-[32px] rounded-full">
           <img
             alt="프로필 이미지"
             sizes="10vw"
-            src={profile === "default_image" ? defaultImage : ""}
+            src={profile === "default_image" ? defaultImage : profile}
             decoding="async"
             data-nimg="fill"
             className="rounded-full"

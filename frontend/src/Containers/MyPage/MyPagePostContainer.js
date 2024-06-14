@@ -1,49 +1,25 @@
 import React, { memo } from "react";
-import PostListComponent from "../../Components/MyPage/PostListComponent";
 import MyPagePostHeader from "../../Components/MyPage/MyPagePostHeader";
-import { useState, useReducer, useEffect } from "react";
-import HeaderContainer from "../Common/HeaderContainer";
+import PostListComponent from "../../Components/MyPage/PostListComponent";
+import { useState, useEffect } from "react";
 import axios from "axios";
-const mockData = [
-  {
-    id: 0,
-    title: "post 1",
-    content: "test Post 1",
-    date: "2024.05.15",
-  },
-  {
-    id: 1,
-    title: "post 2",
-    content: "test Post 2",
-    date: "2024.05.16",
-  },
-  {
-    id: 2,
-    title: "post 3",
-    content: "test Post 3",
-    date: "2024.05.17",
-  },
-  {
-    id: 3,
-    title: "post 4",
-    content: "test Post 4",
-    date: "2024.05.18",
-  },
-];
 
 const MyPagePostContainer = () => {
-  const [post, setPost] = useState(mockData);
-  const [postState, setPostState] = useState();
+  const [post, setPost] = useState([]);
+  const [postState, setPostState] = useState(false);
   const [sort, setSort] = useState("최신순");
+
   useEffect(() => {
     const requestPost = async () => {
       try {
         // 요청
-        const res = await axios.get("http://localhost:4000/user/myPost");
-        setPost(res.data);
+        const res = await axios.get("http://localhost:4000/user/mypost");
+        const myPosts = res.data.myPosts;
+        setPost(myPosts);
         post.length > 0 ? setPostState(true) : setPostState(false);
       } catch (error) {
         // setPost(mockData)
+        console.log("에러 마이페이지 포스트 컨테이너 에러", error);
         post.length > 0 ? setPostState(true) : setPostState(false);
       }
     };
