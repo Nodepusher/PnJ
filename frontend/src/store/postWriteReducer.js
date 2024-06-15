@@ -156,13 +156,11 @@ const postWriteReducer = (state = initialState, action) => {
         },
       };
     case UPDATE_FILE_DATA:
-      console.log("Reducer received payload:", action.payload);
       return produce(state, (draft) => {
         const fileSet = new Set(draft.file.concat(action.payload));
         draft.file = Array.from(fileSet);
       });
     case DELETE_FILE:
-      console.log("Reducer received payload:", action.payload);
       return produce(state, (draft) => {
         const fileSet = new Set(draft.deleteFile.concat(action.payload));
         draft.deleteFile = Array.from(fileSet);
