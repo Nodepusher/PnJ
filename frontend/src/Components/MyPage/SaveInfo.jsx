@@ -1,7 +1,7 @@
 import React from "react";
 import "./animation.css";
 
-const SaveInfo = ({ animationClass,updateState }) => {
+const SaveInfo = ({ animationClass, updateState }) => {
   return (
     <div className={`fixed flex flex-col surface_secondary_inverse
         bottom-[30px] left-[50%] z-50 box-border min-w-[358px] translate-x-[-50%] translate-y-[-50%] rounded-[8px] py-[16px] px-[20px] shadow-s ${animationClass}`}>

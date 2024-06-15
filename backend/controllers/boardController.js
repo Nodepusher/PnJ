@@ -99,6 +99,20 @@ module.exports = {
       res.status(400).json(result);
     }
   },
+  updatePost : async (req, res, next) => {
+    console.log("update :::::: ",  req.files);
+    console.log("update body",req.body);
+    const fileJson = req.files.files;
+    const postData = JSON.parse(req.body.postData);
+    const sendResult = await boardService.updatePost(postData, fileJson);
+    console.log(sendResult.success)
+    console.log(sendResult.message)
+    if(sendResult.success){
+      res.status(200).json(sendResult);
+    }else{
+      res.status(400).json(sendResult);
+    }
+  },
   getBoardById: async (req, res, next) => {
     console.log(req.body);
     const boardData = await boardService.findBoardById(req.body.boardId);
