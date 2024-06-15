@@ -2,13 +2,13 @@
  *  config는 .env파일로 할지 아니면 config.js로 할지 알아보고 정해야 할 듯
  *
  */
-
+require('dotenv').config();
 const dbConfig = {
-    port: 22300,
-    host: '124.59.38.48',
-    username: 'PnJuser',
-    password: '2024homeserver',
-    database: 'PnJdb',
+    port: process.env.MYSQL_PORT,
+    host: process.env.MYSQL_HOST,
+    username: process.env.MYSQL_USERNAME,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
     dialect: 'mysql',
 }
 
