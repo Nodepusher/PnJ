@@ -2,7 +2,7 @@ import React from "react";
 import { usePage } from "../../Context/MyPageContext";
 import { useSearchParams } from "react-router-dom";
 import tempImage from "../../Assets/images/temp.png";
-const SideBar = () => {
+const SideBar = ({ userName, profile }) => {
   const { page, updatePageInfo } = usePage();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -46,7 +46,7 @@ const SideBar = () => {
               <img
                 alt="프로필 이미지"
                 sizes="(max-width: 240px) 100vw, 240px"
-                src={tempImage}
+                src={profile === "default_image" ? tempImage : profile}
                 data-nimg="fill"
                 className="rounded-full profile_image"
                 loading="lazy"
@@ -55,7 +55,7 @@ const SideBar = () => {
             </button>
           </div>
           <h2 className="content_primary font_title_bold_md mb-[12px] text-center">
-            유저 이름
+            {userName}
           </h2>
         </div>
       </div>
@@ -98,8 +98,8 @@ const PostMenu = ({ postState }) => {
         >
           <path d="M15.078 3.137H8.6a5.6 5.6 0 0 0-5.6 5.6v6.8a5.6 5.6 0 0 0 5.6 5.6h6.8a5.6 5.6 0 0 0 5.6-5.6V8.944l-1.6 1.6v4.993a4 4 0 0 1-4 4H8.6a4 4 0 0 1-4-4v-6.8a4 4 0 0 1 4-4h4.878l1.6-1.6Z"></path>
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="m20.692 7.116.534-.534a2.567 2.567 0 1 0-3.63-3.63L9.41 11.138l-1.103 3.74a.8.8 0 0 0 .994.993l3.74-1.103 6.52-6.52.005.004 1.13-1.132-.004-.004Zm-2.262 0-6.233 6.233-1.94.572.572-1.94 6.233-6.233 1.368 1.368Zm1.131-1.132-1.367-1.367.533-.534a.967.967 0 0 1 1.368 1.368l-.534.533Z"
           ></path>
         </svg>
@@ -128,8 +128,8 @@ const MyInfo = ({ myInfoState }) => {
           className="h-[24px] w-[24px] mr-[10px] content_secondary"
         >
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M15.4 4.4H8.8a4.4 4.4 0 0 0-4.4 4.4v6.6a4.4 4.4 0 0 0 4.4 4.4h6.6a4.4 4.4 0 0 0 4.4-4.4V8.8a4.4 4.4 0 0 0-4.4-4.4ZM8.8 2.8a6 6 0 0 0-6 6v6.6a6 6 0 0 0 6 6h6.6a6 6 0 0 0 6-6V8.8a6 6 0 0 0-6-6H8.8Z"
           ></path>
           <path d="M12.2 12.5a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5ZM12.2 16.4c2.21 0 4-.672 4-1.5s-1.79-1.5-4-1.5-4 .672-4 1.5 1.79 1.5 4 1.5Z"></path>
@@ -142,8 +142,8 @@ const MyInfo = ({ myInfoState }) => {
           className="h-[24px] w-[24px] mr-[10px] content_accent_active"
         >
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M8.8 2.8a6 6 0 0 0-6 6v6.6a6 6 0 0 0 6 6h6.6a6 6 0 0 0 6-6V8.8a6 6 0 0 0-6-6H8.8Zm5.65 7.45a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm1.75 4.65c0 .828-1.79 1.5-4 1.5-2.209 0-4-.672-4-1.5s1.791-1.5 4-1.5c2.21 0 4 .672 4 1.5Z"
           ></path>
         </svg>

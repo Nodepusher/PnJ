@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const MyPagePostHeader = ({ post, sort, setSort }) => {
   const [comboVisible, setComboVisible] = useState(false);
+  const nav = useNavigate();
+
+  const moveToWritePage = () => {
+    nav("/write");
+    console.log("들어가기");
+  };
 
   return (
     <>
       <div className="surface_primary sticky top-0 z-10">
         <header className="flex items-center justify-between pt-[40px]">
           <h1 className="content_primary font_headline_bold_lg">포스트</h1>
-          <PostButton />
+          <PostButton moveToWritePage={moveToWritePage} />
         </header>
         <div className="mt-[26px]">
           <ul className="border_black_opacity flex h-[36px] gap-x-[20px] border-b">
@@ -60,8 +67,8 @@ const ComboBoxButton = ({ sort, setSort, comboVisible, setComboVisible }) => {
               className="shrink-0 ml-[4px] w-[10px] h-[10px]"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M3.27 8.42a1.076 1.076 0 0 1 1.587-.13L12 14.832l7.143-6.544a1.076 1.076 0 0 1 1.586.13 1.26 1.26 0 0 1-.122 1.696L12 18l-8.607-7.885A1.26 1.26 0 0 1 3.27 8.42Z"
               ></path>
             </svg>
@@ -79,7 +86,11 @@ const ComboBox = ({ setSort, setComboVisible }) => {
     <>
       <div className="absolute top-[42px] right-0 z-10 w-[248px]">
         <ul className="rounded-[8px] p-[8px] surface_primary shadow-menu false">
-          <li className="undefined" data-option-value="publishedAt" tabindex="-1">
+          <li
+            className="undefined"
+            data-option-value="publishedAt"
+            tabindex="-1"
+          >
             <button
               aria-label="dropdown option"
               className="surface_primary content_primary font_label_regular_lg w-full overflow-hidden text-ellipsis whitespace-nowrap rounded-[8px] py-[12px] px-[20px] text-left hover:surface_tertiary"
@@ -112,7 +123,8 @@ const ComboBox = ({ setSort, setComboVisible }) => {
     </>
   );
 };
-const PostButton = () => {
+
+const PostButton = ({ moveToWritePage }) => {
   return (
     <>
       <div>
@@ -121,6 +133,7 @@ const PostButton = () => {
             aria-label="button"
             className="font_button_bold_md relative flex items-center justify-center h-[40px] rounded-[20px] content_primary_inverse surface_primary_inverse hover:surface_primary_inverse_active active:surface_primary_inverse_active disabled:surface_disabled px-[16px] false disabled:content_disabled"
             type="button"
+            onClick={moveToWritePage}
           >
             작성
           </button>

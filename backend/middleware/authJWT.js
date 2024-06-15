@@ -1,10 +1,11 @@
 const jwt = require("../utils/jwtUtil");
+const jsonwebtoken = require("jsonwebtoken");
 
 const authJWT = (req, res, next) => {
   if (req.headers.authorization) {
-    const token = req.headers.authorization.split("Bearer ")[1]; // header에서 access token을 가져옵니다.
-    console.log("token", token);
-    const result = jwt.verify(token); // token을 검증합니다.
+    const accessToken = req.cookies.accessToken;
+    console.log("accessToken", accessToken);
+    const result = jwt.verify(accessToken);
     if (result.success) {
       // token이 검증되었으면 req에 값을 세팅하고, 다음 콜백함수로 갑니다.
       req.email = result.email;

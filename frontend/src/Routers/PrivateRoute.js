@@ -1,20 +1,23 @@
 // src/components/PrivateRoute.js
 
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Navigate, Outlet } from 'react-router-dom';
+import React from "react";
+import { useSelector } from "react-redux";
+import { Navigate, Outlet } from "react-router-dom";
+import Spinner from "../Containers/Common/Spinner";
 
 const PrivateRoute = () => {
-//   const { isAuthenticated, loading } = useSelector(state => state.auth);
-  let { isAuthenticated, loading } = useSelector(state => state.auth);
-  // 임시 
-  isAuthenticated = true;
-  loading = false;
+  const isAuthenticated =
+    sessionStorage.getItem("isAuthenticated") === "true" ? true : false;
+  const loading = false;
+  console.log("프라이빗", isAuthenticated, loading);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+  return loading ? (
+    <Spinner />
+  ) : isAuthenticated ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/login" />
+  );
 };
 
 export default PrivateRoute;

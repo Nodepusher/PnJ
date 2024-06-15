@@ -3,13 +3,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { createComment, createReply, getPostStatsData } from "../../store/postDetailReducer";
+import {
+  createComment,
+  createReply,
+  getPostStatsData,
+} from "../../store/postDetailReducer";
 
 const InputCommentComponent = ({ type, replyCallback }) => {
   const nav = useNavigate();
   const dispatch = useDispatch();
-  const commentId = useSelector(state => state.detail.commentId);
-  const postId = useSelector(state => state.detail.postId);
+  const commentId = useSelector((state) => state.detail.commentId);
+  const postId = useSelector((state) => state.detail.postId);
   const userId = 1;
   const moveToLoginPage = () => {
     nav("/login");
@@ -75,7 +79,7 @@ const InputCommentComponent = ({ type, replyCallback }) => {
                 <img
                   alt="임웅빈"
                   sizes="(max-width: 240px) 100vw, 240px"
-                  srcset=""
+                  srcSet=""
                   src=""
                   decoding="async"
                   data-nimg="fill"

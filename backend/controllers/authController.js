@@ -1,5 +1,7 @@
+const { getUserByUserEmail } = require("../repositories/user/userRepository");
 const authService = require("../services/user/authService");
 const jwtUtil = require("../utils/jwtUtil");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   sendVerifyPhoneCode: async (req, res) => {
@@ -50,7 +52,7 @@ module.exports = {
     const { phone } = req.body;
     try {
       const result = await authService.existUserVerify(phone);
-      console.log(result.exist);
+
       if (result.exist) {
         res.status(200).json({
           redirect: "/existing-account",
@@ -82,7 +84,6 @@ module.exports = {
     const { email } = req.body;
     try {
       const result = await authService.sendVerifyEmail(email);
-      console.log("result", result.success);
       if (email && result.success) {
         res.status(200).json({
           code: 200,

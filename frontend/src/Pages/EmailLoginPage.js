@@ -4,6 +4,7 @@ import BackButton from "../Components/Login/BackButton";
 
 const EmailLoginPage = () => {
   const backButtonUrl = "/login";
+
   return (
     <>
       <BackButton url={backButtonUrl} />

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/action";
 import CommonSectionContainer from "./CommonSectionContainer";
 import LoginInput from "../../Components/Login/LoginInput";
-import { useNavigate, Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 const LoginButton = React.lazy(() =>
   import("../../Components/Button/LoginButton")
 );
@@ -23,8 +23,7 @@ const EmailLoginContainer = () => {
     password: "",
   });
 
-  const { isAuthenticated, error } = useSelector((state) => ({
-    isAuthenticated: state.auth.isAuthenticated,
+  const { error } = useSelector((state) => ({
     error: state.auth.error,
   }));
 
@@ -48,6 +47,8 @@ const EmailLoginContainer = () => {
     },
     [dispatch, formData]
   );
+  const isAuthenticated =
+    sessionStorage.getItem("isAuthenticated") === "true" ? true : false;
 
   if (isAuthenticated) {
     //return <Navigate to="/myPage" />;

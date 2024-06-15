@@ -1,13 +1,14 @@
-import './App.css';
-import { Route, Routes } from 'react-router-dom';
-import MainRouter from './Routers/MainRouter';
-import NotFoundPage from './Pages/NotFoundPage/NotFoundPage';
+import "./App.css";
+import MainRouter from "./Routers/MainRouter";
+import axios from "axios";
+
 function App() {
-    return (
-        <>
-            <MainRouter />
-        </>
-    );
+  axios.defaults.withCredentials = true;
+  return (
+    <>
+      <MainRouter />
+    </>
+  );
 }
 
 export default App;

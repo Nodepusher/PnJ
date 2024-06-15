@@ -2,9 +2,10 @@ const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
 const redisClient = require("./redisClient");
 const secret = process.env.JWT_SECRET;
+const refreshSecret = process.env.JWT_REFRESH_SECRET;
 
 module.exports = {
-  sign: (email, tokenType = "default", expiresIn = "1h") => {
+  sign: (email, tokenType = "default", expiresIn = "5m") => {
     const payload = {
       email: email,
       token_type: tokenType,
@@ -35,7 +36,7 @@ module.exports = {
   },
   refresh: () => {
     // refresh token 발급
-    return jwt.sign({}, secret, {
+    return jwt.sign({}, refreshSecret, {
       // refresh token은 payload 없이 발급
       algorithm: "HS256",
       expiresIn: "1d",
@@ -51,7 +52,7 @@ module.exports = {
       const data = await getAsync(email); // refresh token 가져오기
       if (token === data) {
         try {
-          jwt.verify(token, secret);
+          jwt.verify(token, refreshSecret);
           return true;
         } catch (err) {
           return false;

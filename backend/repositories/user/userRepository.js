@@ -72,4 +72,12 @@ module.exports = {
       throw error;
     }
   },
+  updateUser: async (include, where = []) => {
+    try {
+      return await User.update(include, { where: where });
+    } catch (error) {
+      console.error("Error in updateUser userRepository:", error);
+      throw error;
+    }
+  },
 };
