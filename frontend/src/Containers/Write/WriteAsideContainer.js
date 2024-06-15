@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import DropdownList from "../../Components/List/DropdownList";
 import { useDispatch, useSelector } from "react-redux";
-
-import { updatePostData, deleteFileData } from "../../store/postWriteReducer";
+import { updatePostData } from "../../store/postWriteReducer";
 import ToastMsg from "../../utils/ToastMsg";
 import AsideRadioBtn from "../../Components/Write/AsideRadioBtn";
 import AsideInputTag from "../../Components/Write/AsideInputTag";
@@ -14,9 +13,8 @@ const WriteAsideContainer = ({
   setSelectedFiles,
 }) => {
   const dispatch = useDispatch();
-  const { isEdit, inputData, file } = useSelector((state) => state.write);
-  const [deleteFile, setDeleteFile] = useState([]);
-  console.log("deleteFile", deleteFile);
+  const { isEdit, inputData } = useSelector((state) => state.write);
+
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownState, setDropdownState] = useState(null);
   const [tagList, setTagList] = useState([]);
@@ -60,12 +58,6 @@ const WriteAsideContainer = ({
     if (type === "tag") {
       setTagList([...tagList.filter((_, i) => i !== index)]);
     } else if (type === "file") {
-      console.log(index);
-      let fileToDelete;
-      if (selectedFiles[index].id) {
-        fileToDelete = selectedFiles[index];
-        setDeleteFile([...deleteFile, fileToDelete]);
-      }
       setSelectedFiles(selectedFiles.filter((_, i) => index !== i));
     }
   };
@@ -76,6 +68,8 @@ const WriteAsideContainer = ({
     }
   };
 
+  // const [selectedFiles, setSelectedFiles] = useState([])
+
   const selectFile = useCallback((e) => {
     e.preventDefault();
     const files = e.target.files;
@@ -83,11 +77,9 @@ const WriteAsideContainer = ({
     setSelectedFiles((selectedFiles) => [...selectedFiles, ...fileArray]);
     e.target.value = "";
   }, []);
-
   useEffect(() => {
     console.log(selectedFiles);
   }, [selectedFiles]);
-
   useEffect(() => {
     if (isEdit) {
       setTagList(inputData.tag);
@@ -100,17 +92,13 @@ const WriteAsideContainer = ({
           : "Q&A"
       );
       setTagList(inputData.tag);
-      console.log("length", file.length);
-      setSelectedFiles(file);
     } else {
       setTagList([]);
       setDropdownState(null);
       setTagList([]);
-      setSelectedFiles([]);
     }
   }, [isEdit]);
 
-  console.log(inputData);
   useEffect(
     (e) => {
       if (isOpen) {
@@ -125,8 +113,12 @@ const WriteAsideContainer = ({
   );
 
   useEffect(() => {
-    dispatch(deleteFileData(deleteFile));
-  }, [deleteFile, dispatch]);
+    dispatch(
+      updatePostData({
+        category: dropdownState,
+      })
+    );
+  }, [dropdownState, dispatch]);
   useEffect(() => {
     dispatch(
       updatePostData({
@@ -212,8 +204,8 @@ const AsideMenuTitle = ({
               className="content_quaternary h-[18px] w-[18px]"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M12.008 20.041a8 8 0 1 0 .067-16 8 8 0 0 0-.067 16Zm-.008 2c5.523.023 10.018-4.435 10.041-9.958.023-5.523-4.435-10.019-9.958-10.041C6.56 2.019 2.064 6.477 2.04 12 2.02 17.523 6.477 22.018 12 22.041Z"
               ></path>
               <path d="M11.984 13.372c-.528-.002-.974-.436-.888-.957.116-.702.408-1.305 1.088-1.753.574-.387 1.011-.768 1.02-1.363-.004-.594-.45-.993-1.01-.988-.283-.005-.552.1-.75.295-.348.343-.712.793-1.2.79-.655-.002-1.214-.559-.978-1.17.46-1.19 1.614-1.739 2.948-1.733 1.886.007 3.242.97 3.241 2.706-.011 1.156-.593 1.857-1.467 2.4-.388.236-.67.511-.843.852-.24.47-.633.923-1.16.92ZM12.02 17.492a1.5 1.5 0 1 0 .013-3 1.5 1.5 0 0 0-.012 3Z"></path>
@@ -276,36 +268,35 @@ const AsideTagList = React.memo(({ tagList, onClickDelete }) => {
   );
 });
 
-const ExistAttachFile = ({ selectedFiles, onClickDelete, isEdit }) => {
+const ExistAttachFile = ({ selectedFiles, onClickDelete }) => {
   return (
-    <ul class="py-[36px]">
+    <ul className="py-[36px]">
       {selectedFiles.map((file, i) => (
-        <li key={i} class="mt-[24px] flex items-center first:mt-0">
-          <div class="surface_secondary border_black_opacity flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-[4px] border">
+        <li key={i} className="mt-[24px] flex items-center first:mt-0">
+          <div className="surface_secondary border_black_opacity flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-[4px] border">
             <svg
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-              class="content_disabled h-[24px] w-[24px]"
+              className="content_disabled h-[24px] w-[24px]"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M6.6 4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8.961a2 2 0 0 0-.751-1.561l-3.702-2.962A2 2 0 0 0 13.898 4H6.6Zm11 15.2h-11a.2.2 0 0 1-.2-.2V6c0-.11.09-.2.2-.2h7V8a1 1 0 0 0 1 1h3.2v10a.2.2 0 0 1-.2.2Z"
               ></path>
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M8.1 12a.9.9 0 0 1 .9-.9h6a.9.9 0 1 1 0 1.8H9a.9.9 0 0 1-.9-.9ZM8.1 15a.9.9 0 0 1 .9-.9h6a.9.9 0 1 1 0 1.8H9a.9.9 0 0 1-.9-.9Z"
               ></path>
             </svg>
           </div>
-          <p class="content_primary font_label_regular_md ml-[16px] grow break-all line-clamp-2">
-            {/* {!file.name ? file.name : file.filename} */}
-            {file.fileName ? file.fileName : file.name}
+          <p className="content_primary font_label_regular_md ml-[16px] grow break-all line-clamp-2">
+            {file.name}
           </p>
           <button
             aria-label="file delete button"
-            class="ml-[16px] block shrink-0"
+            className="ml-[16px] block shrink-0"
             data-file-id="ca73150b-1049-4d4e-b643-20fb135ee4e3"
             type="button"
             onClick={() => {
@@ -315,11 +306,11 @@ const ExistAttachFile = ({ selectedFiles, onClickDelete, isEdit }) => {
             <svg
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-              class="h-[24px] w-[24px] fill-gray_100"
+              className="h-[24px] w-[24px] fill-gray_100"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Zm3.636-13.636a.9.9 0 0 1 0 1.272L13.273 12l2.363 2.364a.9.9 0 1 1-1.273 1.272L12 13.273l-2.364 2.363a.9.9 0 0 1-1.273-1.272L10.727 12 8.363 9.636a.9.9 0 0 1 1.273-1.272L12 10.727l2.363-2.363a.9.9 0 0 1 1.273 0Z"
               ></path>
             </svg>
