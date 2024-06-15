@@ -51,9 +51,9 @@ const { updateState } = useSelector(state => state.write);
     // }, 2000); // 2초 후에 fadeOut 시작
 
   // // 오류가 발생했을 때 오류 메시지를 표시
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+//   if (error) {
+//     return <div>Error: {error}</div>;
+//   }
 
   return (
     <main class="mt-[32px]">

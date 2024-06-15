@@ -12,11 +12,15 @@ const LOAD_POST_DATA_SUCCESS = "post/LOAD_POST_DATA_SUCCESS";
 const LOAD_POST_DATA_FAIL = "post/LOAD_POST_DATA_FAIL";
 const UPDATE_IS_EDIT = "post/UPDATE_IS_EDIT";
 const DELETE_FILE = "post/DELETE_FILE";
+const WRITE_STATE = "post/WRITE_STATE";
+const UPDATE_STATE = "post/UPDATE_STATE";
+
 
 // action 생성
 export const savePostData = (postData, isEdit = false, files, postId, deleteFile) => {
   return async (dispatch) => {
     dispatch(postingData());
+    dispatch(updateState());
     try {
       const formData = new FormData();
       const existFile = [];
@@ -49,8 +53,12 @@ export const savePostData = (postData, isEdit = false, files, postId, deleteFile
           });
 
       console.log("response.data :::::::::::::: ",response.data)
+      
+      
+      dispatch(writeState(true));
       dispatch(postingDataSuccess(response));
     } catch (error) {
+      dispatch(writeState(false));
       dispatch(postingDataFailure(error.message));
     }
   };
@@ -99,6 +107,8 @@ export const updateFileData = (fileData) => {
 };
 
 export const postingData = () => ({ type: POST_DATA });
+export const writeState = (state) => { return {type: WRITE_STATE, payload : state} };
+export const updateState = () => ({ type: UPDATE_STATE });
 export const postingDataSuccess = (data) => ({
   type: POST_DATA_SUCCESS,
   payload: data,
@@ -128,23 +138,34 @@ const initialState = {
     tag: [],
   },
   loading: false,
+  updateState : false,
+  writeState : '',
   error: null,
   postData: null,
   isEdit: null,
   file: [],
   deleteFile: [],
-  updateState : false,
-  status : ''
+  status : '',
+  saveCompleted: false,
 };
 
 // 리듀서
 const postWriteReducer = (state = initialState, action) => {
   switch (action.type) {
+    case WRITE_STATE:
+      return{
+          ...state,
+          writeState : action.payload
+      }
+    case UPDATE_STATE:
+      return{
+          ...state,
+          updateState : false
+      }
     case POST_DATA:
       return {
         ...state,
         loading: true,
-        updateState : false
       };
     case UPDATE_INPUT_DATA:
       console.log("Reducer received payload:", action.payload);
@@ -156,13 +177,11 @@ const postWriteReducer = (state = initialState, action) => {
         },
       };
     case UPDATE_FILE_DATA:
-      console.log("Reducer received payload:", action.payload);
       return produce(state, (draft) => {
         const fileSet = new Set(draft.file.concat(action.payload));
         draft.file = Array.from(fileSet);
       });
     case DELETE_FILE:
-      console.log("Reducer received payload:", action.payload);
       return produce(state, (draft) => {
         const fileSet = new Set(draft.deleteFile.concat(action.payload));
         draft.deleteFile = Array.from(fileSet);
@@ -204,6 +223,7 @@ const postWriteReducer = (state = initialState, action) => {
           tag: action.payload.boardData.tag,
         },
         file: action.payload.files,
+        saveCompleted: true,
       };
     case LOAD_POST_DATA_FAIL:
       return {

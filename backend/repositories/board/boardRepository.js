@@ -139,7 +139,7 @@ module.exports = {
       );
 
       await t.commit();
-      // console.log(Files)
+      console.log(Files)
       postData.File = Files;
       // console.log(postData)
 
