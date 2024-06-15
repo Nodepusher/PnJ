@@ -122,6 +122,7 @@ module.exports = {
   getPostById: async (req, res, next) => {
     console.log(req.params);
     const data = await boardService.getPostById(req.params.id);
+    console.log("::::::::: ",data)
     res.json(data);
   },
   getPostByCategory: async (req, res, next) => {
