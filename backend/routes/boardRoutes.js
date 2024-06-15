@@ -35,6 +35,7 @@ router.post('/list/:category?', boardController.getAllForInfiniteScroll);
 router.post('/uploadImg', uploadImage.single('image'), boardController.saveUploadImg);
 router.post('/createPost', uploadFile.fields([{name : 'files'}]), boardController.createPost);
 router.post('/writeData', boardController.getBoardById);
+router.put('/updatePost/:id',uploadFile.fields([{name : 'files'}]),boardController.updatePost)
 
 router.get('/detail/:id', boardController.getPostById);
 router.get('/latest', boardController.getPostByCategory);

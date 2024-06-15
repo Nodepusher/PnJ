@@ -1,74 +1,136 @@
-const boardRepository = require('../../repositories/board/boardRepository');
+const boardRepository = require("../../repositories/board/boardRepository");
 
 module.exports = {
-  getAllCount : async (category) => {
+  getAllCount: async (category) => {
     try {
-        return await boardRepository.findAllCount(category);
-      } catch (error) {
-        throw new Error(error.message);
-      }
-  },
-  getAllForInfiniteScroll : async (limit, page, category, sort) => {
-    console.log("category: " + category, "limit: " + limit, "page: " + page)
-    try {
-      return await boardRepository.findAllForInfiniteScroll(limit, page, category, sort);
+      return await boardRepository.findAllCount(category);
     } catch (error) {
       throw new Error(error.message);
     }
   },
-  createPost : async (postData, fileData) => {
-    console.log(postData.category)
-    if(postData.category === "스터디해요"){
-      postData.category = "study"
-    }else if(postData.category === "정보 공유"){
-      postData.category = "info"
-    }else{
-      postData.category = "qna"
+  getAllForInfiniteScroll: async (limit, page, category, sort) => {
+    console.log("category: " + category, "limit: " + limit, "page: " + page);
+    try {
+      return await boardRepository.findAllForInfiniteScroll(
+        limit,
+        page,
+        category,
+        sort
+      );
+    } catch (error) {
+      throw new Error(error.message);
     }
-    console.log("fileData",fileData)
+  },
+  createPost: async (postData, fileData) => {
+    console.log(postData.category);
+    if (postData.category === "스터디해요") {
+      postData.category = "study";
+    } else if (postData.category === "정보 공유") {
+      postData.category = "info";
+    } else {
+      postData.category = "qna";
+    }
+    console.log("fileData", fileData);
     // console.log(":::::: ",fileData.length)
-    console.log(":::::: ",!!fileData)
+    console.log(":::::: ", !!fileData);
     var fileJson = { files: [] };
-    
-    if(!!fileData && fileData.length > 0){
-      console.log("!!!!!!!")
-      fileJson.files = fileData.map(file => {
+
+    if (!!fileData && fileData.length > 0) {
+      console.log("!!!!!!!");
+      fileJson.files = fileData.map((file) => {
         return {
-          uuid: file.filename.split('.')[0],
+          uuid: file.filename.split(".")[0],
           uploadPath: file.path,
           fileName: file.originalname,
-          fileType: file.mimetype.split('/')[1],
-          fileSize : file.size
-        }; 
+          fileType: file.mimetype.split("/")[1],
+          fileSize: file.size,
+        };
       });
-      console.log("fileJson :: ",fileJson)
+      console.log("fileJson :: ", fileJson);
     }
-    
+
     return await boardRepository.InsertPost(postData, fileJson);
   },
-  findBoardById : async (boardId) => {
-    return await boardRepository.findBoardById(boardId)
+  updatePost: async (postData, fileData) => {
+    console.log(postData.category);
+    if (postData.category === "스터디해요") {
+      postData.category = "study";
+    } else if (postData.category === "정보 공유") {
+      postData.category = "info";
+    } else {
+      postData.category = "qna";
+    }
+    console.log("fileData", fileData);
+    // console.log(":::::: ",fileData.length)
+    console.log(":::::: ", !!fileData);
+    var fileJson = { files: [] };
+
+    if (!!fileData && fileData.length > 0) {
+      console.log("!!!!!!!");
+      fileJson.files = fileData.map((file) => {
+        return {
+          uuid: file.filename.split(".")[0],
+          uploadPath: file.path,
+          fileName: file.originalname,
+          fileType: file.mimetype.split("/")[1],
+          fileSize: file.size,
+        };
+      });
+      console.log("fileJson :: ", fileJson);
+    }
+    const existFile = postData.files;
+    const deleteFile = []
+    console.log("deleteFile ::: ",deleteFile)
+    postData.deleteFile.map((file) => deleteFile.push(file.id));
+    console.log("deleteFile ::: ",deleteFile)
+    console.log("existFile", existFile);
+
+    delete postData.files;
+    delete postData.deleteFile;
+
+    const selectFile = await boardRepository.findAllFileByBoardId(
+      postData.BoardId
+    );
+    selectFile.map((e) => console.log(e.uuid));
+    console.log(selectFile.length, "갯수");
+
+    console.log(postData.BoardId)
+    console.log(postData.UserId)
+    console.log(postData)
+    if (existFile.length > 0) {
+      const success_deleteFile = deleteFile && await boardRepository.deleteFile(deleteFile);
+      const success_insertFile = fileJson && await boardRepository.insertFile(fileJson, postData.BoardId, postData.UserId);
+      const success_updatePost = await boardRepository.updatePost(postData);
+      return {message : "수정 작업 완료", success : {updatePost : success_updatePost.success, insertFile : success_insertFile.success, deleteFile : success_deleteFile.success}}
+    } else {
+      const success_insertFile = fileJson && await boardRepository.insertFile(fileJson, postData.BoardId, postData.UserId);
+      const success_updatePost = await boardRepository.updatePost(postData);
+      return {message : "수정 작업 완료",success : {updatePost : success_updatePost.success, insertFile : success_insertFile.success}}
+    }
   },
-  getPostById : async (id) => {
-    const data = await boardRepository.findPostById(id)
+  findBoardById: async (boardId) => {
+    const files = await boardRepository.findFileById(boardId);
+    const boardData = await boardRepository.findBoardById(boardId);
+    // return await boardRepository.findBoardById(boardId)
+    return { boardData: boardData, files: files };
+  },
+  getPostById: async (id) => {
+    const data = await boardRepository.findPostById(id);
     const category = data.postData.category;
-    data.category = category
+    data.category = category;
     // console.log(data)
     return data;
   },
-  getPostByCategory : async (category) => {
-    return await boardRepository.findPostByCategory(category)
+  getPostByCategory: async (category) => {
+    return await boardRepository.findPostByCategory(category);
   },
-  getAllCommentById : async(postId) => {
-    return await boardRepository.findAllCommentById(postId)
+  getAllCommentById: async (postId) => {
+    return await boardRepository.findAllCommentById(postId);
   },
-  createComment : async (commentData) => {
-    return await boardRepository.InsertComment(commentData)
+  createComment: async (commentData) => {
+    return await boardRepository.InsertComment(commentData);
   },
-  createReply : async (replyData) => {
-    return await boardRepository.InsertReply(replyData)
-  }
-
+  createReply: async (replyData) => {
+    return await boardRepository.InsertReply(replyData);
+  },
 };
-
-

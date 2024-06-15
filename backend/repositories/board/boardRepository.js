@@ -70,7 +70,7 @@ module.exports = {
               uploadPath: files.uploadPath,
               fileName: files.fileName,
               fileType: files.fileType,
-              fileSize : files.fileSize,
+              fileSize: files.fileSize,
               BoardId: newPost.dataValues.id,
               UserId: postData.UserId,
             },
@@ -91,12 +91,22 @@ module.exports = {
     try {
       const board = await Board.findOne({
         where: { id: boardId },
-        include: { model: File },
       });
-      console.log(board.dataValues);
+
+      console.log("board 정보 ", board.dataValues);
       return board.dataValues;
     } catch (error) {
       console.log(error);
+      return { success: false, message: "에러" };
+    }
+  },
+  findFileById: async (boardId) => {
+    try {
+      const file = await File.findAll({
+        where: { BoardId: boardId },
+      });
+      return file;
+    } catch (err) {
       return { success: false, message: "에러" };
     }
   },
@@ -111,11 +121,12 @@ module.exports = {
         },
         { transaction: t }
       );
-      const Files = await File.findAll({
-        where: { BoardId: id },
-      },
-      {transaction: t}
-    );
+      const Files = await File.findAll(
+        {
+          where: { BoardId: id },
+        },
+        { transaction: t }
+      );
       const userId = postData.User.id;
       const allUserPost = await Board.findAll(
         {
@@ -129,10 +140,10 @@ module.exports = {
 
       await t.commit();
       // console.log(Files)
-      postData.File = Files
+      postData.File = Files;
       // console.log(postData)
 
-      return { postData: postData, userPost: allUserPost, Files : Files };
+      return { postData: postData, userPost: allUserPost, Files: Files };
     } catch (error) {
       // 오류 처리
       console.error(error);
@@ -140,67 +151,131 @@ module.exports = {
       throw error;
     }
   },
-  findPostByCategory : async (category) => {
+  findPostByCategory: async (category) => {
     try {
       const postData = await Board.findAll({
-        where : {category: category},
+        where: { category: category },
         order: [["createdAt", "DESC"]],
-        limit : 5,
+        limit: 5,
         include: { model: User },
-      },)
+      });
       return postData;
     } catch (error) {
       console.error(error);
     }
   },
-  findAllCommentById : async (postId) => {
+  findAllCommentById: async (postId) => {
     try {
-      const comments = await Comment.findAll(
-        {
-          where : {BoardId : postId},
-          include: [
-            {
-              model: Reply,
-              include: [
-                {
-                  model: User,
-                  attributes: ['name', 'profile'],
-                },
-              ],
-            },
-            {
-              model: User,
-              attributes: ['name', 'profile'],
-            },
-          ],
-        });
-      
+      const comments = await Comment.findAll({
+        where: { BoardId: postId },
+        include: [
+          {
+            model: Reply,
+            include: [
+              {
+                model: User,
+                attributes: ["name", "profile"],
+              },
+            ],
+          },
+          {
+            model: User,
+            attributes: ["name", "profile"],
+          },
+        ],
+      });
+
       return comments;
     } catch (error) {
-      return {error: error.message}
+      return { error: error.message };
     }
   },
-  InsertComment : async (commentData) => {
-    console.log(commentData)
+  InsertComment: async (commentData) => {
+    console.log(commentData);
     try {
       const newComment = await Comment.create(commentData);
-      return newComment
-
+      return newComment;
     } catch (error) {
-      console.log(error.message)
-      return {"success": false}
+      console.log(error.message);
+      return { success: false };
     }
   },
-  InsertReply : async (replyData) => {
-    console.log(replyData)
-    console.log(Reply)
+  InsertReply: async (replyData) => {
+    console.log(replyData);
+    console.log(Reply);
     try {
       const newReply = await Reply.create(replyData);
-      return newReply
-
+      return newReply;
     } catch (error) {
-      console.log(error.message)
-      return {"success": false}
+      console.log(error.message);
+      return { success: false };
     }
-  }
+  },
+  updatePost: async (postData) => {
+    console.log("updateadfafas ",postData);
+    try {
+      const update = await Board.update(
+        {
+          title: postData.title,
+          content: postData.content,
+          category: postData.category,
+          tag: postData.tag,
+        },
+        {
+          where: {
+            id: postData.BoardId,
+          },
+        }
+      );
+      return { success: true, message: "post update Success" };
+    } catch (error) {
+      return { success: false, message: "post update fail" + error.message };
+    }
+  },
+  insertFile: async (fileJson, boardId, userId) => {
+    console.log(fileJson);
+    const fileData = fileJson.files;
+    try {
+      // const createFile = await File.create(fileJson.files, {where : {BoardId: boardId}})
+      const filePromise = fileData.map((files) => {
+        return File.create({
+          uuid: files.uuid,
+          uploadPath: files.uploadPath,
+          fileName: files.fileName,
+          fileType: files.fileType,
+          fileSize: files.fileSize,
+          BoardId: boardId,
+          UserId: userId,
+        });
+      });
+      await Promise.all(filePromise);
+      return { success: true, message: "file create Success" };
+    } catch (error) {
+      return { success: false, message: "file create Fail" + error.message };
+    }
+  },
+  deleteFile: async (deleteFile) => {
+    try {
+      await File.destroy({
+        where: {
+          id: deleteFile,
+        },
+      });
+      return { success: true, message: "file delete Success" };
+    } catch (error) {
+      return { success: false, message: "file delete Fail" + error.message };
+    }
+  },
+  findAllFileByBoardId: async (postId) => {
+    console.log("postId", postId);
+    try {
+      const file = await File.findAll({
+        where: { BoardId: postId },
+      });
+      console.log("findAll File", file);
+      return file;
+    } catch (err) {
+      return { success: false, message: "에러" };
+    }
+  },
 };
