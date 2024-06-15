@@ -11,7 +11,6 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const boardRoutes = require("./routes/boardRoutes");
 const userRoutes = require("./routes/userRoutes");
-// const fileRoute = require('./routes/fileRoute')
 const db = require("./models"); // *** models/index.js를 참고함
 const refreshMiddleware = require("./middleware/refresh");
 
