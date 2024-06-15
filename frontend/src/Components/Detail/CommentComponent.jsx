@@ -6,7 +6,7 @@ import { getCommentId } from "../../store/postDetailReducer";
 const CommentComponent = ({ commentData }) => {
   const [activeReply, setActiveReply] = useState(null);
   const dispatch = useDispatch();
-
+  const isAuthor = true
   const showReplyInputComment = (commentId) => {
     setActiveReply((prev) => (prev === commentId ? null : commentId));
     dispatch(getCommentId(commentId));
@@ -14,7 +14,7 @@ const CommentComponent = ({ commentData }) => {
 
   const hideReplyInputComment = () => {
     setActiveReply(null);
-    dispatch(getCommentId(''));
+    dispatch(getCommentId(""));
   };
 
   const StImg = {
@@ -83,7 +83,23 @@ const CommentComponent = ({ commentData }) => {
                   <div className="content_primary font_label_bold_lg">
                     {comment.User.name}
                   </div>
+                  
                 </div>
+                {isAuthor && (
+                      <button
+                        aria-label="remove comment button"
+                        type="button"
+                        value="db7a9a37-cf74-47d5-99a1-8b50fccec0c7"
+                      >
+                        <svg
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="content_quaternary_inverse h-[20px] w-[20px]"
+                        >
+                          <path d="M5.707 5.707a1 1 0 0 0 0 1.414l4.95 4.95-4.95 4.95a1 1 0 1 0 1.414 1.414l4.95-4.95 4.95 4.95a1 1 0 0 0 1.414-1.414l-4.95-4.95 4.95-4.95a1 1 0 1 0-1.414-1.414l-4.95 4.95-4.95-4.95a1 1 0 0 0-1.414 0Z"></path>
+                        </svg>
+                      </button>
+                    )}
               </div>
               <div className="h-[5px]"></div>
               <div className="font_label_regular_lg whitespace-pre-wrap break-all content_secondary">
