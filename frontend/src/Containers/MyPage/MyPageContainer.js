@@ -7,33 +7,23 @@ import { usePage } from "../../Context/MyPageContext";
 import { useSelector } from "react-redux";
 import Spinner from "../Common/Spinner";
 
-const MyPageContainer = () => {
+const MyPageContainer = ({}) => {
   const { page, updatePageInfo } = usePage();
-  const [searchParams] = useSearchParams();
   const { user, loading } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    const myPost = searchParams.get("myPost") === "true";
-    const myInfo = searchParams.get("myInfo") === "true";
-
-    if (myPost !== page.myPost || myInfo !== page.myInfo) {
-      updatePageInfo("myPost", myPost);
-      updatePageInfo("myInfo", myInfo);
-    }
-  }, [searchParams, page.myPost, page.myInfo, updatePageInfo]);
-  console.log("마이페이지 컨테이너");
+  const profile = user
+    ? `/uploads/file/${user.profile}`
+    : `/uploads/file/default_profile_image.png`;
 
   if (loading) {
     return <Spinner />;
   }
+
   return (
     <>
-      <SideBar
-        userName={user ? user.name : ""}
-        profile={user ? user.profile : ""}
-      />
+      <SideBar userName={user ? user.name : ""} profile={profile} />
       {page.myPost && <MyPagePostContainer />}
-      {page.myInfo && <MyPageEditContainer user={user} />}
+      {page.myInfo && <MyPageEditContainer user={user} profile={profile} />}
     </>
   );
 };

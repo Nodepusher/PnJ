@@ -13,8 +13,12 @@ const HeaderContainer = ({ search = false, login = false, mypage = false }) => {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  console.log("user", user);
   const [loading, setLoading] = useState(true);
-  const profile = user ? user.profile : false;
+  const profile = user
+    ? `/uploads/file/${user.profile}`
+    : `/uploads/file/default_profile_image.png`;
+
   const isAuthenticated =
     sessionStorage.getItem("isAuthenticated") === "true" ? true : false;
 
@@ -26,8 +30,10 @@ const HeaderContainer = ({ search = false, login = false, mypage = false }) => {
   };
 
   const moveToLogout = useCallback(async () => {
-    await dispatch(logout());
-    window.location.reload(); // 현재 페이지 새로고침
+    const result = await dispatch(logout());
+    if (result) {
+      window.location.reload(); // 현재 페이지 새로고침
+    }
   }, [dispatch]);
 
   const Stdiv = {
@@ -46,15 +52,14 @@ const HeaderContainer = ({ search = false, login = false, mypage = false }) => {
 
   console.log("공통 헤더 콘솔로그");
   useEffect(() => {
-    if (isAuthenticated) {
-      console.log("아니 이거 들어오는거 맞음?");
-      const fetchData = async () => {
+    const fetchData = async () => {
+      if (isAuthenticated) {
         await dispatch(loadUser());
-      };
-      fetchData();
-    }
-    setLoading(false);
-  }, []);
+      }
+      setLoading(false);
+    };
+    fetchData();
+  }, [isAuthenticated, dispatch]);
 
   if (loading) {
     return <Spinner />;

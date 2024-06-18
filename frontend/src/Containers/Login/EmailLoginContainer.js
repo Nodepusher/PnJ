@@ -4,6 +4,7 @@ import { login } from "../../store/action";
 import CommonSectionContainer from "./CommonSectionContainer";
 import LoginInput from "../../Components/Login/LoginInput";
 import { Navigate, useNavigate } from "react-router-dom";
+import ToastMsg from "../../utils/ToastMsg";
 const LoginButton = React.lazy(() =>
   import("../../Components/Button/LoginButton")
 );
@@ -17,12 +18,14 @@ const EmailButton = React.lazy(() =>
 const EmailLoginContainer = () => {
   const dispatch = useDispatch();
   const nav = useNavigate();
+  const [onTimer, setOnTimer] = useState(false);
+  const [msg, setMsg] = useState("");
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
+  const { success } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => ({
     error: state.auth.error,
   }));
@@ -44,6 +47,10 @@ const EmailLoginContainer = () => {
       e.preventDefault();
       console.log(formData.email, " :::: ", formData.password);
       dispatch(login({ email: formData.email, password: formData.password }));
+      if (!success) {
+        setOnTimer(true);
+        setMsg("이메일 또는 비밀번호를 틀려 로그인에 실패하였습니다.");
+      }
     },
     [dispatch, formData]
   );
@@ -126,6 +133,9 @@ const EmailLoginContainer = () => {
           </a>
         </div>
       </div>
+      {onTimer && (
+        <ToastMsg text={msg} onTimer={onTimer} setOnTimer={setOnTimer} />
+      )}
     </CommonSectionContainer>
   );
 };

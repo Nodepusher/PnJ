@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, isValidElement } from "react";
 import EditInfo from "../../Components/MyPage/EditInfo";
 import EditUploadImage from "../../Components/MyPage/EditUploadImage";
 import EditUpdateImage from "../../Components/MyPage/EditUpdateImage";
@@ -8,8 +8,10 @@ import SaveInfo from "../../Components/MyPage/SaveInfo";
 import axios from "axios";
 import "./animation.css";
 import { loadUser } from "../../store/action";
+import { useDispatch } from "react-redux";
 
-const MyPageEditContainer = ({ user }) => {
+const MyPageEditContainer = ({ user, profile }) => {
+  const dispatch = useDispatch();
   // 보여주기 위한 스테이트
   const [uploadImage, setUploadImage] = useState(null);
   // 전송하기 위한 스테이트
@@ -52,12 +54,12 @@ const MyPageEditContainer = ({ user }) => {
     });
   }, [updateUserInfo]);
 
-  const handleSave = async () => {
+  const handleSave = async (e) => {
+    e.preventDefault();
     const isPasswordEmpty =
       !updateUserInfo.password && !updateUserInfo.passwordCheck;
     const isPasswordValid = valid.passwordValid && valid.passwordMatch;
-
-    const canUpdate = isPasswordEmpty || isPasswordValid;
+    const canUpdate = !isPasswordEmpty && isPasswordValid;
     if (canUpdate) {
       setUpdateState(true);
       const formData = new FormData();
@@ -72,11 +74,10 @@ const MyPageEditContainer = ({ user }) => {
           },
         });
         console.log("Update successful");
+        dispatch(loadUser());
       } catch (error) {
         console.error("Error updating user info:", error);
       }
-    } else {
-      setUpdateState(false);
     }
     setIsSaved(true);
     setAnimationClass("fadeIn");
@@ -158,6 +159,7 @@ const MyPageEditContainer = ({ user }) => {
                       <EditUpdateImage
                         uploadImage={uploadImage}
                         setUploadImage={setUploadImage}
+                        profile={profile}
                       />
                       <div>
                         <EditUploadImage

@@ -63,15 +63,24 @@ module.exports = {
     }
     return result;
   },
-  //임시
-  getBoards: async (where, include = []) => {
+  getBoards: async (where, include = [], order = []) => {
     try {
-      return await Board.findAll({ where, include });
+      return await Board.findAll({ where, include, order });
     } catch (error) {
       console.error("Error fetching posts:", error);
       throw error;
     }
   },
+
+  deleteMyPost: async (where) => {
+    try {
+      return await Board.destroy({ where: where });
+    } catch (error) {
+      console.error("Error in deleteMyPost:", error);
+      throw error;
+    }
+  },
+
   updateUser: async (include, where = []) => {
     try {
       return await User.update(include, { where: where });

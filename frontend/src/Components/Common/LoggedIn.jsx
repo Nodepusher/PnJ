@@ -1,6 +1,5 @@
 import React from "react";
 import LoginButton from "./LoginButton";
-import defaultImage from "../../Assets/images/temp.png";
 
 const LoggedIn = ({ onClick, profile }) => {
   const StImg = {
@@ -10,7 +9,6 @@ const LoggedIn = ({ onClick, profile }) => {
     inset: "0px",
     color: "transparent",
   };
-
   return (
     <div className="flex">
       <div className="relative mr-[16px]">
@@ -18,7 +16,7 @@ const LoggedIn = ({ onClick, profile }) => {
           <img
             alt="프로필 이미지"
             sizes="10vw"
-            src={profile === "default_image" ? defaultImage : profile}
+            src={profile}
             decoding="async"
             data-nimg="fill"
             className="rounded-full"

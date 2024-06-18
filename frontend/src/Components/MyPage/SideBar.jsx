@@ -19,16 +19,6 @@ const SideBar = ({ userName, profile }) => {
         updatePageInfo("myPost", false);
         updatePageInfo("myInfo", true);
       }
-
-      const params = {};
-      if (isPostButton) {
-        params.myPost = "true";
-        params.myInfo = "false";
-      } else if (isInfoButton) {
-        params.myPost = "false";
-        params.myInfo = "true";
-      }
-      setSearchParams(params);
     }
   };
 
@@ -46,7 +36,7 @@ const SideBar = ({ userName, profile }) => {
               <img
                 alt="프로필 이미지"
                 sizes="(max-width: 240px) 100vw, 240px"
-                src={profile === "default_image" ? tempImage : profile}
+                src={profile}
                 data-nimg="fill"
                 className="rounded-full profile_image"
                 loading="lazy"

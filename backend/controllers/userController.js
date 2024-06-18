@@ -1,3 +1,4 @@
+const path = require("path");
 const userRepository = require("../repositories/user/userRepository");
 const userService = require("../services/user/userService");
 const jwtUtil = require("../utils/jwtUtil");
@@ -106,8 +107,8 @@ module.exports = {
   getMyPost: async (req, res) => {
     try {
       const { user } = req.auth;
-      console.log(user);
-      const post = await userService.getMyPost(user.id);
+      const { sort } = req.query;
+      const post = await userService.getMyPost(user.id, sort);
       if (!post) {
         res.status(400).json(post);
         return;
@@ -115,6 +116,30 @@ module.exports = {
       res.status(200).json(post);
     } catch (error) {
       console.log(error);
+      res.status(500).json({
+        success: false,
+        message: "500",
+      });
+    }
+  },
+
+  deleteMyPost: async (req, res) => {
+    try {
+      const { postId } = req.params;
+      console.log("컨트롤러단 postId", postId);
+      const result = await userService.deleteMyPost(postId);
+
+      if (result) {
+        return res
+          .status(200)
+          .json({ success: true, message: "delete MyPost Success" });
+      } else {
+        res
+          .status(400)
+          .json({ success: false, message: "delete MyPost Failed" });
+      }
+    } catch (error) {
+      console.log("Error in userController deleteMyPost", error);
       res.status(500).json({
         success: false,
         message: "500",
@@ -135,14 +160,17 @@ module.exports = {
 
   updateUserInfo: async (req, res) => {
     try {
+      console.log("req.file", req.file);
       const { email } = req.auth.user;
-      const { password } = req.body;
-      const { originalname } = req.file;
-      const update = await userService.updateUserInfo(
-        email,
-        password,
-        originalname
-      );
+      const include = {};
+      if (req.file) {
+        include.profile =
+          email + "_profileImage" + path.extname(req.file.originalname);
+      }
+      if (req.body.password) {
+        include.password = req.body.password; // 여기서 비밀번호 해싱 필요
+      }
+      const update = await userService.updateUserInfo(email, include);
 
       if (!update) {
         res.status(400).json({ success: false });

@@ -56,35 +56,48 @@ module.exports = {
       return { success: false, message: error.message };
     }
   },
-  resetPassword: async (newPassword) => {},
-  getMyPost: async (userId) => {
+  getMyPost: async (userId, sort) => {
     try {
       if (!userId) {
         throw new Error("User not found");
       }
-
+      let order = [];
+      if (sort === "최신순") {
+        order = [["createdAt", "ASC"]];
+      } else if (sort === "오래된순") {
+        order = [["createdAt", "DESC"]];
+      }
       const where = { user_id: userId };
       const include = [{ model: User, attributes: ["id"] }];
 
-      const myPosts = await userRepository.getBoards(where, include);
+      const myPosts = await userRepository.getBoards(where, include, order);
       return { success: true, myPosts };
     } catch (error) {
       console.error("Error in getMyPost service:", error);
       return { success: false, message: error.message };
     }
   },
-  updateUserInfo: async (email, password, originalname) => {
+
+  deleteMyPost: async (postId) => {
+    try {
+      if (!postId) {
+        throw new Error("postId not found");
+      }
+      const where = { id: postId };
+      await userRepository.deleteMyPost(where);
+      return { success: true, message: "delete MyPost Sucess" };
+    } catch (error) {
+      console.error("Error in deleteMyPost userService:", error);
+      return { success: false, message: error.message };
+    }
+  },
+
+  updateUserInfo: async (email, include) => {
     try {
       if (!email) {
         throw new Error("User not found");
       }
-
-      const fileUploadsDir = path.join("uploads", "file");
       const where = { email: email };
-      const include = {
-        password: password,
-        profile: `${fileUploadsDir}\\${email}_profileImage_${originalname}`,
-      };
       await userRepository.updateUser(include, where);
       return { success: true, message: "update user info success" };
     } catch (error) {
