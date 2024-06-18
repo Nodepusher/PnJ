@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import NoPost from "./NoPost";
 import MyPageModal from "../MyPage/MyPageModal";
+import axios from "axios";
 
 const PostListComponent = ({ postState, post, sort, setPost }) => {
   return (
@@ -23,8 +24,21 @@ const PostList = ({ postList, sort, setPost }) => {
   const descPost = (postList) => {
     return postList.sort((a, b) => new Date(b.date) - new Date(a.date));
   };
+
+  async function deletePost(postId) {
+    try {
+      const res = await axios.delete(`http://localhost:4000/user/${postId}`);
+      console.log("Post deleted successfully:", res.data);
+      return res.data; // 삭제된 글에 대한 추가 처리
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      throw error; // 오류 처리
+    }
+  }
+
   const onDeleteModal = useCallback((id) => {
     setCheckModal(true);
+    deletePost(id);
     setDeleteId(id);
   }, []);
 

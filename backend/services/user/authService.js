@@ -5,6 +5,7 @@ const crypto = require("crypto");
 const path = require("path");
 const jwtUtil = require("../../utils/jwtUtil");
 const redisClient = require("../../utils/redisClient");
+const userController = require("../../controllers/userController");
 require("dotenv").config();
 
 module.exports = {
@@ -63,22 +64,29 @@ module.exports = {
   },
 
   // 인증메일 보내기
-  sendVerifyEmail: async (userEmail) => {
+  sendVerifyEmail: async (
+    userEmail,
+    tokenType,
+    expiresIn,
+    ejsName,
+    mailTitle,
+    props
+  ) => {
     try {
       //해시코드 생성
       // const code = crypto.randomBytes(3).toString("hex");
       //DB에 해당 유저 튜플에 코드 값 UPDATE 코드 .. 생략
 
       // JWT 토큰 생성
-      const token = jwtUtil.sign(userEmail, "email_verification", "5m");
-      const url = `http://localhost:4000/user/confirmation/${token}`;
+      const token = jwtUtil.sign(userEmail, tokenType, expiresIn);
+      const url = `http://localhost:4000/user/${props}/${token}`;
 
-      redisClient.setex(userEmail, 300, token);
+      redisClient.setex(userEmail, expiresIn, token);
 
       //발송 할 ejs 준비
       let emailTemplate;
       ejs.renderFile(
-        path.join(__dirname, "../../utils/registerVerify.ejs"), //ejs파일 위치
+        path.join(__dirname, `../../utils/${ejsName}`), //ejs파일 위치
         { email: userEmail, url: url },
         (err, data) => {
           //ejs mapping
@@ -103,7 +111,7 @@ module.exports = {
       let mailOptions = {
         from: "PnJ_admin <PnJ_admin@PnJ.com>",
         to: userEmail,
-        subject: "[PnJ] 회원가입 인증메일 입니다.",
+        subject: mailTitle,
         html: emailTemplate,
       };
 
@@ -150,6 +158,61 @@ module.exports = {
         return { success: true, message: "유저 스테이터스 업데이트" };
       }
     } catch (error) {
+      return { success: false, message: error.message };
+    }
+  },
+  validateToken: async (token) => {
+    const { success, email, token_type } = jwtUtil.verify(token);
+    try {
+      if (!email || !success) {
+        throw new Error("The token is invalid");
+      }
+
+      if (success && token_type === "reset_password") {
+        return { success: true, message: "token is vaild" };
+      }
+    } catch (error) {
+      console.error("Error in validateToken authService:", error);
+      return { success: false, message: error.message };
+    }
+  },
+  resetPassword: async (password, token) => {
+    const { success, email, token_type } = jwtUtil.verify(token);
+    try {
+      if (!email || !success) {
+        throw new Error("The token is invalid");
+      }
+
+      if (success && token_type === "reset_password") {
+        const include = {
+          password: password,
+        };
+        const where = { email: email };
+        await userRepository.updateUser(include, where);
+
+        const redisDeletePromise = new Promise((resolve, reject) => {
+          redisClient.del(email, (err, response) => {
+            if (err) {
+              reject(new Error("레디스 토큰 삭제 에러:", err));
+            } else {
+              if (response === 1) {
+                console.log("토큰 삭제 성공");
+                resolve();
+              } else {
+                reject(new Error("레디스에서 해당 토큰을 찾을 수 없음"));
+              }
+            }
+          });
+        });
+
+        await redisDeletePromise;
+      }
+
+      res.clearCookie("resetPwdToken");
+
+      return { success: true, message: "update resetPassword success" };
+    } catch (error) {
+      console.error("Error in resetPassword authService:", error);
       return { success: false, message: error.message };
     }
   },

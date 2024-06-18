@@ -14,10 +14,14 @@ router.post("/exist-verify", authController.existUserVerify);
 router.post("/create-account", userController.createUser);
 router.post("/email-verify", authController.emailAuthentication);
 
+router.post("/send-reset-mail", authController.sendResetMail);
+router.get("/validate-token/:token", authController.validateToken);
+router.post("/req-reset-password", authController.successResetPassword);
+
 router.get("/confirmation/:token", authController.confirmEmail);
 
 router.get("/mypost", userController.getMyPost);
-
+router.delete("/:postId", userController.deleteMyPost);
 router.get("/check-auth", userController.checkAuthenticated);
 
 router.put(

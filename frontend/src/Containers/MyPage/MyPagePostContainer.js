@@ -10,11 +10,15 @@ const MyPagePostContainer = () => {
   const [sort, setSort] = useState("최신순");
 
   useEffect(() => {
+    console.log(sort);
     const requestPost = async () => {
       try {
         // 요청
-        const res = await axios.get("http://localhost:4000/user/mypost");
+        const res = await axios.get("http://localhost:4000/user/mypost", {
+          params: { sort },
+        });
         const myPosts = res.data.myPosts;
+        console.log("res.data", res.data);
         setPost(myPosts);
         post.length > 0 ? setPostState(true) : setPostState(false);
       } catch (error) {
@@ -24,7 +28,7 @@ const MyPagePostContainer = () => {
       }
     };
     requestPost();
-  }, [post.length]);
+  }, [post.length, sort]);
 
   return (
     <>

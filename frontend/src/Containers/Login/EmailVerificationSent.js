@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import UserInput from "../../Components/Login/UserInput";
 import UserInputMsg from "../../Components/Login/UserInputMsg";
 import useUserInfo from "../../utils/useUserInfo";
 
-const EmailVerificationSent = ({ sendMailState, isValidCallback }) => {
+const EmailVerificationSent = ({
+  sendMailState,
+  isValidCallback,
+  isCallbackEmail,
+}) => {
   let content = "";
   const { userInfo, validationResults, handleInputChange } = useUserInfo();
+  console.log("하위 컴포넌트 userInfo", userInfo);
   isValidCallback(validationResults.emailValid);
+
   if (sendMailState) {
     content =
       "메일이 오지 않을 경우 스팸 메일로 분류되어 있을 수 있으니, 스팸 메일 보관함을 확인해 주세요.";
@@ -14,6 +20,10 @@ const EmailVerificationSent = ({ sendMailState, isValidCallback }) => {
     content =
       "스테디오 가입 시 사용한 이메일 계정을 입력해주세요. 해당 이메일로 비밀번호 재설정 링크를 보내드립니다.";
   }
+
+  useEffect(() => {
+    isCallbackEmail(userInfo.email);
+  }, [userInfo.email]);
 
   return (
     <>
@@ -35,7 +45,7 @@ const EmailVerificationSent = ({ sendMailState, isValidCallback }) => {
               인증메일 발송 완료
             </strong>
             <p className="content_secondary font_body_regular_md">
-              <span className="font_label_bold_md">b7309@naver.com</span>으로
+              <span className="font_label_bold_md">{userInfo.email}</span>으로
               인증메일을 발송했습니다. 메일을 확인해주세요.
             </p>
           </div>

@@ -62,6 +62,7 @@ export const login = createAsyncThunk(
       });
       const { token, success } = res.data;
       sessionStorage.setItem("isAuthenticated", JSON.stringify(true));
+
       return { token, success };
 
       // 성공하면, 응답 데이터를 포함하여 loginSuccess 액션을 디스패치

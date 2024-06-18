@@ -2,24 +2,24 @@
  *  config는 .env파일로 할지 아니면 config.js로 할지 알아보고 정해야 할 듯
  *
  */
-require('dotenv').config();
+require("dotenv").config();
 const dbConfig = {
-    port: process.env.MYSQL_PORT,
-    host: process.env.MYSQL_HOST,
-    username: process.env.MYSQL_USERNAME,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE,
-    dialect: 'mysql',
-}
+  port: process.env.MYSQL_PORT,
+  host: process.env.MYSQL_HOST,
+  username: process.env.MYSQL_USERNAME,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+  dialect: "mysql",
+};
 
 const srvDBConfig = {
-    port: process.env.MYSQL_PORT,
-    host: process.env.MYSQL_HOST,
-    username: process.env.MYSQL_USERNAME,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE,
-    dialect: 'mysql',
-}
+  port: process.env.MYSQL_PORT,
+  host: process.env.MYSQL_HOST,
+  username: process.env.MYSQL_USERNAME,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+  dialect: "mysql",
+};
 
 // const dbConfig = {
 //     port: 3306,
@@ -31,14 +31,14 @@ const srvDBConfig = {
 // }
 
 const redisConfig = {
-    REDIS_HOST: process.env.REDIS_HOST,
-    REDIS_PORT: process.env.REDIS_PORT,
-    REDIS_USERNAME: process.env.REDIS_USERNAME,
-    REDIS_PASSWORD: process.env.REDIS_PASSWORD,
-}
+  REDIS_HOST: process.env.REDIS_HOST,
+  REDIS_PORT: process.env.REDIS_PORT,
+  REDIS_USERNAME: process.env.REDIS_USERNAME,
+  REDIS_PASSWORD: process.env.REDIS_PASSWORD,
+};
 
 module.exports = {
-    dbConfig,
-    srvDBConfig,
-    redisConfig,
-}
+  dbConfig,
+  srvDBConfig,
+  redisConfig,
+};
