@@ -14,6 +14,7 @@ import WriteSectionContainer from "../Containers/Write/WriteSectionContainer";
 import "../Components/MyPage/animation.css";
 import styles from "../style/writePage.css";
 import axios from "axios";
+import Thumbnail from "../Components/Write/Thumbnail";
 const PostWritepage = ({ match }) => {
   // match : parameter 값을 가져옴
   const [isSaved, setIsSaved] = useState(false);
@@ -24,6 +25,8 @@ const PostWritepage = ({ match }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [animationClass, setAnimationClass] = useState("");
   const [saveTrigger, setSaveTrigger] = useState(false);
+  // 썸네일 모달 창 위한 스테이트
+  const [onThumbModal, setOnThumbModal] = useState(false);
   const {
     inputData,
     loading,
@@ -35,6 +38,7 @@ const PostWritepage = ({ match }) => {
   console.log(query.get("postId"));
   var postId = query.get("postId");
   var isEdit = postId ? true : false;
+
   useEffect(() => {
     dispatch(updateIsEdit(isEdit, postId));
     if (isEdit) {
@@ -53,6 +57,11 @@ const PostWritepage = ({ match }) => {
       );
     }
   }, []);
+
+  const closeThumbModal = () => {
+    setOnThumbModal(false);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let markdownContent = editorRef.current?.getInstance().getMarkdown();
@@ -65,19 +74,19 @@ const PostWritepage = ({ match }) => {
       ...inputData,
       content: markdownContent,
     };
+    setOnThumbModal(true);
     console.log("deleteFile file :::: ", deleteFile);
     dispatch(savePostData(postData, isEdit, selectedFiles, postId, deleteFile));
     setSaveTrigger(true);
-    };
-//     useEffect(()=> {
-//         dispatch(fetchPostData(postId))
-//         setSaveTrigger(false);
-//   },[saveTrigger])
+  };
+  //     useEffect(()=> {
+  //         dispatch(fetchPostData(postId))
+  //         setSaveTrigger(false);
+  //   },[saveTrigger])
   useEffect(() => {
-    dispatch(fetchPostData(postId))
+    dispatch(fetchPostData(postId));
 
     if (saveTrigger) {
-
       setIsSaved(true);
       setAnimationClass("fadeIn");
       setTimeout(() => {
@@ -91,8 +100,7 @@ const PostWritepage = ({ match }) => {
         // }
       }, 2000); // 2초 후에 fadeOut 시작
     }
-  }, [updateState,saveTrigger]);
-
+  }, [updateState, saveTrigger]);
 
   return (
     <>
@@ -104,6 +112,7 @@ const PostWritepage = ({ match }) => {
         setIsSaved={setIsSaved}
         isSaved={isSaved}
       />
+      {onThumbModal && <Thumbnail closeThumbModal={closeThumbModal} />}
       {isSaved && (
         <SaveInfo
           animationClass={animationClass}
