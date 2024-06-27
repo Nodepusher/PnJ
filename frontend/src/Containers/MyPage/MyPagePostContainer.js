@@ -18,7 +18,6 @@ const MyPagePostContainer = () => {
           params: { sort },
         });
         const myPosts = res.data.myPosts;
-        console.log("res.data", res.data);
         setPost(myPosts);
         post.length > 0 ? setPostState(true) : setPostState(false);
       } catch (error) {
