@@ -1,23 +1,19 @@
 import React from "react";
 
-const DetailWrtierInfoTop = ({ name, createdAt }) => {
-  const url =
-    "https://steadio.imgix.net/profiles/f7261458-bcc0-4313-88a9-c1a86625ecee/profileImage/3b1c4b3e-b460-4670-ad69-c2a071216470.png?auto=format%2Ccompress&amp;fm=jpg&amp;h=300&amp;lossless=true&amp;w=300";
+const DetailWrtierInfoTop = ({ name, createdAt, profile }) => {
   const StProfileImg = {
     width: "34px",
     height: "34px",
-    background: `url(${url}) center center / cover no-repeat rgb(255, 255, 255)`,
+    background: `url(${profile}) center center / cover no-repeat rgb(255, 255, 255)`,
   };
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-x-[10px] whitespace-nowrap">
         <div>
-          <a href="/creator/newcrochet">
-            <div
-              className="relative shrink-0 rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.1)]"
-              style={StProfileImg}
-            ></div>
-          </a>
+          <div
+            className="relative shrink-0 rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.1)]"
+            style={StProfileImg}
+          ></div>
         </div>
         <div>
           <div>

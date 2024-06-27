@@ -65,13 +65,12 @@ export const getPostStatsData = (postId) => {
 };
 
 // 댓글 생성 함수
-export const createComment = (boardId, content, userId) => {
+export const createComment = (boardId, content) => {
   return async (dispatch) => {
     try {
       const response = await axios.post("/board/createComment", {
         BoardId: boardId,
         content: content,
-        UserId: userId,
       });
       dispatch(getPostStatsData(boardId)); // 댓글 작성 후 댓글 목록 업데이트
       //   dispatch(getPostData(boardId));
@@ -82,13 +81,12 @@ export const createComment = (boardId, content, userId) => {
 };
 
 // 답글 생성 함수
-export const createReply = (boardId, content, userId, commentId) => {
+export const createReply = (boardId, content, commentId) => {
   return async (dispatch) => {
     try {
       const response = await axios.post("/board/createReply", {
         BoardId: boardId,
         content: content,
-        UserId: userId,
         CommentId: commentId,
       });
       dispatch(getPostStatsData(boardId)); // 답글 작성 후 댓글 목록 업데이트

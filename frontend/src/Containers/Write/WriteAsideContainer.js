@@ -59,15 +59,14 @@ const WriteAsideContainer = ({
     if (type === "tag") {
       setTagList([...tagList.filter((_, i) => i !== index)]);
     } else if (type === "file") {
-        console.log(index)
+      console.log(index);
       let fileToDelete;
       if (selectedFiles[index].id) {
         fileToDelete = selectedFiles[index];
         setDeleteFile([...deleteFile, fileToDelete]);
       }
       setSelectedFiles(selectedFiles.filter((_, i) => index !== i));
-      }
-   
+    }
   };
 
   const handleClickOutside = (e) => {
@@ -131,11 +130,9 @@ const WriteAsideContainer = ({
       })
     );
   }, [dropdownState, dispatch]);
-    useEffect(() => {
-      dispatch(
-          deleteFileData(deleteFile)
-      );
-    }, [deleteFile, dispatch]);
+  useEffect(() => {
+    dispatch(deleteFileData(deleteFile));
+  }, [deleteFile, dispatch]);
   useEffect(() => {
     dispatch(
       updatePostData({
@@ -287,14 +284,14 @@ const AsideTagList = React.memo(({ tagList, onClickDelete }) => {
 
 const ExistAttachFile = ({ selectedFiles, onClickDelete, isEdit }) => {
   return (
-    <ul class="py-[36px]">
+    <ul className="py-[36px]">
       {selectedFiles.map((file, i) => (
-        <li key={i} class="mt-[24px] flex items-center first:mt-0">
-          <div class="surface_secondary border_black_opacity flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-[4px] border">
+        <li key={i} className="mt-[24px] flex items-center first:mt-0">
+          <div className="surface_secondary border_black_opacity flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-[4px] border">
             <svg
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-              class="content_disabled h-[24px] w-[24px]"
+              className="content_disabled h-[24px] w-[24px]"
             >
               <path
                 fill-rule="evenodd"
@@ -308,13 +305,13 @@ const ExistAttachFile = ({ selectedFiles, onClickDelete, isEdit }) => {
               ></path>
             </svg>
           </div>
-          <p class="content_primary font_label_regular_md ml-[16px] grow break-all line-clamp-2">
+          <p className="content_primary font_label_regular_md ml-[16px] grow break-all line-clamp-2">
             {/* {!file.name ? file.name : file.filename} */}
             {file.fileName ? file.fileName : file.name}
           </p>
           <button
             aria-label="file delete button"
-            class="ml-[16px] block shrink-0"
+            className="ml-[16px] block shrink-0"
             data-file-id="ca73150b-1049-4d4e-b643-20fb135ee4e3"
             type="button"
             onClick={() => {
@@ -324,7 +321,7 @@ const ExistAttachFile = ({ selectedFiles, onClickDelete, isEdit }) => {
             <svg
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-              class="h-[24px] w-[24px] fill-gray_100"
+              className="h-[24px] w-[24px] fill-gray_100"
             >
               <path
                 fill-rule="evenodd"

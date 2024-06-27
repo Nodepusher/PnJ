@@ -10,28 +10,28 @@ const WriteSectionContainer = ({
   selectedFiles,
   setSelectedFiles,
   setIsSaved,
-  isSaved
+  isSaved,
 }) => {
-const { updateState } = useSelector(state => state.write);
-  
-//   const [animationClass, setAnimationClass] = useState("");
+  const { updateState } = useSelector((state) => state.write);
+
+  //   const [animationClass, setAnimationClass] = useState("");
   const [modalOn, setModalOn] = useState(false);
   const state = useSelector((state) => state.write);
   console.log(state.file);
   const loading = useSelector((state) => state.write.loading);
   const error = useSelector((state) => state.write.error);
-//   useEffect(() => {
-//     if (updateState !== undefined) {
-//       setIsSaved(true);
-//       setAnimationClass("fadeIn");
-//       setTimeout(() => {
-//         setAnimationClass("fadeOut");
-//         setTimeout(() => {
-//           setIsSaved(false);
-//         }, 200); // fadeOut 애니메이션이 끝난 후에 컴포넌트를 제거
-//       }, 2000); // 2초 후에 fadeOut 시작
-//     }
-//   }, [updateState]);
+  //   useEffect(() => {
+  //     if (updateState !== undefined) {
+  //       setIsSaved(true);
+  //       setAnimationClass("fadeIn");
+  //       setTimeout(() => {
+  //         setAnimationClass("fadeOut");
+  //         setTimeout(() => {
+  //           setIsSaved(false);
+  //         }, 200); // fadeOut 애니메이션이 끝난 후에 컴포넌트를 제거
+  //       }, 2000); // 2초 후에 fadeOut 시작
+  //     }
+  //   }, [updateState]);
 
   if (loading) {
     return (
@@ -40,24 +40,24 @@ const { updateState } = useSelector(state => state.write);
       </div>
     );
   }
-  
-    // setIsSaved(true);
-    // setAnimationClass("fadeIn");
-    // setTimeout(() => {
-    //   setAnimationClass("fadeOut");
-    //   setTimeout(() => {
-    //     setIsSaved(false);
-    //   }, 200); // fadeOut 애니메이션이 끝난 후에 컴포넌트를 제거
-    // }, 2000); // 2초 후에 fadeOut 시작
+
+  // setIsSaved(true);
+  // setAnimationClass("fadeIn");
+  // setTimeout(() => {
+  //   setAnimationClass("fadeOut");
+  //   setTimeout(() => {
+  //     setIsSaved(false);
+  //   }, 200); // fadeOut 애니메이션이 끝난 후에 컴포넌트를 제거
+  // }, 2000); // 2초 후에 fadeOut 시작
 
   // // 오류가 발생했을 때 오류 메시지를 표시
-//   if (error) {
-//     return <div>Error: {error}</div>;
-//   }
+  //   if (error) {
+  //     return <div>Error: {error}</div>;
+  //   }
 
   return (
-    <main class="mt-[32px]">
-      <div class="editor mx-auto grid w-desktop-grid grid-cols-15 gap-x-[16px] gap-y-0">
+    <main className="mt-[32px]">
+      <div className="editor mx-auto grid w-desktop-grid grid-cols-15 gap-x-[16px] gap-y-0">
         <WriteEditorContainer editorRef={editorRef} />
         <WriteAsideContainer
           setModalOn={setModalOn}

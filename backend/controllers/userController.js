@@ -126,7 +126,6 @@ module.exports = {
   deleteMyPost: async (req, res) => {
     try {
       const { postId } = req.params;
-      console.log("컨트롤러단 postId", postId);
       const result = await userService.deleteMyPost(postId);
 
       if (result) {

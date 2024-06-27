@@ -42,6 +42,10 @@ const PostList = ({ postList, sort, setPost }) => {
     return nav(`/detail?post=${postId}`);
   };
 
+  const moveToUpdatePost = async (postId) => {
+    return nav(`/write?postId=${postId}`);
+  };
+
   const onDeleteModal = useCallback((id) => {
     setCheckModal(true);
     deletePost(id);
@@ -100,6 +104,7 @@ const PostList = ({ postList, sort, setPost }) => {
                   aria-label="edit button"
                   className="border_primary flex h-[40px] w-[40px] items-center justify-center rounded-full border"
                   type="button"
+                  onClick={() => moveToUpdatePost(post.id)}
                 >
                   <svg
                     viewBox="0 0 20 20"

@@ -139,7 +139,7 @@ module.exports = {
       );
 
       await t.commit();
-      console.log(Files)
+      console.log(Files);
       postData.File = Files;
       // console.log(postData)
 
@@ -212,7 +212,7 @@ module.exports = {
     }
   },
   updatePost: async (postData) => {
-    console.log("updateadfafas ",postData);
+    console.log("updateadfafas ", postData);
     try {
       const update = await Board.update(
         {
@@ -276,6 +276,23 @@ module.exports = {
       return file;
     } catch (err) {
       return { success: false, message: "에러" };
+    }
+  },
+  deleteComment: async (where) => {
+    try {
+      return await Comment.destroy({ where: where });
+    } catch (error) {
+      console.error("Error in deleteMyComment:", error);
+      throw error;
+    }
+  },
+
+  deleteReply: async (where) => {
+    try {
+      return await Reply.destroy({ where: where });
+    } catch (error) {
+      console.error("Error in deleteMyReply:", error);
+      throw error;
     }
   },
 };

@@ -1,6 +1,6 @@
 import React from "react";
 
-const DetailWrtierInfo = ({ name }) => {
+const DetailWrtierInfo = ({ name, profile }) => {
   const StImg = {
     position: "absolute",
     height: "100%",
@@ -10,6 +10,7 @@ const DetailWrtierInfo = ({ name }) => {
     objectPosition: "center center",
     color: "transparent",
   };
+
   return (
     <section className="border_secondary relative flex flex-col flex-wrap items-center gap-[12px] border-t-[1px] py-[32px]">
       <div>
@@ -17,7 +18,7 @@ const DetailWrtierInfo = ({ name }) => {
           <img
             alt="프로필 이미지"
             sizes="100vw"
-            srcSet=""
+            src={profile}
             decoding="async"
             data-nimg="fill"
             loading="lazy"

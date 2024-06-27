@@ -99,17 +99,17 @@ module.exports = {
       res.status(400).json(result);
     }
   },
-  updatePost : async (req, res, next) => {
-    console.log("update :::::: ",  req.files);
-    console.log("update body",req.body);
+  updatePost: async (req, res, next) => {
+    console.log("update :::::: ", req.files);
+    console.log("update body", req.body);
     const fileJson = req.files.files;
     const postData = JSON.parse(req.body.postData);
     const sendResult = await boardService.updatePost(postData, fileJson);
-    console.log(sendResult.success)
-    console.log(sendResult.message)
-    if(sendResult.success){
+    console.log(sendResult.success);
+    console.log(sendResult.message);
+    if (sendResult.success) {
       res.status(200).json(sendResult);
-    }else{
+    } else {
       res.status(400).json(sendResult);
     }
   },
@@ -122,7 +122,7 @@ module.exports = {
   getPostById: async (req, res, next) => {
     console.log(req.params);
     const data = await boardService.getPostById(req.params.id);
-    console.log("::::::::: ",data)
+    console.log("::::::::: ", data);
     res.json(data);
   },
   getPostByCategory: async (req, res, next) => {
@@ -140,21 +140,86 @@ module.exports = {
     }
   },
   createComment: async (req, res, next) => {
-    console.log(req.body);
-    const data = await boardService.createComment(req.body);
-    if(!data.success){
+    const { BoardId, content } = req.body;
+    const { isAuthenticated, user } = req.auth;
+    if (!isAuthenticated) {
+      return res.status(400).json({ message: "Is Not Authenticated User" });
+    }
+    const commentData = {
+      content: content,
+      BoardId: BoardId,
+      UserId: user.id,
+    };
+    const data = await boardService.createComment(commentData);
+    if (!data.success) {
       res.status(200).json(data);
-    }else{
+    } else {
       res.status(400).json(data);
     }
-    },
-    createReply: async (req, res, next) => {
-      console.log(req.body);
-      const data =await boardService.createReply(req.body);
-      if(!data.success){
-        res.status(200).json(data);
-      }else{
-        res.status(400).json(data);
+  },
+  createReply: async (req, res, next) => {
+    const { BoardId, content, CommentId } = req.body;
+    const { isAuthenticated, user } = req.auth;
+    if (!isAuthenticated) {
+      return res.status(400).json({ message: "Is Not Authenticated User" });
+    }
+    const replyData = {
+      content: content,
+      BoardId: BoardId,
+      UserId: user.id,
+      CommentId: CommentId,
+    };
+    const data = await boardService.createReply(replyData);
+    if (!data.success) {
+      res.status(200).json(data);
+    } else {
+      res.status(400).json(data);
+    }
+  },
+  deleteMyComment: async (req, res) => {
+    try {
+      console.log("req.params", req.params);
+      const { commentId } = req.params;
+      const result = await boardService.deleteMyComment(commentId);
+
+      if (result) {
+        return res
+          .status(200)
+          .json({ success: true, message: "delete MyComment Success" });
+      } else {
+        res
+          .status(400)
+          .json({ success: false, message: "delete MyComment Failed" });
       }
+    } catch (error) {
+      console.log("Error in boardController deleteMyComment", error);
+      res.status(500).json({
+        success: false,
+        message: "500",
+      });
+    }
+  },
+
+  deleteMyReply: async (req, res) => {
+    try {
+      const { replyId } = req.params;
+      const result = await boardService.deleteMyReply(replyId);
+
+      if (result) {
+        return res
+          .status(200)
+          .json({ success: true, message: "delete MyReply Success" });
+      } else {
+        res
+          .status(400)
+          .json({ success: false, message: "delete MyReply Failed" });
+      }
+    } catch (error) {
+      console.log("Error in boardController deleteMyReply", error);
+      res.status(500).json({
+        success: false,
+        message: "500",
+      });
+    }
   },
 };

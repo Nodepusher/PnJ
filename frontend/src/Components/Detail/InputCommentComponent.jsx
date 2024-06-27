@@ -8,19 +8,21 @@ import {
   createReply,
   getPostStatsData,
 } from "../../store/postDetailReducer";
+import ToastMsg from "../../utils/ToastMsg";
 
-const InputCommentComponent = ({ type, replyCallback }) => {
+const InputCommentComponent = ({ type, replyCallback, profile }) => {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const commentId = useSelector((state) => state.detail.commentId);
   const postId = useSelector((state) => state.detail.postId);
-  const userId = 1;
   const moveToLoginPage = () => {
     nav("/login");
   };
-  const isLoggedIn = true;
+  const isLoggedIn = sessionStorage.getItem("isAuthenticated");
 
   const [comment, setComment] = useState("");
+  const [onTimer, setOnTimer] = useState(false);
+  const msg = "댓글이 입력되지 않았습니다.";
 
   const handleChange = (e) => {
     setComment(e.target.value);
@@ -29,13 +31,16 @@ const InputCommentComponent = ({ type, replyCallback }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!comment) {
+      return setOnTimer(true);
+    }
+
     if (type === "comment") {
       console.log("Comment submitted:", comment);
-      await dispatch(createComment(postId, comment, userId));
+      await dispatch(createComment(postId, comment));
     } else if (type === "reply") {
-      console.log(commentId);
       console.log("Reply submitted:", comment);
-      await dispatch(createReply(postId, comment, userId, commentId));
+      await dispatch(createReply(postId, comment, commentId));
       replyCallback();
     }
     setComment("");
@@ -79,8 +84,7 @@ const InputCommentComponent = ({ type, replyCallback }) => {
                 <img
                   alt="임웅빈"
                   sizes="(max-width: 240px) 100vw, 240px"
-                  srcSet=""
-                  src=""
+                  src={profile}
                   decoding="async"
                   data-nimg="fill"
                   className="rounded-full"
@@ -119,6 +123,9 @@ const InputCommentComponent = ({ type, replyCallback }) => {
           </button>
         </div>
       </div>
+      {onTimer && (
+        <ToastMsg text={msg} onTimer={onTimer} setOnTimer={setOnTimer} />
+      )}
     </div>
   );
 };
