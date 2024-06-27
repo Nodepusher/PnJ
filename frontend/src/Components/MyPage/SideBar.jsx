@@ -4,7 +4,6 @@ import { useSearchParams } from "react-router-dom";
 import tempImage from "../../Assets/images/temp.png";
 const SideBar = ({ userName, profile }) => {
   const { page, updatePageInfo } = usePage();
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const onClickPage = (e) => {
     const target = e.target.closest(".buttonClass");

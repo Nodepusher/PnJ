@@ -1,5 +1,8 @@
 import React from "react";
 import InputCommentComponent from "./InputCommentComponent";
+import axios from "axios";
+import { getPostStatsData } from "../../store/postDetailReducer";
+import { useDispatch } from "react-redux";
 
 const ReplyComponent = ({
   showReply,
@@ -8,17 +11,29 @@ const ReplyComponent = ({
   StImg,
   replies,
   formatDateTime,
+  profile,
+  loginUser,
+  post,
 }) => {
-  /* 
-    Post 작성자의 id와 댓글 작성자의 id를 매칭하는 로직 필요 
-    적절한 데이터 값을 받아오면 54번째 줄 아래와 같이 수정 필요
-    reply.userInfo.id === Post.작성자id && (별표시)
-    */
-  const isAuthor = true;
+  const dispatch = useDispatch();
   const type = "reply";
 
   const replyCallback = () => {
     hideReply();
+  };
+  console.log("replies", replies);
+
+  const removeReply = async (replyId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:4000/board/deleteReply/${replyId}`
+      );
+      if (response.data.success) {
+        dispatch(getPostStatsData(post.id)); // 댓글 작성 후 댓글 목록 업데이트
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -43,7 +58,10 @@ const ReplyComponent = ({
                         alt="뉴크로셰"
                         sizes="(max-width: 240px) 100vw, 240px"
                         srcSet=""
-                        src=""
+                        src={
+                          `/uploads/file/${reply.User.profile}` ||
+                          `/uploads/file/default_profile_image.png`
+                        }
                         decoding="async"
                         data-nimg="fill"
                         className="rounded-full"
@@ -60,7 +78,7 @@ const ReplyComponent = ({
                       <div className="content_primary font_label_bold_lg">
                         {reply.User.name}
                       </div>
-                      {isAuthor && (
+                      {reply.UserId == post.UserId && (
                         <div
                           className="surface_accent inline-flex h-[14px] w-[14px] items-center justify-center rounded-[4px] p-[2px]"
                           data-testid="creator-badge"
@@ -75,16 +93,17 @@ const ReplyComponent = ({
                         </div>
                       )}
                     </div>
-                    {isAuthor && (
+                    {loginUser.id == reply.UserId && (
                       <button
                         aria-label="remove comment button"
                         type="button"
                         value="db7a9a37-cf74-47d5-99a1-8b50fccec0c7"
+                        onClick={() => removeReply(reply.id)}
                       >
                         <svg
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
-                          class="content_quaternary_inverse h-[20px] w-[20px]"
+                          className="content_quaternary_inverse h-[20px] w-[20px]"
                         >
                           <path d="M5.707 5.707a1 1 0 0 0 0 1.414l4.95 4.95-4.95 4.95a1 1 0 1 0 1.414 1.414l4.95-4.95 4.95 4.95a1 1 0 0 0 1.414-1.414l-4.95-4.95 4.95-4.95a1 1 0 1 0-1.414-1.414l-4.95 4.95-4.95-4.95a1 1 0 0 0-1.414 0Z"></path>
                         </svg>
@@ -112,7 +131,11 @@ const ReplyComponent = ({
         </ul>
         {showReply && (
           <div className="reply-input-section">
-            <InputCommentComponent type={type} replyCallback={replyCallback} />
+            <InputCommentComponent
+              type={type}
+              replyCallback={replyCallback}
+              profile={profile}
+            />
           </div>
         )}
       </div>

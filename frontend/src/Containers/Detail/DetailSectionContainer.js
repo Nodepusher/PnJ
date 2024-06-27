@@ -30,8 +30,10 @@ const DetailSectionContainer = () => {
   }
   const files = post.Files;
   const name = post.User.name;
+  const profile = post.User
+    ? `/uploads/file/${post.User.profile}`
+    : `/uploads/file/default_profile_image.png`;
   const { title, tags, createdAt } = post;
-  console.log(post);
   const category =
     post.category === "info"
       ? "정보 공유"
@@ -52,16 +54,17 @@ const DetailSectionContainer = () => {
           title={title}
           createdAt={createdAt}
           name={name}
+          profile={profile}
         />
         <DetailSectionContent
           content={post.content}
           tags={tags}
           files={files}
         />
-        <DetailWrtierInfo name={name} />
+        <DetailWrtierInfo name={name} profile={profile} />
         <div className="border-t border_primary"></div>
         <div className="h-[28px]"></div>
-        <DetailReplyContainer />
+        <DetailReplyContainer profile={profile} />
         <div className="h-[28px]"></div>
         <div className="border-t border_primary"></div>
         <div className="h-[28px]"></div>

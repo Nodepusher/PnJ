@@ -13,7 +13,6 @@ const HeaderContainer = ({ search = false, login = false, mypage = false }) => {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  console.log("user", user);
   const [loading, setLoading] = useState(true);
   const profile = user
     ? `/uploads/file/${user.profile}`

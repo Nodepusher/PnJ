@@ -3,70 +3,15 @@ import InputCommentComponent from "../../Components/Detail/InputCommentComponent
 import CommentComponent from "../../Components/Detail/CommentComponent";
 import { useSelector } from "react-redux";
 // import Spinner from '../Common/Spinner'
-const DetailReplyContainer = () => {
+const DetailReplyContainer = ({ profile }) => {
   const commentData = useSelector((state) => state.detail.postStats);
-
+  const loginUser = useSelector((state) => state.auth.user);
   const loading = useSelector((state) => state.detail.statsLoading);
   if (loading) {
     return <div></div>;
   }
-  // const comments = [
-  //     {
-  //         id: 1,
-  //         content: '댓글내용1',
-  //         userInfo: { userName: '유저닉네임1' },
-  //         replies: [
-  //             {
-  //                 id: 1,
-  //                 content: '대댓글내용1',
-  //                 userInfo: { userName: '유저닉네임2' },
-  //                 updateTime: '2024. 3. 8. 08:15',
-  //             },
-  //             {
-  //                 id: 2,
-  //                 content: '대댓글내용2',
-  //                 userInfo: { userName: '유저닉네임1' },
-  //                 updateTime: '2024. 3. 8. 08:50',
-  //             },
-  //         ],
-  //         updateTime: '2024. 3. 8. 07:50',
-  //     },
-  //     {
-  //         id: 2,
-  //         content: '댓글내용2',
-  //         userInfo: { userName: '유저닉네임1' },
-  //         replies: [
-  //             {
-  //                 id: 1,
-  //                 content: '대댓글내용1',
-  //                 userInfo: { userName: '유저닉네임2' },
-  //                 updateTime: '2024. 3. 8. 08:15',
-  //             },
-  //             {
-  //                 id: 2,
-  //                 content: '대댓글내용2',
-  //                 userInfo: { userName: '유저닉네임1' },
-  //                 updateTime: '2024. 3. 8. 08:50',
-  //             },
-  //             {
-  //                 id: 2,
-  //                 content: '대댓글내용2',
-  //                 userInfo: { userName: '유저닉네임1' },
-  //                 updateTime: '2024. 3. 8. 08:50',
-  //             },
-  //         ],
-  //         updateTime: '2024. 3. 8. 07:50',
-  //     },
-  //     {
-  //         id: 3,
-  //         content: '댓글내용3',
-  //         userInfo: { userName: '유저닉네임3' },
-  //         replies: [],
-  //         updateTime: '2024. 3. 8. 07:50',
-  //     },
-  // ];
   const type = "comment";
-
+  console.log("commentData", commentData);
   const commentCount = commentData.comments.length;
   const replyCount = commentData.comments.reduce(
     (acc, comment) => acc + comment.Replies.length,
@@ -85,9 +30,13 @@ const DetailReplyContainer = () => {
       {/* 댓글 인풋 컴포넌트 
             만약 댓글 입력 후 게시버튼을 눌렀는데 댓글이 등록이 안되면 게시 버튼 눌렀을때 commentComponent를 리렌더링 시켜야함
             답글 달기의 게시버튼은 버블링때문에 리렌더링 되고있어서 문제 없음 */}
-      <InputCommentComponent type={type} />
+      <InputCommentComponent type={type} profile={profile} />
       <div className="h-[23px]"></div>
-      <CommentComponent commentData={commentData} />
+      <CommentComponent
+        commentData={commentData}
+        profile={profile}
+        loginUser={loginUser}
+      />
     </div>
   );
 };

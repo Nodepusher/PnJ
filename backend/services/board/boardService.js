@@ -79,10 +79,10 @@ module.exports = {
       console.log("fileJson :: ", fileJson);
     }
     const existFile = postData.files;
-    const deleteFile = []
-    console.log("deleteFile ::: ",deleteFile)
+    const deleteFile = [];
+    console.log("deleteFile ::: ", deleteFile);
     postData.deleteFile.map((file) => deleteFile.push(file.id));
-    console.log("deleteFile ::: ",deleteFile)
+    console.log("deleteFile ::: ", deleteFile);
     console.log("existFile", existFile);
 
     delete postData.files;
@@ -94,18 +94,44 @@ module.exports = {
     selectFile.map((e) => console.log(e.uuid));
     console.log(selectFile.length, "갯수");
 
-    console.log(postData.BoardId)
-    console.log(postData.UserId)
-    console.log(postData)
+    console.log(postData.BoardId);
+    console.log(postData.UserId);
+    console.log(postData);
     if (existFile.length > 0) {
-      const success_deleteFile = deleteFile && await boardRepository.deleteFile(deleteFile);
-      const success_insertFile = fileJson && await boardRepository.insertFile(fileJson, postData.BoardId, postData.UserId);
+      const success_deleteFile =
+        deleteFile && (await boardRepository.deleteFile(deleteFile));
+      const success_insertFile =
+        fileJson &&
+        (await boardRepository.insertFile(
+          fileJson,
+          postData.BoardId,
+          postData.UserId
+        ));
       const success_updatePost = await boardRepository.updatePost(postData);
-      return {message : "수정 작업 완료", success : {updatePost : success_updatePost.success, insertFile : success_insertFile.success, deleteFile : success_deleteFile.success}}
+      return {
+        message: "수정 작업 완료",
+        success: {
+          updatePost: success_updatePost.success,
+          insertFile: success_insertFile.success,
+          deleteFile: success_deleteFile.success,
+        },
+      };
     } else {
-      const success_insertFile = fileJson && await boardRepository.insertFile(fileJson, postData.BoardId, postData.UserId);
+      const success_insertFile =
+        fileJson &&
+        (await boardRepository.insertFile(
+          fileJson,
+          postData.BoardId,
+          postData.UserId
+        ));
       const success_updatePost = await boardRepository.updatePost(postData);
-      return {message : "수정 작업 완료",success : {updatePost : success_updatePost.success, insertFile : success_insertFile.success}}
+      return {
+        message: "수정 작업 완료",
+        success: {
+          updatePost: success_updatePost.success,
+          insertFile: success_insertFile.success,
+        },
+      };
     }
   },
   findBoardById: async (boardId) => {
@@ -132,5 +158,31 @@ module.exports = {
   },
   createReply: async (replyData) => {
     return await boardRepository.InsertReply(replyData);
+  },
+  deleteMyComment: async (commentId) => {
+    try {
+      if (!commentId) {
+        throw new Error("commentId not found");
+      }
+      const where = { id: commentId };
+      await boardRepository.deleteComment(where);
+      return { success: true, message: "delete MyComment Sucess" };
+    } catch (error) {
+      console.error("Error in deleteMyComment boardService:", error);
+      return { success: false, message: error.message };
+    }
+  },
+  deleteMyReply: async (replyId) => {
+    try {
+      if (!replyId) {
+        throw new Error("replyId not found");
+      }
+      const where = { id: replyId };
+      await boardRepository.deleteReply(where);
+      return { success: true, message: "delete MyReply Sucess" };
+    } catch (error) {
+      console.error("Error in deleteMyReply boardService:", error);
+      return { success: false, message: error.message };
+    }
   },
 };

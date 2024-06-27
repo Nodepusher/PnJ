@@ -1,20 +1,35 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ReplyComponent from "./ReplyComponent";
-import { getCommentId } from "../../store/postDetailReducer";
+import { getCommentId, getPostStatsData } from "../../store/postDetailReducer";
+import axios from "axios";
 
-const CommentComponent = ({ commentData }) => {
+const CommentComponent = ({ commentData, profile, loginUser }) => {
   const [activeReply, setActiveReply] = useState(null);
+  const postId = useSelector((state) => state.detail.postId);
+  const { post } = useSelector((state) => state.detail.postData);
   const dispatch = useDispatch();
-  const isAuthor = true
   const showReplyInputComment = (commentId) => {
     setActiveReply((prev) => (prev === commentId ? null : commentId));
     dispatch(getCommentId(commentId));
   };
-
   const hideReplyInputComment = () => {
     setActiveReply(null);
     dispatch(getCommentId(""));
+  };
+
+  const removeComment = async (commentId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:4000/board/deleteComment/${commentId}`
+      );
+      console.log(response);
+      if (response.data.success) {
+        dispatch(getPostStatsData(postId)); // 댓글 작성 후 댓글 목록 업데이트
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const StImg = {
@@ -66,7 +81,10 @@ const CommentComponent = ({ commentData }) => {
                   <img
                     alt={comment.User.name}
                     sizes="(max-width: 240px) 100vw, 240px"
-                    src={comment.User.profile || "default-profile-url"}
+                    src={
+                      `/uploads/file/${comment.User.profile}` ||
+                      `/uploads/file/default_profile_image.png`
+                    }
                     decoding="async"
                     data-nimg="fill"
                     className="rounded-full"
@@ -83,23 +101,37 @@ const CommentComponent = ({ commentData }) => {
                   <div className="content_primary font_label_bold_lg">
                     {comment.User.name}
                   </div>
-                  
-                </div>
-                {isAuthor && (
-                      <button
-                        aria-label="remove comment button"
-                        type="button"
-                        value="db7a9a37-cf74-47d5-99a1-8b50fccec0c7"
+                  {comment.UserId == post.UserId && (
+                    <div
+                      class="surface_accent inline-flex h-[14px] w-[14px] items-center justify-center rounded-[4px] p-[2px]"
+                      data-testid="creator-badge"
+                    >
+                      <svg
+                        viewBox="0 0 12 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="content_primary_inverse h-[14px] w-[14px]"
                       >
-                        <svg
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="content_quaternary_inverse h-[20px] w-[20px]"
-                        >
-                          <path d="M5.707 5.707a1 1 0 0 0 0 1.414l4.95 4.95-4.95 4.95a1 1 0 1 0 1.414 1.414l4.95-4.95 4.95 4.95a1 1 0 0 0 1.414-1.414l-4.95-4.95 4.95-4.95a1 1 0 1 0-1.414-1.414l-4.95 4.95-4.95-4.95a1 1 0 0 0-1.414 0Z"></path>
-                        </svg>
-                      </button>
-                    )}
+                        <path d="M5.567 1.748a.5.5 0 0 1 .866 0L7.499 3.59a.5.5 0 0 0 .329.238l2.082.445a.5.5 0 0 1 .268.823L8.754 6.681a.5.5 0 0 0-.125.386l.22 2.118a.5.5 0 0 1-.7.51L6.203 8.83a.5.5 0 0 0-.406 0l-1.946.864a.5.5 0 0 1-.7-.509l.22-2.118a.5.5 0 0 0-.125-.386L1.822 5.097a.5.5 0 0 1 .268-.823l2.082-.445a.5.5 0 0 0 .329-.238l1.066-1.843Z"></path>
+                      </svg>
+                    </div>
+                  )}
+                </div>
+                {loginUser.id == comment.UserId && (
+                  <button
+                    aria-label="remove comment button"
+                    type="button"
+                    value="db7a9a37-cf74-47d5-99a1-8b50fccec0c7"
+                    onClick={() => removeComment(comment.id)}
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="content_quaternary_inverse h-[20px] w-[20px]"
+                    >
+                      <path d="M5.707 5.707a1 1 0 0 0 0 1.414l4.95 4.95-4.95 4.95a1 1 0 1 0 1.414 1.414l4.95-4.95 4.95 4.95a1 1 0 0 0 1.414-1.414l-4.95-4.95 4.95-4.95a1 1 0 1 0-1.414-1.414l-4.95 4.95-4.95-4.95a1 1 0 0 0-1.414 0Z"></path>
+                    </svg>
+                  </button>
+                )}
               </div>
               <div className="h-[5px]"></div>
               <div className="font_label_regular_lg whitespace-pre-wrap break-all content_secondary">
@@ -133,6 +165,9 @@ const CommentComponent = ({ commentData }) => {
             StImg={StImg}
             formatDateTime={formatDateTime}
             replies={comment.Replies}
+            profile={profile}
+            loginUser={loginUser}
+            post={post}
           />
         </li>
       ))}

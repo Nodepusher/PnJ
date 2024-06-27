@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import NoPost from "./NoPost";
 import MyPageModal from "../MyPage/MyPageModal";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const PostListComponent = ({ postState, post, sort, setPost }) => {
   return (
@@ -16,6 +17,7 @@ const PostListComponent = ({ postState, post, sort, setPost }) => {
 };
 
 const PostList = ({ postList, sort, setPost }) => {
+  const nav = useNavigate();
   const [checkModal, setCheckModal] = useState(false); // 모달 상태관리
   const [deleteId, setDeleteId] = useState();
   const ascPost = (postList) => {
@@ -25,7 +27,7 @@ const PostList = ({ postList, sort, setPost }) => {
     return postList.sort((a, b) => new Date(b.date) - new Date(a.date));
   };
 
-  async function deletePost(postId) {
+  const deletePost = async (postId) => {
     try {
       const res = await axios.delete(`http://localhost:4000/user/${postId}`);
       console.log("Post deleted successfully:", res.data);
@@ -34,7 +36,15 @@ const PostList = ({ postList, sort, setPost }) => {
       console.error("Error deleting post:", error);
       throw error; // 오류 처리
     }
-  }
+  };
+
+  const moveToDetailPost = (postId) => {
+    return nav(`/detail?post=${postId}`);
+  };
+
+  const moveToUpdatePost = async (postId) => {
+    return nav(`/write?postId=${postId}`);
+  };
 
   const onDeleteModal = useCallback((id) => {
     setCheckModal(true);
@@ -50,7 +60,10 @@ const PostList = ({ postList, sort, setPost }) => {
         {sortPostList.map((post) => {
           return (
             <li className="border_secondary flex items-center border-b px-[8px] py-[16px] hover:surface_secondary">
-              <button className="block w-[280px] text-left">
+              <button
+                className="block w-[280px] text-left"
+                onClick={() => moveToDetailPost(post.id)}
+              >
                 <div className="content_secondary flex flex-col gap-y-[2px]">
                   <div className="flex gap-[12px]">
                     <div className="flex flex-col">
@@ -91,6 +104,7 @@ const PostList = ({ postList, sort, setPost }) => {
                   aria-label="edit button"
                   className="border_primary flex h-[40px] w-[40px] items-center justify-center rounded-full border"
                   type="button"
+                  onClick={() => moveToUpdatePost(post.id)}
                 >
                   <svg
                     viewBox="0 0 20 20"
