@@ -89,7 +89,7 @@ const ComboBox = ({ setSort, setComboVisible }) => {
           <li
             className="undefined"
             data-option-value="publishedAt"
-            tabindex="-1"
+            tabIndex="-1"
           >
             <button
               aria-label="dropdown option"
@@ -104,7 +104,7 @@ const ComboBox = ({ setSort, setComboVisible }) => {
               최신순
             </button>
           </li>
-          <li className="undefined" data-option-value="likes" tabindex="-1">
+          <li className="undefined" data-option-value="likes" tabIndex="-1">
             <button
               aria-label="dropdown option"
               className="surface_primary content_primary font_label_regular_lg w-full overflow-hidden text-ellipsis whitespace-nowrap rounded-[8px] py-[12px] px-[20px] text-left hover:surface_tertiary"

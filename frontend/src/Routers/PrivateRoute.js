@@ -9,7 +9,6 @@ const PrivateRoute = () => {
   const isAuthenticated =
     sessionStorage.getItem("isAuthenticated") === "true" ? true : false;
   const loading = false;
-  console.log("프라이빗", isAuthenticated, loading);
 
   return loading ? (
     <Spinner />

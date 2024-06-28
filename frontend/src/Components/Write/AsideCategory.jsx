@@ -43,7 +43,6 @@ const AsideCategory = ({
                 className="outline-none w-full font_body_regular_md placeholder:content_disabled cursor-pointer surface_primary content_primary"
                 name=""
                 placeholder="카테고리 미설정"
-                readonly=""
                 type="text"
                 value={dropdownState}
               />

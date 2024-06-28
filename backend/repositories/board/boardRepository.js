@@ -51,7 +51,7 @@ module.exports = {
     }
   },
 
-  InsertPost: async (postData, fileJson) => {
+  InsertPost: async (postData, fileJson, thumbnail) => {
     const transaction = await sequelize.transaction();
     // 게시물 작성
     // Board.create()

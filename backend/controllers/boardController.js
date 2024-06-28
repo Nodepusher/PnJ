@@ -11,7 +11,6 @@ module.exports = {
     }
     try {
       const board = await boardService.getAllCount(category);
-      console.log(board);
       res.status(200).json(board);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -88,11 +87,16 @@ module.exports = {
     }
   },
   createPost: async (req, res, next) => {
-    console.log(req.files);
-    console.log(req.body);
-    const fileJson = req.files.files;
+    const { thumbnail, files } = req.files;
+    const { user } = req.auth;
+    const fileJson = files;
     const postData = JSON.parse(req.body.postData);
-    const result = await boardService.createPost(postData, fileJson);
+    const result = await boardService.createPost(
+      postData,
+      fileJson,
+      thumbnail,
+      user
+    );
     if (result.success) {
       res.status(200).json(result);
     } else {

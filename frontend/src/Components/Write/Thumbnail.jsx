@@ -1,16 +1,19 @@
-import React, { useState } from "react";
-import defaultThumbnail from "../../Assets/images/noImage.png";
+import React, { useEffect, useState } from "react";
+import defaultThumb from "../../Assets/images/noThumb.png";
+import { updatePostData } from "../../store/postWriteReducer";
+import { useDispatch } from "react-redux";
 
-const Thumbnail = ({ closeThumbModal }) => {
-  const [image, setImage] = useState(null);
+const Thumbnail = ({ hideThumbModal, handleSubmit, setThumbFile }) => {
+  const [PreviewImage, setPreviewImage] = useState(null);
 
   const insertImage = (e) => {
     const image = e.target.files[0];
     if (image) {
+      setThumbFile(image);
       const reader = new FileReader();
       reader.readAsDataURL(image);
       reader.onloadend = () => {
-        setImage(reader.result);
+        setPreviewImage(reader.result);
       };
     }
   };
@@ -24,7 +27,7 @@ const Thumbnail = ({ closeThumbModal }) => {
             aria-label="close button"
             className="flex h-[32px] w-[32px] items-center justify-center"
             type="button"
-            onClick={closeThumbModal}
+            onClick={hideThumbModal}
           >
             <svg
               viewBox="0 0 24 24"
@@ -42,7 +45,7 @@ const Thumbnail = ({ closeThumbModal }) => {
                 <div className="surface_black_opacity_6 border_black_opacity relative flex h-[144px] w-[144px] justify-center items-center border">
                   <img
                     className="h-full"
-                    src={image ? image : defaultThumbnail}
+                    src={PreviewImage ? PreviewImage : defaultThumb}
                   />
                 </div>
                 <div className="h-[10px]"></div>
@@ -57,7 +60,7 @@ const Thumbnail = ({ closeThumbModal }) => {
                     <label
                       aria-label="파일 첨부"
                       className="absolute top-0 left-0 z-[1] block block h-[100%] w-full cursor-pointer opacity-0"
-                      for="fileInputattached-thumbnail"
+                      htmlFor="fileInputattached-thumbnail"
                     >
                       <input
                         className="hidden cursor-pointer"
@@ -78,14 +81,15 @@ const Thumbnail = ({ closeThumbModal }) => {
             aria-label="button"
             className="font_button_bold_md relative flex items-center justify-center h-[48px] rounded-[24px] content_secondary surface_primary border border-solid border_black_opacity hover:surface_tertiary hover:border_secondary active:surface_tertiary active:border_secondary disabled:surface_primary disabled:border_black_opacity disabled:border disabled:border-solid px-[19px] min-w-[88px] disabled:content_disabled"
             type="button"
-            onClick={closeThumbModal}
+            onClick={hideThumbModal}
           >
             취소
           </button>
           <button
             aria-label="button"
             className="font_button_bold_md relative flex items-center justify-center h-[48px] rounded-[24px] content_primary_inverse surface_primary_inverse hover:surface_primary_inverse_active active:surface_primary_inverse_active disabled:surface_disabled px-[20px] min-w-[88px] disabled:content_disabled"
-            type="button"
+            type="submit"
+            onClick={handleSubmit}
           >
             게시
           </button>

@@ -21,7 +21,7 @@ module.exports = {
       throw new Error(error.message);
     }
   },
-  createPost: async (postData, fileData) => {
+  createPost: async (postData, fileData, thumbnail, user) => {
     console.log(postData.category);
     if (postData.category === "스터디해요") {
       postData.category = "study";
@@ -34,7 +34,12 @@ module.exports = {
     // console.log(":::::: ",fileData.length)
     console.log(":::::: ", !!fileData);
     var fileJson = { files: [] };
-
+    if (thumbnail) {
+      postData.thumbnail = thumbnail[0].originalname;
+    } else {
+      postData.thumbnail = "noThumb.png";
+    }
+    postData.UserId = user.id;
     if (!!fileData && fileData.length > 0) {
       console.log("!!!!!!!");
       fileJson.files = fileData.map((file) => {

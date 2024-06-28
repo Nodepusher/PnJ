@@ -7,6 +7,7 @@ import {
   fetchPostData,
   updatePostData,
   updateIsEdit,
+  loadPostDataSuccess,
 } from "../store/postWriteReducer";
 
 import WriteHeaderContainer from "../Containers/Write/WriteHeaderContainer";
@@ -27,6 +28,8 @@ const PostWritepage = ({ match }) => {
   const [saveTrigger, setSaveTrigger] = useState(false);
   // 썸네일 모달 창 위한 스테이트
   const [onThumbModal, setOnThumbModal] = useState(false);
+  const [thumbFile, setThumbFile] = useState(null);
+
   const {
     inputData,
     loading,
@@ -41,48 +44,85 @@ const PostWritepage = ({ match }) => {
 
   useEffect(() => {
     dispatch(updateIsEdit(isEdit, postId));
+    const savedPost = sessionStorage.getItem("savedPost");
+
     if (isEdit) {
       // 수정 게시물
       dispatch(fetchPostData(postId));
+    } else if (savedPost) {
+      // 세션스토리지에 임시저장 데이터가 있다면
+      const { title, content, category, tag, files } = JSON.parse(savedPost);
+      const data = {
+        boardData: {
+          title: title,
+          content: content,
+          category: category,
+          tag: tag,
+        },
+        files: files,
+      };
+      dispatch(loadPostDataSuccess(data));
     } else {
       dispatch(
         updatePostData({
           // id: '',
-          title: "타이틀",
+          title: "",
           content: "본문",
           category: "",
-          tags: [],
+          tag: [],
           isEdit: isEdit,
         })
       );
     }
   }, []);
-
-  const closeThumbModal = () => {
+  // 모달 show/hide
+  const showThumbModal = () => {
+    setOnThumbModal(true);
+  };
+  const hideThumbModal = () => {
     setOnThumbModal(false);
   };
-
+  // 임시저장 이벤트
+  const savedPost = () => {
+    sessionStorage.setItem(
+      "savedPost",
+      JSON.stringify({
+        ...inputData,
+        files: Array(0),
+      })
+    );
+  };
+  // 게시 이벤트
   const handleSubmit = (e) => {
     e.preventDefault();
     let markdownContent = editorRef.current?.getInstance().getMarkdown();
-    let htmlContent = editorRef.current?.getInstance().getHTML();
-    console.log("::::::::: ", inputData);
-    console.log(markdownContent);
-    console.log("================================================");
-    console.log(htmlContent);
+    const { title, content, category } = inputData;
+    if (!title || !content || !category) {
+      alert("필수 필드를 입력해 주세요.");
+      return;
+    }
+
     const postData = {
       ...inputData,
       content: markdownContent,
     };
-    setOnThumbModal(true);
-    console.log("deleteFile file :::: ", deleteFile);
-    dispatch(savePostData(postData, isEdit, selectedFiles, postId, deleteFile));
+
+    dispatch(
+      savePostData(
+        postData,
+        thumbFile,
+        isEdit,
+        selectedFiles,
+        postId,
+        deleteFile
+      )
+    );
     setSaveTrigger(true);
+    if (!saveTrigger) {
+      window.location.href = "/";
+    }
   };
-  //     useEffect(()=> {
-  //         dispatch(fetchPostData(postId))
-  //         setSaveTrigger(false);
-  //   },[saveTrigger])
+
   useEffect(() => {
     dispatch(fetchPostData(postId));
 
@@ -94,6 +134,7 @@ const PostWritepage = ({ match }) => {
         setTimeout(() => {
           setIsSaved(false);
           setSaveTrigger(false);
+          setOnThumbModal(false);
         }, 200); // fadeOut 애니메이션이 끝난 후에 컴포넌트를 제거
         // if(writeState){
         //     nav('/mypage')
@@ -104,7 +145,10 @@ const PostWritepage = ({ match }) => {
 
   return (
     <>
-      <WriteHeaderContainer handleSubmit={handleSubmit} />
+      <WriteHeaderContainer
+        showThumbModal={showThumbModal}
+        savedPost={savedPost}
+      />
       <WriteSectionContainer
         editorRef={editorRef}
         selectedFiles={selectedFiles}
@@ -112,7 +156,13 @@ const PostWritepage = ({ match }) => {
         setIsSaved={setIsSaved}
         isSaved={isSaved}
       />
-      {onThumbModal && <Thumbnail closeThumbModal={closeThumbModal} />}
+      {onThumbModal && (
+        <Thumbnail
+          hideThumbModal={hideThumbModal}
+          handleSubmit={handleSubmit}
+          setThumbFile={setThumbFile}
+        />
+      )}
       {isSaved && (
         <SaveInfo
           animationClass={animationClass}

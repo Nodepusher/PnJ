@@ -17,7 +17,6 @@ const WriteSectionContainer = ({
   //   const [animationClass, setAnimationClass] = useState("");
   const [modalOn, setModalOn] = useState(false);
   const state = useSelector((state) => state.write);
-  console.log(state.file);
   const loading = useSelector((state) => state.write.loading);
   const error = useSelector((state) => state.write.error);
   //   useEffect(() => {

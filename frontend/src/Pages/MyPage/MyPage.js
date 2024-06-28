@@ -9,7 +9,6 @@ const MyPage = () => {
 
   const isAuthenticated =
     sessionStorage.getItem("isAuthenticated") === "true" ? true : false;
-  console.log("isAuthenticated", isAuthenticated);
   if (isAuthenticated === false) {
     return nav("/");
   }

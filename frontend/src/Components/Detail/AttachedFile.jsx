@@ -8,16 +8,18 @@ const AttachedFile = ({ files }) => {
   const fileDownload = async (fileUrl, fileName) => {
     try {
       // 응답 타입을 blob
-      const response = await axios.get(fileUrl, {responseType: "blob"}); 
+      const response = await axios.get(fileUrl, { responseType: "blob" });
       // blob 객체 생성, 응답받은 data를 blob MIME 타입 지정
-      const blob = new Blob([response.data], {type: response.headers['content-type'] });
+      const blob = new Blob([response.data], {
+        type: response.headers["content-type"],
+      });
       // 링크 a 태그 생성
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       // Link에 blob 객체 url 생성
       link.href = window.URL.createObjectURL(blob);
       // 다운로드 할 파일 이름을 지정
       link.download = fileName;
-  
+
       // a 요소를 body에 추가
       document.body.appendChild(link);
       // link 클릭
@@ -25,20 +27,20 @@ const AttachedFile = ({ files }) => {
       // 다운로드 완료 후 태그 제거
       document.body.removeChild(link);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
   const changeSize = (fileSize) => {
-    if(fileSize < 1024) {
-      return `${fileSize}B`
-    }else if(fileSize < 1024 * 1024){
-      return `${(fileSize / 1024).toFixed(2)}KB`
-    }else if(fileSize < 1024 * 1024 * 1024){
-      return `${(fileSize / (1024 * 1024)).toFixed(2)}MB`
-    }else{
-      return `${(fileSize / (1024 * 1024 * 1024)).toFixed(2)}GB`
+    if (fileSize < 1024) {
+      return `${fileSize}B`;
+    } else if (fileSize < 1024 * 1024) {
+      return `${(fileSize / 1024).toFixed(2)}KB`;
+    } else if (fileSize < 1024 * 1024 * 1024) {
+      return `${(fileSize / (1024 * 1024)).toFixed(2)}MB`;
+    } else {
+      return `${(fileSize / (1024 * 1024 * 1024)).toFixed(2)}GB`;
     }
-  }
+  };
   return (
     <>
       <div className="md:w-[380px]">
@@ -47,10 +49,9 @@ const AttachedFile = ({ files }) => {
           {console.log(files)}
           {files.map((file, i) => (
             <li
-              key={file.id} 
+              key={file.id}
               className="border_primary flex h-[76px] items-center justify-between rounded-[8px] border p-[12px] pr-[24px]"
-              >
-
+            >
               <div className="flex items-center gap-x-[12px]">
                 <div className="surface_tertiary flex h-[40px] w-[40px] items-center justify-center rounded-[8px]">
                   <svg
@@ -59,13 +60,13 @@ const AttachedFile = ({ files }) => {
                     className="content_quaternary h-[24px] w-[24px]"
                   >
                     <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
+                      fillRule="evenodd"
+                      clipRule="evenodd"
                       d="M6.6 4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8.961a2 2 0 0 0-.751-1.561l-3.702-2.962A2 2 0 0 0 13.898 4H6.6Zm11 15.2h-11a.2.2 0 0 1-.2-.2V6c0-.11.09-.2.2-.2h7V8a1 1 0 0 0 1 1h3.2v10a.2.2 0 0 1-.2.2Z"
                     ></path>
                     <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
+                      fillRule="evenodd"
+                      clipRule="evenodd"
                       d="M8.1 12a.9.9 0 0 1 .9-.9h6a.9.9 0 1 1 0 1.8H9a.9.9 0 0 1-.9-.9ZM8.1 15a.9.9 0 0 1 .9-.9h6a.9.9 0 1 1 0 1.8H9a.9.9 0 0 1-.9-.9Z"
                     ></path>
                   </svg>
@@ -80,7 +81,9 @@ const AttachedFile = ({ files }) => {
                 </div>
               </div>
               {/* 다운로드 버튼 */}
-              <button onClick= {() => fileDownload(file.uploadPath,file.fileName)}>
+              <button
+                onClick={() => fileDownload(file.uploadPath, file.fileName)}
+              >
                 <svg
                   viewBox="0 0 16 18"
                   xmlns="http://www.w3.org/2000/svg"

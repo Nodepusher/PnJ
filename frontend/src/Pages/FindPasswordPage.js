@@ -28,11 +28,9 @@ const FindPasswordPage = () => {
   };
 
   const handleOnClick = () => {
-    console.log("sendMailState", sendMailState);
     if (sendMailState) {
       nav("/login/email-login");
     } else {
-      console.log("email", email.email);
       setSendMailState(validState);
       sendEmailAuth(email.email);
     }

@@ -19,7 +19,6 @@ const PostDetailPage = () => {
 
   // const currentPostId = 2;
   useEffect(() => {
-    console.log(postId);
     dispatch(getPostId(postId));
     dispatch(getPostData(postId));
     dispatch(getPostStatsData(postId));

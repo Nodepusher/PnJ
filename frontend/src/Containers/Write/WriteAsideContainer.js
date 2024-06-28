@@ -15,7 +15,6 @@ const WriteAsideContainer = ({
   const dispatch = useDispatch();
   const { isEdit, inputData, file } = useSelector((state) => state.write);
   const [deleteFile, setDeleteFile] = useState([]);
-  console.log("deleteFile", deleteFile);
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownState, setDropdownState] = useState(null);
   const [tagList, setTagList] = useState([]);
@@ -59,7 +58,6 @@ const WriteAsideContainer = ({
     if (type === "tag") {
       setTagList([...tagList.filter((_, i) => i !== index)]);
     } else if (type === "file") {
-      console.log(index);
       let fileToDelete;
       if (selectedFiles[index].id) {
         fileToDelete = selectedFiles[index];
@@ -84,10 +82,13 @@ const WriteAsideContainer = ({
   }, []);
 
   useEffect(() => {
-    console.log(selectedFiles);
-  }, [selectedFiles]);
+    const savedPost = sessionStorage.getItem("savedPost");
+    let data = null;
 
-  useEffect(() => {
+    if (savedPost) {
+      data = JSON.parse(savedPost);
+    }
+
     if (isEdit) {
       setTagList(inputData.tag);
       // setDropdownState(inputData.category);
@@ -98,18 +99,18 @@ const WriteAsideContainer = ({
           ? "스터디 해요"
           : "Q&A"
       );
-      setTagList(inputData.tag);
-      console.log("length", file.length);
       setSelectedFiles(file);
+    } else if (data) {
+      setTagList(data.tag);
+      setDropdownState(data.category);
+      setSelectedFiles(data.files);
     } else {
       setTagList([]);
       setDropdownState(null);
-      setTagList([]);
       setSelectedFiles([]);
     }
   }, [isEdit]);
 
-  console.log(inputData);
   useEffect(
     (e) => {
       if (isOpen) {
@@ -218,8 +219,8 @@ const AsideMenuTitle = ({
               className="content_quaternary h-[18px] w-[18px]"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M12.008 20.041a8 8 0 1 0 .067-16 8 8 0 0 0-.067 16Zm-.008 2c5.523.023 10.018-4.435 10.041-9.958.023-5.523-4.435-10.019-9.958-10.041C6.56 2.019 2.064 6.477 2.04 12 2.02 17.523 6.477 22.018 12 22.041Z"
               ></path>
               <path d="M11.984 13.372c-.528-.002-.974-.436-.888-.957.116-.702.408-1.305 1.088-1.753.574-.387 1.011-.768 1.02-1.363-.004-.594-.45-.993-1.01-.988-.283-.005-.552.1-.75.295-.348.343-.712.793-1.2.79-.655-.002-1.214-.559-.978-1.17.46-1.19 1.614-1.739 2.948-1.733 1.886.007 3.242.97 3.241 2.706-.011 1.156-.593 1.857-1.467 2.4-.388.236-.67.511-.843.852-.24.47-.633.923-1.16.92ZM12.02 17.492a1.5 1.5 0 1 0 .013-3 1.5 1.5 0 0 0-.012 3Z"></path>
@@ -294,13 +295,13 @@ const ExistAttachFile = ({ selectedFiles, onClickDelete, isEdit }) => {
               className="content_disabled h-[24px] w-[24px]"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M6.6 4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8.961a2 2 0 0 0-.751-1.561l-3.702-2.962A2 2 0 0 0 13.898 4H6.6Zm11 15.2h-11a.2.2 0 0 1-.2-.2V6c0-.11.09-.2.2-.2h7V8a1 1 0 0 0 1 1h3.2v10a.2.2 0 0 1-.2.2Z"
               ></path>
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M8.1 12a.9.9 0 0 1 .9-.9h6a.9.9 0 1 1 0 1.8H9a.9.9 0 0 1-.9-.9ZM8.1 15a.9.9 0 0 1 .9-.9h6a.9.9 0 1 1 0 1.8H9a.9.9 0 0 1-.9-.9Z"
               ></path>
             </svg>
@@ -324,8 +325,8 @@ const ExistAttachFile = ({ selectedFiles, onClickDelete, isEdit }) => {
               className="h-[24px] w-[24px] fill-gray_100"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Zm3.636-13.636a.9.9 0 0 1 0 1.272L13.273 12l2.363 2.364a.9.9 0 1 1-1.273 1.272L12 13.273l-2.364 2.363a.9.9 0 0 1-1.273-1.272L10.727 12 8.363 9.636a.9.9 0 0 1 1.273-1.272L12 10.727l2.363-2.363a.9.9 0 0 1 1.273 0Z"
               ></path>
             </svg>

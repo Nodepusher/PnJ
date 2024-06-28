@@ -15,9 +15,15 @@ const DELETE_FILE = "post/DELETE_FILE";
 const WRITE_STATE = "post/WRITE_STATE";
 const UPDATE_STATE = "post/UPDATE_STATE";
 
-
 // action 생성
-export const savePostData = (postData, isEdit = false, files, postId, deleteFile) => {
+export const savePostData = (
+  postData,
+  thumbFile,
+  isEdit = false,
+  files,
+  postId,
+  deleteFile
+) => {
   return async (dispatch) => {
     dispatch(postingData());
     dispatch(updateState());
@@ -28,10 +34,11 @@ export const savePostData = (postData, isEdit = false, files, postId, deleteFile
       if (isEdit) {
         postData.BoardId = postId;
       }
+      if (thumbFile) {
+        formData.append("thumbnail", thumbFile);
+      }
       postData.UserId = userId;
-      console.log(files);
       files.forEach((e, i) => {
-        console.log(i, " e ::", e);
         if (e.id) {
           existFile.push(e);
         } else {
@@ -39,22 +46,21 @@ export const savePostData = (postData, isEdit = false, files, postId, deleteFile
         }
       });
       postData.files = existFile;
-      postData.deleteFile = deleteFile
+      postData.deleteFile = deleteFile;
       formData.append("postData", JSON.stringify(postData));
 
-      console.log("postData ::::: ", postData);
-      console.log("formData ::::: ", formData);
       const response = isEdit
         ? await axios.put(`/board/updatePost/${postId}`, formData, {
-            headers: "multipart/form-data",
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           })
         : await axios.post("/board/createPost", formData, {
-            headers: "multipart/form-data",
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           });
 
-      console.log("response.data :::::::::::::: ",response.data)
-      
-      
       dispatch(writeState(true));
       dispatch(postingDataSuccess(response));
     } catch (error) {
@@ -73,7 +79,6 @@ export const fetchPostData = (boardId) => {
         `http://localhost:4000/board/writeData`,
         data
       );
-      console.log("response.data :: ", response.data);
       dispatch(loadPostDataSuccess(response.data));
     } catch (error) {
       dispatch(loadPostDataFail(error.message));
@@ -107,7 +112,9 @@ export const updateFileData = (fileData) => {
 };
 
 export const postingData = () => ({ type: POST_DATA });
-export const writeState = (state) => { return {type: WRITE_STATE, payload : state} };
+export const writeState = (state) => {
+  return { type: WRITE_STATE, payload: state };
+};
 export const updateState = () => ({ type: UPDATE_STATE });
 export const postingDataSuccess = (data) => ({
   type: POST_DATA_SUCCESS,
@@ -132,20 +139,20 @@ const initialState = {
   userId: "",
   boardId: "",
   inputData: {
-    title: "타이틀",
-    content: "본문",
+    title: "",
+    content: "",
     category: "",
     tag: [],
   },
   loading: false,
-  updateState : false,
-  writeState : '',
+  updateState: false,
+  writeState: "",
   error: null,
   postData: null,
   isEdit: null,
   file: [],
   deleteFile: [],
-  status : '',
+  status: "",
   saveCompleted: false,
 };
 
@@ -153,15 +160,15 @@ const initialState = {
 const postWriteReducer = (state = initialState, action) => {
   switch (action.type) {
     case WRITE_STATE:
-      return{
-          ...state,
-          writeState : action.payload
-      }
+      return {
+        ...state,
+        writeState: action.payload,
+      };
     case UPDATE_STATE:
-      return{
-          ...state,
-          updateState : false
-      }
+      return {
+        ...state,
+        updateState: false,
+      };
     case POST_DATA:
       return {
         ...state,
@@ -196,15 +203,15 @@ const postWriteReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        updateState : true,
-        status : action.payload.status
+        updateState: true,
+        status: action.payload.status,
       };
     case POST_DATA_FAIL:
       return {
         ...state,
         loading: false,
         error: action.payload,
-        updateState : false
+        updateState: false,
       };
     case LOAD_POST_DATA:
       return {
