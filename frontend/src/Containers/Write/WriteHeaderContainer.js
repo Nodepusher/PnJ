@@ -2,7 +2,7 @@ import React from "react";
 import WriterPostHeader from "../../Components/Write/WriterPostHeader";
 import WriteNavigation from "../../Components/Write/WriteNavigation";
 
-const WriteHeaderContainer = ({ handleSubmit }) => {
+const WriteHeaderContainer = ({ showThumbModal, savedPost }) => {
   const StImg = {
     position: "absolute",
     height: "100%",
@@ -19,7 +19,7 @@ const WriteHeaderContainer = ({ handleSubmit }) => {
   return (
     <div className="sticky top-0 z-10 z-100">
       <WriteNavigation StImg={StImg} />
-      <WriterPostHeader handleSubmit={handleSubmit} />
+      <WriterPostHeader showThumbModal={showThumbModal} savedPost={savedPost} />
       <div
         className="surface_accent translate-x-0 animate-slideLeftToRight"
         style={StTemp}

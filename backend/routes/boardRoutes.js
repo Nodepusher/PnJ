@@ -3,6 +3,7 @@ const boardController = require("../controllers/boardController");
 const multer = require("multer");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
+const upload = require("../middleware/upload");
 
 const router = express.Router();
 
@@ -32,16 +33,19 @@ const uploadImage = multer({ storage: storageImg });
 const uploadFile = multer({ storage: storageFile });
 router.post("/count", boardController.getAllCount);
 router.post("/list/:category?", boardController.getAllForInfiniteScroll);
+
 router.post(
   "/uploadImg",
   uploadImage.single("image"),
   boardController.saveUploadImg
 );
+
 router.post(
   "/createPost",
-  uploadFile.fields([{ name: "files" }]),
+  upload.fields([{ name: "thumbnail" }, { name: "files" }]),
   boardController.createPost
 );
+
 router.post("/writeData", boardController.getBoardById);
 router.put(
   "/updatePost/:id",

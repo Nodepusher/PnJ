@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPostData } from "../../store/postListReducer";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
+import defaultThumb from "../../Assets/images/noThumb.png";
 
 const PostList = ({ StProps, postData, category, dropdownState }) => {
   const nav = useNavigate();
@@ -25,7 +26,7 @@ const PostList = ({ StProps, postData, category, dropdownState }) => {
   const [page, setPage] = useState(2);
   const posts = useSelector((state) => state.postList.postsData);
   const hasMore = useSelector((state) => state.postList.hasMore);
-
+  console.log("postlist jsx", posts);
   useEffect(() => {
     setPage(2);
   }, [category]);
@@ -73,12 +74,13 @@ const PostList = ({ StProps, postData, category, dropdownState }) => {
                   </div>
                   <div className="relative h-[72px] w-[72px] shrink-0 rounded-[8px] md:h-[90px] md:w-[90px]">
                     <img
-                      alt="멜빵바지를 입은 볼빵빵 아기토끼 키링뜨기 (글도안+부분영상+사진+첨부파일 추가)"
+                      alt="thumbnail img"
                       sizes="(max-width: 500px) 72px, 90px"
-                      srcSet="
-                                                   
-                                                "
-                      src=""
+                      src={
+                        post.thumbnail
+                          ? `/uploads/thumbnail/${post.thumbnail}`
+                          : defaultThumb
+                      }
                       decoding="async"
                       data-nimg="fill"
                       className="rounded-[8px]"
@@ -156,12 +158,13 @@ const PostList = ({ StProps, postData, category, dropdownState }) => {
                 </div>
                 <div className="relative h-[72px] w-[72px] shrink-0 rounded-[8px] md:h-[90px] md:w-[90px]">
                   <img
-                    alt="멜빵바지를 입은 볼빵빵 아기토끼 키링뜨기 (글도안+부분영상+사진+첨부파일 추가)"
+                    alt="detail Thumb"
                     sizes="(max-width: 500px) 72px, 90px"
-                    srcSet="
-                                                   
-                                                "
-                    src=""
+                    src={
+                      post.thumbnail
+                        ? `/uploads/thumbnail/${post.thumbnail}`
+                        : defaultThumb
+                    }
                     decoding="async"
                     data-nimg="fill"
                     className="rounded-[8px]"

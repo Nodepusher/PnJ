@@ -21,7 +21,6 @@ export const getPostData = (postId) => {
       const authorPosts = getPost.data.userPost;
       const post = getPost.data.postData;
       post.Files = getPost.data.Files;
-      console.log(":::::", post);
       const categoryPosts = latestPost.data;
       dispatch({
         type: GET_POST_DATA_SUCCESS,

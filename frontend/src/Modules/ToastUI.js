@@ -28,30 +28,15 @@ const TuiEditor = ({ editorRef, content }) => {
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-      console.log(":::::::::::::: ", response.data.url);
-      console.log(":::::::::::::: ", response);
       callback(response.data.url);
     } catch (error) {
       console.error("Image upload failed:", error);
     }
-
-    // console.log('blob :::::::: ',blob);
-    // var reader = new FileReader();
-    // reader.onload = function (_a) {
-    //     var target = _a.target;
-    //     console.log('target.result', target.result.split('base64,'));
-    //     return callback(target.result);
-    // };
-    // reader.readAsDataURL(blob);
   };
   useEffect(() => {
     editorRef.current?.getInstance().setMarkdown(content);
   }, [content]);
 
-  const TempFunction = (temp1, temp2) => {
-    console.log("토스트ui모듈에 임시함수가 있습니다.");
-    console.log(temp1, temp2);
-  };
   return (
     <>
       <Editor

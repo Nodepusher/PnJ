@@ -10,7 +10,6 @@ const MyPagePostContainer = () => {
   const [sort, setSort] = useState("최신순");
 
   useEffect(() => {
-    console.log(sort);
     const requestPost = async () => {
       try {
         // 요청

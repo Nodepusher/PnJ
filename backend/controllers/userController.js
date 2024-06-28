@@ -159,7 +159,6 @@ module.exports = {
 
   updateUserInfo: async (req, res) => {
     try {
-      console.log("req.file", req.file);
       const { email } = req.auth.user;
       const include = {};
       if (req.file) {
