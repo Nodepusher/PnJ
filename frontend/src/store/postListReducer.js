@@ -4,6 +4,8 @@ import axios from "axios";
 const SELECT_CATEGORY = "post/SELECT_CATEGORY";
 const GET_POST_DATA = "post/GET_POST_DATA";
 const APPEND_POST_DATA = "post/APPEND_POST_DATA";
+const START_LOADING = "post/START_LOADING";
+const FINISH_LOADING = "post/FINISH_LOADING";
 
 // 액션 생성
 export const selectCategory = (category) => ({
@@ -11,8 +13,17 @@ export const selectCategory = (category) => ({
   payload: category,
 });
 
+const startLoading = () => ({
+  type: START_LOADING,
+});
+
+const finishLoading = () => ({
+  type: FINISH_LOADING,
+});
+
 export const getPostData = (category, page = 1, dropdownState = "최신순") => {
   return async (dispatch) => {
+    dispatch(startLoading());
     try {
       const response = await axios.post("http://localhost:4000/board/list", {
         dropdownState,
@@ -39,6 +50,8 @@ export const getPostData = (category, page = 1, dropdownState = "최신순") => 
         type: GET_POST_DATA,
         payload: postData,
       });
+    } finally {
+      dispatch(finishLoading());
     }
   };
 };
@@ -49,6 +62,7 @@ const initialState = {
   postsData: [],
   filteredPosts: [],
   hasMore: true,
+  loading: false,
 };
 
 // 리듀서
@@ -76,6 +90,16 @@ const postListReducer = (state = initialState, action) => {
         ...state,
         postsData: [...state.postsData, ...action.payload],
         hasMore: action.payload.length >= 8,
+      };
+    case START_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FINISH_LOADING:
+      return {
+        ...state,
+        loading: false,
       };
     default:
       return state;

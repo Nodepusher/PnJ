@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,7 @@ import { marked } from "marked";
 import DOMPurify from "dompurify";
 import defaultThumb from "../../Assets/images/noThumb.png";
 
-const PostList = ({ StProps, postData, category, dropdownState }) => {
+const PostList = ({ StProps, category, dropdownState }) => {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -26,15 +26,26 @@ const PostList = ({ StProps, postData, category, dropdownState }) => {
   const [page, setPage] = useState(2);
   const posts = useSelector((state) => state.postList.postsData);
   const hasMore = useSelector((state) => state.postList.hasMore);
+  
   console.log("postlist jsx", posts);
+  // useEffect(() => {
+  //   setPage(2);
+  // }, [category]);
+
+  // const fetchData = () => {
+  //   dispatch(getPostData(category, page, dropdownState));
+  //   setPage(page + 1);
+  // };
   useEffect(() => {
     setPage(2);
-  }, [category]);
+    dispatch(getPostData(category, 1, dropdownState));
+  }, [category, dropdownState, dispatch]);
 
-  const fetchData = () => {
+  const fetchData = useCallback(() => {
     dispatch(getPostData(category, page, dropdownState));
-    setPage(page + 1);
-  };
+    setPage((prevPage) => prevPage + 1);
+  }, [dispatch, category, page, dropdownState]);
+
   // 마크다운을 텍스트로 변환
   const extractTextFromMarkdown = (markdown) => {
     const html = marked(markdown);
@@ -136,7 +147,7 @@ const PostList = ({ StProps, postData, category, dropdownState }) => {
     </InfiniteScroll>
   ) : (
     <ul className={`col-span-full flex flex-col ${StUlMargin}`}>
-      {postData.map((post, i) => (
+      {posts.map((post, i) => (
         <li
           key={post.id}
           className={`border_secondary border-t py-[20px] first:border-0 md:py-[24px] ${StfirstPost}`}

@@ -14,6 +14,7 @@ const HeaderContainer = ({ search = false, login = false, mypage = false }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(true);
+  
   const profile = user
     ? `/uploads/file/${user.profile}`
     : `/uploads/file/default_profile_image.png`;
