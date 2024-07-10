@@ -1,42 +1,43 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getPostData } from "../store/postListReducer";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import ListHeaderContainer from "../Containers/List/ListHeaderContainer";
-import ListContentContainer from "../Containers/List/ListContentContainer";
 import ListFooterContainer from "../Containers/List/ListFooterContainer";
 import Spinner from "../Containers/Common/Spinner";
+import { getPostData, startLoading, finishLoading } from "../store/postListReducer";
+
+const ListContentContainer = React.lazy(() =>
+  import("../Containers/List/ListContentContainer")
+);
 
 const PostListPage = () => {
   const [dropdownState, setDropdownState] = useState("최신순");
-  const dispatch = useDispatch();
-  // 카테고리 상태 데이터
   const category = useSelector((state) => state.postList.category);
-  // 리스트 데이터
-  const postData = useSelector((state) => state.postList.postsData);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
-  const renderCount = useRef(0);
+  const preloadData = useCallback(async () => {
+    dispatch(startLoading());
+    setLoading(true);
+    await dispatch(getPostData(category, 1, dropdownState));
+    setLoading(false);
+    dispatch(finishLoading());
+  }, [category, dropdownState, dispatch]);
 
   useEffect(() => {
-    renderCount.current += 1;
-    console.log(`Render count: ${renderCount.current}`);
-  });
+    preloadData();
+  }, [preloadData]);
 
-  // 리스트 데이터 요청
-  // useEffect(() => {
-  //   dispatch(getPostData(category, 1, dropdownState));
-  // }, [dispatch, category, dropdownState]);
-  // const loading = useSelector((state) => state.postList.loading);
-  // if(loading){
-  //   <Spinner />
-  // }
   return (
     <>
       <ListHeaderContainer search={true} login={true} mypage={true} />
-      <ListContentContainer
-        category={category}
-        dropdownState={dropdownState}
-        setDropdownState={setDropdownState}
-      />
+      <Suspense fallback={<Spinner />}>
+        <ListContentContainer
+          category={category}
+          dropdownState={dropdownState}
+          setDropdownState={setDropdownState}
+          loading={loading}
+        />
+      </Suspense>
       <ListFooterContainer />
     </>
   );

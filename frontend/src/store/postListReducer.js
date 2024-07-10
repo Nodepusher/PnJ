@@ -7,20 +7,21 @@ const APPEND_POST_DATA = "post/APPEND_POST_DATA";
 const START_LOADING = "post/START_LOADING";
 const FINISH_LOADING = "post/FINISH_LOADING";
 
-// 액션 생성
+// 액션 생성자
 export const selectCategory = (category) => ({
   type: SELECT_CATEGORY,
   payload: category,
 });
 
-const startLoading = () => ({
+export const startLoading = () => ({
   type: START_LOADING,
 });
 
-const finishLoading = () => ({
+export const finishLoading = () => ({
   type: FINISH_LOADING,
 });
 
+// 서버에서 포스트 데이터를 가져오는 액션 생성자
 export const getPostData = (category, page = 1, dropdownState = "최신순") => {
   return async (dispatch) => {
     dispatch(startLoading());
@@ -36,14 +37,19 @@ export const getPostData = (category, page = 1, dropdownState = "최신순") => 
         payload: response.data,
       });
     } catch (error) {
+      // 에러가 발생할 경우 더미 데이터를 사용
       const categories = ["all", "study", "info", "qna"];
       const postData = [];
       for (let i = 0; i < 50; i++) {
         postData.push({
-          id: i + 1,
-          title: `게시글 제목${i + 1}`,
-          content: `게시글 내용${i + 1}`,
-          category: categories[i % 3],
+          id: Date.now() + i, // 현재 시간을 기반으로 고유한 ID 생성
+          title: `데이터를 가져올 수 없습니다. ::: ${i + 1}`,
+          content: `데이터를 가져올 수 없습니다. :::: ${i + 1}`,
+          category: categories[i % categories.length],
+          User : {
+            id : i + 1,
+            name: `User ${i + 1}`
+          }
         });
       }
       dispatch({
@@ -56,7 +62,7 @@ export const getPostData = (category, page = 1, dropdownState = "최신순") => 
   };
 };
 
-// 초기 스테이트
+// 초기 상태
 const initialState = {
   category: "",
   postsData: [],
@@ -69,10 +75,10 @@ const initialState = {
 const postListReducer = (state = initialState, action) => {
   switch (action.type) {
     case SELECT_CATEGORY:
-      const filteredPosts =
-        action.payload === undefined
-          ? state.postsData
-          : state.postsData.filter((post) => post.category === action.payload);
+      // 선택된 카테고리에 따라 포스트 필터링
+      const filteredPosts = action.payload
+        ? state.postsData.filter((post) => post.category === action.payload)
+        : state.postsData;
       return {
         ...state,
         category: action.payload,
@@ -89,6 +95,7 @@ const postListReducer = (state = initialState, action) => {
       return {
         ...state,
         postsData: [...state.postsData, ...action.payload],
+        filteredPosts: [...state.postsData, ...action.payload],
         hasMore: action.payload.length >= 8,
       };
     case START_LOADING:

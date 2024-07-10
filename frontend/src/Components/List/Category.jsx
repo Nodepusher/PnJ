@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import '../../style/List.css';
-import '../../style/List2.css';
 import { useDispatch } from 'react-redux';
-import { selectCategory, getPostData } from '../../store/postListReducer';
+import { selectCategory } from '../../store/postListReducer';
 
 function Category() {
     const dispatch = useDispatch();
@@ -12,7 +10,6 @@ function Category() {
     const handleSelectCategory = (category, i) => {
         setActiveBtn(i);
         dispatch(selectCategory(category.value));
-        // dispatch(getPostData(category.value));
         window.scrollTo(0, 0);
     };
 
@@ -61,12 +58,11 @@ function Category() {
             <div
                 className="swiper swiper-initialized swiper-horizontal swiper-pointer-events"
                 style={StStatic}
-                draggable="true"
             >
                 <div className="swiper-wrapper" style={style}>
                     {categories.map((category, i) => (
-                        <div className="swiper-slide swiper-slide-active !w-auto !ml-[16px] md:!ml-[0] mr-[12px] shrink-0 relative">
-                            <li key={category.value} className="shrink-0">
+                        <div key={category.value} className="swiper-slide swiper-slide-active !w-auto !ml-[16px] md:!ml-[0] mr-[12px] shrink-0 relative">
+                            <li className="shrink-0">
                                 <div>
                                     <button
                                         aria-label="category chip"
@@ -90,4 +86,4 @@ function Category() {
     );
 }
 
-export default Category;
+export default React.memo(Category);

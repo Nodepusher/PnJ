@@ -6,7 +6,7 @@ import Category from '../../Components/List/Category';
 const ListHeaderContainer = () => {
     return (
         <div className="sticky surface_primary z-20 w-full top-0">
-            <HeaderContainer search={true} login={true} mypage={true} />
+            <HeaderContainer search login mypage />
             <div className="mx-auto max-w-main">
                 <ListTitle />
                 <div className="h-[18px]"></div>
@@ -17,4 +17,4 @@ const ListHeaderContainer = () => {
     );
 };
 
-export default ListHeaderContainer;
+export default React.memo(ListHeaderContainer);

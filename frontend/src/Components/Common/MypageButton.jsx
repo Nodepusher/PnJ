@@ -13,7 +13,7 @@ const MypageButton = ({ onClick }) => {
   return (
     <div className="hidden lg:block">
       <button aria-label="button" type="button" style={style} onClick={onClick}>
-        크리에이터 센터
+        My P&J
       </button>
     </div>
   );
