@@ -1,193 +1,169 @@
 const boardRepository = require("../../repositories/board/boardRepository");
 
 module.exports = {
+  // 주어진 카테고리에 해당하는 모든 게시물 수를 반환
   getAllCount: async (category) => {
     try {
       return await boardRepository.findAllCount(category);
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(`모든 게시물 수를 가져오는 중 오류 발생: ${error.message}`);
     }
   },
+
+  // 무한 스크롤을 위해 주어진 조건에 맞는 게시물들을 반환
   getAllForInfiniteScroll: async (limit, page, category, sort) => {
-    console.log("category: " + category, "limit: " + limit, "page: " + page);
+    console.log(`category: ${category}, limit: ${limit}, page: ${page}`);
     try {
-      return await boardRepository.findAllForInfiniteScroll(
-        limit,
-        page,
-        category,
-        sort
-      );
+      return await boardRepository.findAllForInfiniteScroll(limit, page, category, sort);
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(`무한 스크롤용 게시물 가져오는 중 오류 발생: ${error.message}`);
     }
   },
+
+  // 새로운 게시물 생성
   createPost: async (postData, fileData, thumbnail, user) => {
-    console.log(postData.category);
-    if (postData.category === "스터디해요") {
-      postData.category = "study";
-    } else if (postData.category === "정보 공유") {
-      postData.category = "info";
-    } else {
-      postData.category = "qna";
-    }
-    console.log("fileData", fileData);
-    // console.log(":::::: ",fileData.length)
-    console.log(":::::: ", !!fileData);
-    var fileJson = { files: [] };
-    if (thumbnail) {
-      postData.thumbnail = thumbnail[0].originalname;
-    } else {
-      postData.thumbnail = "noThumb.png";
-    }
-    postData.UserId = user.id;
-    if (!!fileData && fileData.length > 0) {
-      console.log("!!!!!!!");
-      fileJson.files = fileData.map((file) => {
-        return {
-          uuid: file.filename.split(".")[0],
-          uploadPath: file.path,
-          fileName: file.originalname,
-          fileType: file.mimetype.split("/")[1],
-          fileSize: file.size,
-        };
-      });
-      console.log("fileJson :: ", fileJson);
-    }
+    try {
+      postData.category = translateCategory(postData.category);
+      postData.thumbnail = thumbnail ? thumbnail[0].originalname : "noThumb.png";
+      postData.UserId = user.id;
 
-    return await boardRepository.InsertPost(postData, fileJson);
+      const fileJson = processFileData(fileData);
+      return await boardRepository.InsertPost(postData, fileJson);
+    } catch (error) {
+      throw new Error(`게시물 생성 중 오류 발생: ${error.message}`);
+    }
   },
+
+  // 게시물 업데이트
   updatePost: async (postData, fileData) => {
-    console.log(postData.category);
-    if (postData.category === "스터디해요") {
-      postData.category = "study";
-    } else if (postData.category === "정보 공유") {
-      postData.category = "info";
-    } else {
-      postData.category = "qna";
-    }
-    console.log("fileData", fileData);
-    // console.log(":::::: ",fileData.length)
-    console.log(":::::: ", !!fileData);
-    var fileJson = { files: [] };
+    try {
+      postData.category = translateCategory(postData.category);
 
-    if (!!fileData && fileData.length > 0) {
-      console.log("!!!!!!!");
-      fileJson.files = fileData.map((file) => {
-        return {
-          uuid: file.filename.split(".")[0],
-          uploadPath: file.path,
-          fileName: file.originalname,
-          fileType: file.mimetype.split("/")[1],
-          fileSize: file.size,
-        };
-      });
-      console.log("fileJson :: ", fileJson);
-    }
-    const existFile = postData.files;
-    const deleteFile = [];
-    console.log("deleteFile ::: ", deleteFile);
-    postData.deleteFile.map((file) => deleteFile.push(file.id));
-    console.log("deleteFile ::: ", deleteFile);
-    console.log("existFile", existFile);
+      const fileJson = processFileData(fileData);
+      const deleteFileIds = postData.deleteFile.map(file => file.id);
 
-    delete postData.files;
-    delete postData.deleteFile;
+      delete postData.files;
+      delete postData.deleteFile;
 
-    const selectFile = await boardRepository.findAllFileByBoardId(
-      postData.BoardId
-    );
-    selectFile.map((e) => console.log(e.uuid));
-    console.log(selectFile.length, "갯수");
+      if (deleteFileIds.length > 0) {
+        await boardRepository.deleteFile(deleteFileIds);
+      }
 
-    console.log(postData.BoardId);
-    console.log(postData.UserId);
-    console.log(postData);
-    if (existFile.length > 0) {
-      const success_deleteFile =
-        deleteFile && (await boardRepository.deleteFile(deleteFile));
-      const success_insertFile =
-        fileJson &&
-        (await boardRepository.insertFile(
-          fileJson,
-          postData.BoardId,
-          postData.UserId
-        ));
-      const success_updatePost = await boardRepository.updatePost(postData);
-      return {
-        message: "수정 작업 완료",
-        success: {
-          updatePost: success_updatePost.success,
-          insertFile: success_insertFile.success,
-          deleteFile: success_deleteFile.success,
-        },
-      };
-    } else {
-      const success_insertFile =
-        fileJson &&
-        (await boardRepository.insertFile(
-          fileJson,
-          postData.BoardId,
-          postData.UserId
-        ));
-      const success_updatePost = await boardRepository.updatePost(postData);
-      return {
-        message: "수정 작업 완료",
-        success: {
-          updatePost: success_updatePost.success,
-          insertFile: success_insertFile.success,
-        },
-      };
+      if (fileJson.files.length > 0) {
+        await boardRepository.insertFile(fileJson, postData.BoardId, postData.UserId);
+      }
+
+      await boardRepository.updatePost(postData);
+
+      return { message: "게시물 업데이트 성공", success: true };
+    } catch (error) {
+      throw new Error(`게시물 업데이트 중 오류 발생: ${error.message}`);
     }
   },
+
+  // 게시물 ID로 게시물 찾기
   findBoardById: async (boardId) => {
-    const files = await boardRepository.findFileById(boardId);
-    const boardData = await boardRepository.findBoardById(boardId);
-    // return await boardRepository.findBoardById(boardId)
-    return { boardData: boardData, files: files };
+    try {
+      const files = await boardRepository.findFileById(boardId);
+      const boardData = await boardRepository.findBoardById(boardId);
+      return { boardData, files };
+    } catch (error) {
+      throw new Error(`게시물 ID로 찾기 중 오류 발생: ${error.message}`);
+    }
   },
+
+  // 게시물 ID로 게시물 및 관련 데이터 가져오기
   getPostById: async (id) => {
-    const data = await boardRepository.findPostById(id);
-    const category = data.postData.category;
-    data.category = category;
-    // console.log(data)
-    return data;
+    try {
+      const data = await boardRepository.findPostById(id);
+      data.category = data.postData.category;
+      return data;
+    } catch (error) {
+      throw new Error(`게시물 ID로 가져오는 중 오류 발생: ${error.message}`);
+    }
   },
+
+  // 카테고리로 게시물 찾기
   getPostByCategory: async (category) => {
-    return await boardRepository.findPostByCategory(category);
+    try {
+      return await boardRepository.findPostByCategory(category);
+    } catch (error) {
+      throw new Error(`카테고리로 게시물 찾기 중 오류 발생: ${error.message}`);
+    }
   },
+
+  // 게시물 ID로 모든 댓글 찾기
   getAllCommentById: async (postId) => {
-    return await boardRepository.findAllCommentById(postId);
+    try {
+      return await boardRepository.findAllCommentById(postId);
+    } catch (error) {
+      throw new Error(`게시물 ID로 모든 댓글 찾기 중 오류 발생: ${error.message}`);
+    }
   },
+
+  // 새로운 댓글 생성
   createComment: async (commentData) => {
-    return await boardRepository.InsertComment(commentData);
+    try {
+      return await boardRepository.InsertComment(commentData);
+    } catch (error) {
+      throw new Error(`댓글 생성 중 오류 발생: ${error.message}`);
+    }
   },
+
+  // 새로운 답글 생성
   createReply: async (replyData) => {
-    return await boardRepository.InsertReply(replyData);
+    try {
+      return await boardRepository.InsertReply(replyData);
+    } catch (error) {
+      throw new Error(`답글 생성 중 오류 발생: ${error.message}`);
+    }
   },
+
+  // 댓글 삭제
   deleteMyComment: async (commentId) => {
     try {
-      if (!commentId) {
-        throw new Error("commentId not found");
-      }
-      const where = { id: commentId };
-      await boardRepository.deleteComment(where);
-      return { success: true, message: "delete MyComment Sucess" };
+      if (!commentId) throw new Error("댓글 ID를 찾을 수 없습니다.");
+      await boardRepository.deleteComment({ id: commentId });
+      return { success: true, message: "댓글 삭제 성공" };
     } catch (error) {
-      console.error("Error in deleteMyComment boardService:", error);
+      console.error(`댓글 삭제 중 오류 발생: ${error.message}`);
       return { success: false, message: error.message };
     }
   },
+
+  // 답글 삭제
   deleteMyReply: async (replyId) => {
     try {
-      if (!replyId) {
-        throw new Error("replyId not found");
-      }
-      const where = { id: replyId };
-      await boardRepository.deleteReply(where);
-      return { success: true, message: "delete MyReply Sucess" };
+      if (!replyId) throw new Error("답글 ID를 찾을 수 없습니다.");
+      await boardRepository.deleteReply({ id: replyId });
+      return { success: true, message: "답글 삭제 성공" };
     } catch (error) {
-      console.error("Error in deleteMyReply boardService:", error);
+      console.error(`답글 삭제 중 오류 발생: ${error.message}`);
       return { success: false, message: error.message };
     }
-  },
+  }
+};
+
+// 헬퍼 함수들
+const translateCategory = (category) => {
+  switch (category) {
+    case "스터디해요":
+      return "study";
+    case "정보 공유":
+      return "info";
+    default:
+      return "qna";
+  }
+};
+
+const processFileData = (fileData) => {
+  const files = fileData ? fileData.map((file) => ({
+    uuid: file.filename.split(".")[0],
+    uploadPath: file.path,
+    fileName: file.originalname,
+    fileType: file.mimetype.split("/")[1],
+    fileSize: file.size,
+  })) : [];
+
+  return { files };
 };

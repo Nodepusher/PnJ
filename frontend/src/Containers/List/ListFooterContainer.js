@@ -1,7 +1,6 @@
 import React from "react";
-import "../../style/List.css";
-import "../../style/List2.css";
-
+import "../../style/common.css"
+import "../../style/common2.css"
 const ListFooterContainer = () => {
   return (
     <div className="mt-[56px] mobile:mt-[128px]">
@@ -24,13 +23,13 @@ const ListFooterContainer = () => {
                 </svg>
                 <div className="flex gap-x-[52px]">
                   <div className="content_secondary flex flex-col">
-                    <h5 className="font_label_bold_xl mb-[8px]">스테디오</h5>
+                    <h5 className="font_label_bold_xl mb-[8px]">P&J</h5>
                     <a
                       className="false font_label_regular_lg mt-[8px]"
                       target="_blank"
                       href="/start"
                     >
-                      크리에이터 시작
+                      P&J 시작
                     </a>
                     <a
                       className="false font_label_regular_lg mt-[8px]"
@@ -42,14 +41,12 @@ const ListFooterContainer = () => {
                     <a
                       className="false font_label_regular_lg mt-[8px]"
                       target="_blank"
-                      href="https://static.steadio.co/static/docs/steadio_intro.pdf"
                     >
                       서비스 소개
                     </a>
                     <a
                       className="false font_label_regular_lg mt-[8px]"
                       target="_blank"
-                      href="https://idus.notion.site/1c51157d3715410f9be9d22ddb0ce8cc"
                     >
                       공지사항
                     </a>
@@ -59,16 +56,14 @@ const ListFooterContainer = () => {
                     <a
                       className="false font_label_regular_lg mt-[8px]"
                       target="_blank"
-                      href="https://steadio.zendesk.com/hc/ko"
                     >
                       헬프센터
                     </a>
                     <a
                       className="false font_label_regular_lg mt-[8px]"
                       target="_blank"
-                      href="https://idus.notion.site/d910e507a65a45499cdbee3d90dd5609"
                     >
-                      크리에이터 가이드
+                      P&J 가이드
                     </a>
                   </div>
                   <div className="content_secondary flex flex-col">
@@ -76,21 +71,18 @@ const ListFooterContainer = () => {
                     <a
                       className="false font_label_regular_lg mt-[8px]"
                       target="_blank"
-                      href="https://steadio.zendesk.com/hc/ko/articles/6674963349145"
                     >
                       이용약관
                     </a>
                     <a
                       className="font-bold font_label_regular_lg mt-[8px]"
                       target="_blank"
-                      href="https://steadio.zendesk.com/hc/ko/articles/6674965622809"
                     >
                       개인정보 처리방침
                     </a>
                     <a
                       className="false font_label_regular_lg mt-[8px]"
                       target="_blank"
-                      href="https://steadio.zendesk.com/hc/ko/articles/6674994738841"
                     >
                       커뮤니티 운영방침
                     </a>
@@ -103,7 +95,6 @@ const ListFooterContainer = () => {
                     <a
                       className="mt-[12px]"
                       target="_blank"
-                      href="https://steadio.zendesk.com/hc/ko/requests/new"
                     >
                       <button
                         aria-label="button"
@@ -122,106 +113,38 @@ const ListFooterContainer = () => {
                     회사명
                   </span>
                   <span className="font_label_regular_md ml-[8px]">
-                    주식회사 백패커
+                    NodePusher
                   </span>
                   <span className="font_label_bold_md ml-[12px] first:m-0">
                     주소
                   </span>
                   <span className="font_label_regular_md ml-[8px]">
-                    주소 서울특별시 서초구 서초대로 398, 20층(서초동,
-                    BNK디지털타워)
+                    주소 서울특별시 동작구 남부순환로 반지하 자취방
                   </span>
                   <span className="font_label_bold_md ml-[12px] first:m-0">
                     대표
                   </span>
-                  <span className="font_label_regular_md ml-[8px]">김동환</span>
+                  <span className="font_label_regular_md ml-[8px]">황자현</span>
                 </p>
                 <p>
-                  <span className="font_label_bold_md ml-[12px] first:m-0">
-                    사업자등록번호
-                  </span>
-                  <span className="font_label_regular_md ml-[8px]">
-                    107-87-83297
-                  </span>
-                  <span className="font_label_bold_md ml-[12px] first:m-0">
-                    통신판매업 신고번호
-                  </span>
-                  <span className="font_label_regular_md ml-[8px]">
-                    2023-서울서초-2114호
-                  </span>
                   <span className="font_label_bold_md ml-[12px] first:m-0">
                     대표번호
                   </span>
                   <span className="font_label_regular_md ml-[8px]">
-                    02-6080-0760
+                    010-xxxx-xxxx
                   </span>
                   <span className="font_label_bold_md ml-[12px] first:m-0">
                     메일
                   </span>
                   <span className="font_label_regular_md ml-[8px]">
-                    support_steadio@backpac.kr
+                    indiajh94@gamil.com
                   </span>
                 </p>
               </div>
               <div className="mt-[20px] flex items-center justify-between">
                 <p className="content_tertiary font_label_regular_lg">
-                  © 2024 Backpackr Inc.
+                  © 2024 NodePusher Inc.
                 </p>
-                <div className="flex">
-                  <a
-                    className="ml-[20px] first:m-0"
-                    target="_blank"
-                    href="https://pf.kakao.com/_Kzxamb"
-                  >
-                    <svg
-                      viewBox="0 0 17 16"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-[24px] h-[24px] content_secondary"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M8.5 2C4.803 2 1.833 4.306 1.833 7.128a5.026 5.026 0 0 0 3.091 4.339l-.636 2.306c-.03.06 0 .151.06.181.061.061.182.061.243 0l2.697-1.79c.394.061.788.091 1.212.091 3.667 0 6.667-2.306 6.667-5.127C15.167 4.306 12.197 2 8.5 2Z"
-                      ></path>
-                    </svg>
-                  </a>
-                  <a
-                    className="ml-[20px] first:m-0"
-                    target="_blank"
-                    href="https://twitter.com/steadio_co"
-                  >
-                    <svg
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-[24px] h-[24px] content_secondary"
-                    >
-                      <path d="M8.66 19.333c-2.158 0-4.168-.627-5.86-1.71 1.437.094 3.972-.129 5.549-1.633-2.372-.109-3.442-1.928-3.582-2.706.202.078 1.163.171 1.706-.047-2.73-.684-3.148-3.079-3.055-3.81.512.358 1.38.482 1.721.451-2.542-1.82-1.628-4.556-1.178-5.147 1.825 2.528 4.56 3.948 7.943 4.027a3.91 3.91 0 0 1-.097-.87A3.882 3.882 0 0 1 15.683 4a3.86 3.86 0 0 1 2.834 1.235c.748-.175 1.873-.585 2.422-.94-.277.996-1.14 1.826-1.662 2.134.005.01-.004-.01 0 0 .459-.07 1.7-.308 2.19-.64-.243.559-1.158 1.488-1.909 2.009.14 6.16-4.574 11.535-10.899 11.535Z"></path>
-                    </svg>
-                  </a>
-                  <a
-                    className="ml-[20px] first:m-0"
-                    target="_blank"
-                    href="https://www.instagram.com/steadio.official"
-                  >
-                    <svg
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-[24px] h-[24px] content_secondary"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M12.005 16.875c2.763 0 5.003-2.22 5.003-4.958 0-2.739-2.24-4.959-5.002-4.959-2.763 0-5.003 2.22-5.003 4.959 0 2.738 2.24 4.958 5.002 4.958Zm0-1.983c1.658 0 3.002-1.332 3.002-2.975s-1.344-2.975-3.002-2.975c-1.657 0-3.001 1.332-3.001 2.975s1.344 2.975 3.002 2.975Z"
-                      ></path>
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M2 11.52c0-3.332 0-4.998.654-6.271a5.977 5.977 0 0 1 2.624-2.6C6.562 2 8.243 2 11.605 2h.8c3.363 0 5.044 0 6.328.649a5.977 5.977 0 0 1 2.624 2.6c.654 1.273.654 2.939.654 6.271v.793c0 3.333 0 4.999-.654 6.272a5.977 5.977 0 0 1-2.624 2.6c-1.284.648-2.965.648-6.327.648h-.8c-3.363 0-5.044 0-6.328-.648a5.977 5.977 0 0 1-2.624-2.6C2 17.312 2 15.645 2 12.313v-.793Zm9.605-7.537h.8c1.715 0 2.88.002 3.78.075.878.07 1.327.2 1.64.358.753.38 1.365.987 1.749 1.733.16.31.289.755.36 1.625.074.892.076 2.047.076 3.746v.793c0 1.7-.002 2.854-.075 3.747-.072.87-.202 1.314-.361 1.624a3.985 3.985 0 0 1-1.75 1.734c-.312.158-.761.287-1.638.358-.901.073-2.066.074-3.78.074h-.8c-1.715 0-2.88-.002-3.78-.075-.878-.07-1.327-.2-1.64-.357a3.985 3.985 0 0 1-1.749-1.734c-.16-.31-.29-.755-.36-1.624C4.002 15.167 4 14.012 4 12.313v-.793c0-1.699.002-2.854.075-3.746.072-.87.202-1.315.361-1.625a3.985 3.985 0 0 1 1.75-1.733c.312-.158.76-.287 1.638-.358.9-.073 2.066-.075 3.78-.075Z"
-                      ></path>
-                      <path d="M18.059 6.916c0 .552-.452 1-1.009 1a1.005 1.005 0 0 1-1.009-1c0-.552.452-1 1.01-1 .556 0 1.008.448 1.008 1Z"></path>
-                    </svg>
-                  </a>
-                </div>
               </div>
             </div>
           </div>
@@ -243,63 +166,43 @@ const ListFooterContainer = () => {
                 <a
                   className="false content_tertiary font_label_regular_lg"
                   target="_blank"
-                  href="/start"
+                  href="/login"
                 >
                   크리에이터 시작
                 </a>
                 <a
                   className="false content_tertiary font_label_regular_lg"
                   target="_blank"
-                  href="/plans"
-                >
-                  요금제
-                </a>
-                <a
-                  className="false content_tertiary font_label_regular_lg"
-                  target="_blank"
-                  href="https://static.steadio.co/static/docs/steadio_intro.pdf"
                 >
                   서비스 소개
                 </a>
                 <a
                   className="false content_tertiary font_label_regular_lg"
                   target="_blank"
-                  href="https://idus.notion.site/1c51157d3715410f9be9d22ddb0ce8cc"
                 >
                   공지사항
                 </a>
                 <a
                   className="false content_tertiary font_label_regular_lg"
                   target="_blank"
-                  href="https://steadio.zendesk.com/hc/ko"
                 >
                   헬프센터
                 </a>
                 <a
                   className="false content_tertiary font_label_regular_lg"
                   target="_blank"
-                  href="https://idus.notion.site/d910e507a65a45499cdbee3d90dd5609"
-                >
-                  크리에이터 가이드
-                </a>
-                <a
-                  className="false content_tertiary font_label_regular_lg"
-                  target="_blank"
-                  href="https://steadio.zendesk.com/hc/ko/articles/6674963349145"
                 >
                   이용약관
                 </a>
                 <a
                   className="font-bold content_tertiary font_label_regular_lg"
                   target="_blank"
-                  href="https://steadio.zendesk.com/hc/ko/articles/6674965622809"
                 >
                   개인정보 처리방침
                 </a>
                 <a
                   className="false content_tertiary font_label_regular_lg"
                   target="_blank"
-                  href="https://steadio.zendesk.com/hc/ko/articles/6674994738841"
                 >
                   커뮤니티 운영방침
                 </a>
@@ -312,98 +215,35 @@ const ListFooterContainer = () => {
                 <a
                   className="mt-[8px] block"
                   target="_blank"
-                  href="https://steadio.zendesk.com/hc/ko/requests/new"
                 >
                   <button
                     aria-label="button"
                     className="font_button_bold_md relative flex items-center justify-center h-[40px] rounded-[8px] content_secondary surface_primary border border-solid border_black_opacity hover:surface_tertiary hover:border_secondary active:surface_tertiary active:border_secondary disabled:surface_primary disabled:border_black_opacity disabled:border disabled:border-solid px-[15px] false disabled:content_disabled"
                     type="button"
                   >
-                    스테디오에 문의
+                    P&J에 문의
                   </button>
                 </a>
               </div>
               <div className="content_quaternary mt-[16px] leading-none">
                 <span className="font_label_bold_sm">회사명 </span>
-                <span className="font_label_regular_sm">주식회사 백패커 </span>
+                <span className="font_label_regular_sm">NodePusher</span>
                 <span className="font_label_bold_sm">주소 </span>
                 <span className="font_label_regular_sm">
-                  주소 서울특별시 서초구 서초대로 398, 20층(서초동,
-                  BNK디지털타워){" "}
+                  주소 서울특별시 동작구 남부순환로 반지하 자취방 {" "}
                 </span>
                 <span className="font_label_bold_sm">대표 </span>
-                <span className="font_label_regular_sm">김동환 </span>
-                <span className="font_label_bold_sm">사업자등록번호 </span>
-                <span className="font_label_regular_sm">107-87-83297 </span>
-                <span className="font_label_bold_sm">통신판매업 신고번호 </span>
-                <span className="font_label_regular_sm">
-                  2023-서울서초-2114호{" "}
-                </span>
+                <span className="font_label_regular_sm">황자현 </span>
                 <span className="font_label_bold_sm">대표번호 </span>
-                <span className="font_label_regular_sm">02-6080-0760 </span>
+                <span className="font_label_regular_sm">010-xxxx-xxxx </span>
                 <span className="font_label_bold_sm">메일 </span>
                 <span className="font_label_regular_sm">
-                  support_steadio@backpac.kr{" "}
+                  indiajh94@gamil.com{" "}
                 </span>
               </div>
               <p className="content_tertiary font_label_regular_md mt-[8px]">
-                © 2024 Backpackr Inc.
+                © 2024 NodePusher Inc.
               </p>
-              <div className="mt-[16px] flex">
-                <a
-                  className="ml-[20px] first:m-0"
-                  target="_blank"
-                  href="https://pf.kakao.com/_Kzxamb"
-                >
-                  <svg
-                    viewBox="0 0 17 16"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-[24px] h-[24px] content_secondary"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M8.5 2C4.803 2 1.833 4.306 1.833 7.128a5.026 5.026 0 0 0 3.091 4.339l-.636 2.306c-.03.06 0 .151.06.181.061.061.182.061.243 0l2.697-1.79c.394.061.788.091 1.212.091 3.667 0 6.667-2.306 6.667-5.127C15.167 4.306 12.197 2 8.5 2Z"
-                    ></path>
-                  </svg>
-                </a>
-                <a
-                  className="ml-[20px] first:m-0"
-                  target="_blank"
-                  href="https://twitter.com/steadio_co"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-[24px] h-[24px] content_secondary"
-                  >
-                    <path d="M8.66 19.333c-2.158 0-4.168-.627-5.86-1.71 1.437.094 3.972-.129 5.549-1.633-2.372-.109-3.442-1.928-3.582-2.706.202.078 1.163.171 1.706-.047-2.73-.684-3.148-3.079-3.055-3.81.512.358 1.38.482 1.721.451-2.542-1.82-1.628-4.556-1.178-5.147 1.825 2.528 4.56 3.948 7.943 4.027a3.91 3.91 0 0 1-.097-.87A3.882 3.882 0 0 1 15.683 4a3.86 3.86 0 0 1 2.834 1.235c.748-.175 1.873-.585 2.422-.94-.277.996-1.14 1.826-1.662 2.134.005.01-.004-.01 0 0 .459-.07 1.7-.308 2.19-.64-.243.559-1.158 1.488-1.909 2.009.14 6.16-4.574 11.535-10.899 11.535Z"></path>
-                  </svg>
-                </a>
-                <a
-                  className="ml-[20px] first:m-0"
-                  target="_blank"
-                  href="https://www.instagram.com/steadio.official"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-[24px] h-[24px] content_secondary"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M12.005 16.875c2.763 0 5.003-2.22 5.003-4.958 0-2.739-2.24-4.959-5.002-4.959-2.763 0-5.003 2.22-5.003 4.959 0 2.738 2.24 4.958 5.002 4.958Zm0-1.983c1.658 0 3.002-1.332 3.002-2.975s-1.344-2.975-3.002-2.975c-1.657 0-3.001 1.332-3.001 2.975s1.344 2.975 3.002 2.975Z"
-                    ></path>
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M2 11.52c0-3.332 0-4.998.654-6.271a5.977 5.977 0 0 1 2.624-2.6C6.562 2 8.243 2 11.605 2h.8c3.363 0 5.044 0 6.328.649a5.977 5.977 0 0 1 2.624 2.6c.654 1.273.654 2.939.654 6.271v.793c0 3.333 0 4.999-.654 6.272a5.977 5.977 0 0 1-2.624 2.6c-1.284.648-2.965.648-6.327.648h-.8c-3.363 0-5.044 0-6.328-.648a5.977 5.977 0 0 1-2.624-2.6C2 17.312 2 15.645 2 12.313v-.793Zm9.605-7.537h.8c1.715 0 2.88.002 3.78.075.878.07 1.327.2 1.64.358.753.38 1.365.987 1.749 1.733.16.31.289.755.36 1.625.074.892.076 2.047.076 3.746v.793c0 1.7-.002 2.854-.075 3.747-.072.87-.202 1.314-.361 1.624a3.985 3.985 0 0 1-1.75 1.734c-.312.158-.761.287-1.638.358-.901.073-2.066.074-3.78.074h-.8c-1.715 0-2.88-.002-3.78-.075-.878-.07-1.327-.2-1.64-.357a3.985 3.985 0 0 1-1.749-1.734c-.16-.31-.29-.755-.36-1.624C4.002 15.167 4 14.012 4 12.313v-.793c0-1.699.002-2.854.075-3.746.072-.87.202-1.315.361-1.625a3.985 3.985 0 0 1 1.75-1.733c.312-.158.76-.287 1.638-.358.9-.073 2.066-.075 3.78-.075Z"
-                    ></path>
-                    <path d="M18.059 6.916c0 .552-.452 1-1.009 1a1.005 1.005 0 0 1-1.009-1c0-.552.452-1 1.01-1 .556 0 1.008.448 1.008 1Z"></path>
-                  </svg>
-                </a>
-              </div>
             </div>
           </div>
         </div>
@@ -412,4 +252,4 @@ const ListFooterContainer = () => {
   );
 };
 
-export default ListFooterContainer;
+export default React.memo(ListFooterContainer);
