@@ -43,7 +43,7 @@ const HeaderContainer = ({ search = false, login = false, mypage = false }) => {
 
   // 로그아웃 처리
   const moveToLogout = useCallback(async () => {
-    const result = dispatch(logout());
+    const result = await dispatch(logout());
     if (result) {
       window.location.reload(); // 현재 페이지 새로고침
     }

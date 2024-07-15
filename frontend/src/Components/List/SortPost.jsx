@@ -60,6 +60,12 @@ const SortPost = ({ dropdownState, setDropdownState }) => {
       }, 200); // fadeOut 애니메이션이 끝난 후에 컴포넌트를 제거
     }, 2000); // 2초 후에 fadeOut 시작
   }
+  const propsClassName = "absolute top-[42px] right-0 z-10 w-[248px]";
+
+  const propsList = [
+    { dataOptionValue: "old", content: "오래된순" },
+    { dataOptionValue: "latest", content: "최신순" },
+  ];
 
   return (
     <div className="flex h-[44px] items-center justify-between px-[16px] md:p-0">
@@ -92,6 +98,9 @@ const SortPost = ({ dropdownState, setDropdownState }) => {
         {isOpen && (
           <DropdownList
             onClick={handleMenuClick}
+            propsClassName={propsClassName}
+            props={propsList}
+
           />
         )}
       </div>

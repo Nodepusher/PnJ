@@ -1,5 +1,6 @@
 import React from "react";
-
+import "../../style/common.css"
+import "../../style/common2.css"
 const ListFooterContainer = () => {
   return (
     <div className="mt-[56px] mobile:mt-[128px]">

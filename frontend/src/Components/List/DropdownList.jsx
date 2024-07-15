@@ -1,11 +1,11 @@
 import React from "react";
-const propsClassName = "absolute top-[42px] right-0 z-10 w-[248px]";
 
-const DropdownList = ({ onClick }) => {
-  const props = [
-    { dataOptionValue: "old", content: "오래된순" },
-    { dataOptionValue: "latest", content: "최신순" },
-  ];
+
+const DropdownList = ({ onClick, propsClassName, props  }) => {
+  // const props = [
+  //   { dataOptionValue: "old", content: "오래된순" },
+  //   { dataOptionValue: "latest", content: "최신순" },
+  // ];
   const handleItemClick = (e) => {
     onClick(e.target.innerText);
   };
