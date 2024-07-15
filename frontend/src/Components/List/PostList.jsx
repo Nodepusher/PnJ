@@ -7,24 +7,24 @@ import DOMPurify from "dompurify";
 import defaultThumb from "../../Assets/images/noThumb.png";
 import Spinner from "../../Containers/Common/Spinner";
 
-const InfiniteScroll = React.lazy(() => import("react-infinite-scroll-component"));
+import InfiniteScroll from "react-infinite-scroll-component";
 
-const PostList = React.memo(({ StProps, category, dropdownState }) => {
+const PostList = (({ StProps, category, dropdownState }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
   const { StfirstPost = "", StUlMargin = "" } = StProps || {}; // 스타일 프로퍼티
   const [page, setPage] = useState(2); // 페이지 번호 상태
   const hasMore = useSelector((state) => state.postList.hasMore); // 가져올 포스트가 더 있는지 확인
-  const loading = useSelector((state) => state.postList.loading); // 가져올 포스트가 더 있는지 확인
+  // const loading = useSelector((state) => state.postList.loading);
   const renderCount = useRef(0);
   const posts = useSelector((state) => state.postList.postsData); // 리덕스 포스트 데이터 가져오기
-
-  useEffect(() => {
-    renderCount.current += 1;
-    console.log(`Render count: ${renderCount.current}`);
-    console.log(posts);
-  });
+  
+  // useEffect(() => {
+  //   renderCount.current += 1;
+  //   console.log(`Render count: ${renderCount.current}`);
+  //   console.log(posts);
+  // });
 
   // 처음 렌더링 될 때, 카테고리와 드롭다운 상태 변경 될때 호출
   useEffect(() => {
@@ -33,11 +33,8 @@ const PostList = React.memo(({ StProps, category, dropdownState }) => {
 
   // 무한스크롤 데이터 가져올 함수
   const fetchData = useCallback(async () => {
-    console.log("Fetching more data...");
-    dispatch(startLoading());
     await dispatch(getPostData(category, page, dropdownState));
     setPage((prevPage) => prevPage + 1); // 페이지 번호 증가
-    dispatch(finishLoading());
   }, [dispatch, category, page, dropdownState]);
 
   // 마크다운 html 변환하고, 다시 텍스트로 변환
@@ -49,6 +46,7 @@ const PostList = React.memo(({ StProps, category, dropdownState }) => {
     return tempElement.textContent || tempElement.innerText || "";
   }, []);
 
+ 
   // 포스트 렌더링 함수
   const renderPostItem = useCallback(
     (post) => (
@@ -116,14 +114,11 @@ const PostList = React.memo(({ StProps, category, dropdownState }) => {
   );
 
   return location.pathname === "/" ? (
-    <Suspense fallback={<Spinner />}>
       <InfiniteScroll dataLength={posts.length} next={fetchData} hasMore={hasMore}>
         <ul className={`col-span-full flex flex-col ${StUlMargin}`}>
           {posts.map(renderPostItem)}
         </ul>
-        {loading && <Spinner />} {/* 로딩 중일 때 로딩 스피너 표시 */}
       </InfiniteScroll>
-    </Suspense>
   ) : (
     <ul className={`col-span-full flex flex-col ${StUlMargin}`}>
       {posts.map(renderPostItem)}

@@ -4,10 +4,7 @@ import ListHeaderContainer from "../Containers/List/ListHeaderContainer";
 import ListFooterContainer from "../Containers/List/ListFooterContainer";
 import Spinner from "../Containers/Common/Spinner";
 import { getPostData, startLoading, finishLoading } from "../store/postListReducer";
-
-const ListContentContainer = React.lazy(() =>
-  import("../Containers/List/ListContentContainer")
-);
+import ListContentContainer from "../Containers/List/ListContentContainer"
 
 const PostListPage = () => {
   const [dropdownState, setDropdownState] = useState("최신순");
@@ -30,14 +27,12 @@ const PostListPage = () => {
   return (
     <>
       <ListHeaderContainer search={true} login={true} mypage={true} />
-      <Suspense fallback={<Spinner />}>
         <ListContentContainer
           category={category}
           dropdownState={dropdownState}
           setDropdownState={setDropdownState}
           loading={loading}
         />
-      </Suspense>
       <ListFooterContainer />
     </>
   );

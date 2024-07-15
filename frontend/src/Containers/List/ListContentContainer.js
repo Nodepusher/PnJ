@@ -1,10 +1,7 @@
 import React from "react";
 import SortPost from "../../Components/List/SortPost";
 import Spinner from "../Common/Spinner";
-
-const PostList = React.lazy(() =>
-  import("../../Components/List/PostList")
-);
+import PostList from "../../Components/List/PostList"
 
 const ListContentContainer = ({
   category,
@@ -23,9 +20,7 @@ const ListContentContainer = ({
           {loading ? (
             <Spinner />
           ) : (
-            <React.Suspense fallback={<Spinner />}>
               <PostList category={category} dropdownState={dropdownState} />
-            </React.Suspense>
           )}
         </ul>
       </div>

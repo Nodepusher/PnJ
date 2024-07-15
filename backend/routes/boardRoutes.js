@@ -31,7 +31,10 @@ const storageFile = multer.diskStorage({
 
 const uploadImage = multer({ storage: storageImg });
 const uploadFile = multer({ storage: storageFile });
+
+// 게시물 총 개수
 router.post("/count", boardController.getAllCount);
+// 목록페이지
 router.post("/list/:category?", boardController.getAllForInfiniteScroll);
 
 router.post(

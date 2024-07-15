@@ -5,10 +5,7 @@ const fs = require("fs");
 
 module.exports = {
   getAllCount: async (req, res, next) => {
-    var category = req.body.category;
-    if (category === "") {
-      category = "all";
-    }
+    let category = req.body.category || "all";
     try {
       const board = await boardService.getAllCount(category);
       res.status(200).json(board);
@@ -16,60 +13,38 @@ module.exports = {
       res.status(500).json({ error: error.message });
     }
   },
+
   getAllForInfiniteScroll: async (req, res, next) => {
-    console.log(req.body.params);
-    var category = req.body.category;
-    var sort = req.body.dropdownState === "최신순" ? "DESC" : "ASC";
-    console.log(":::cate", !category);
-    if (!category) {
-      category = "all";
-    }
-    console.log(category);
+    let category = req.body.category || "all";
+    const sort = req.body.dropdownState === "최신순" ? "DESC" : "ASC";
     const limit = parseInt(req.body.limit);
     const page = parseInt(req.body.page) || 1;
 
     try {
-      const board = await boardService.getAllForInfiniteScroll(
-        limit,
-        page,
-        category,
-        sort
-      );
+      const board = await boardService.getAllForInfiniteScroll(limit, page, category, sort);
       if (!board) {
         return res.status(404).json({ error: "No boards found" });
+      } else if (board.error) {
+        res.status(404).json({ error: "Failed to fetch data" });
+      } else {
+        res.status(200).json(board);
       }
-      console.log(":::::: ", board.length);
-      res.status(200).json(board);
     } catch (error) {
-      console.error("1234 :::::::", error);
       res.status(500).json({ error: error.message });
     }
   },
-  saveUploadImg: async (req, res, next) => {
-    console.log("File received:", req.file);
-    console.log("Other data:", req.body);
 
+  saveUploadImg: async (req, res, next) => {
     if (!req.file) {
       return res.status(400).send("No file uploaded.");
     }
 
     const tempFilePath = req.file.path;
-    const outputFilePath = path.join(
-      __dirname,
-      "..",
-      "uploads",
-      "temp",
-      `compressed-${req.file.filename}`
-    );
+    const outputFilePath = path.join(__dirname, "..", "uploads", "temp", `compressed-${req.file.filename}`);
 
     try {
       await sharp(tempFilePath)
-        .resize({
-          width: 800,
-          height: 800,
-          fit: sharp.fit.inside,
-          withoutEnlargement: true,
-        })
+        .resize({ width: 800, height: 800, fit: sharp.fit.inside, withoutEnlargement: true })
         .toFormat("jpeg", { quality: 80 })
         .toFile(outputFilePath);
 
@@ -86,121 +61,113 @@ module.exports = {
       res.status(500).json({ message: "Error processing image" });
     }
   },
+
   createPost: async (req, res, next) => {
     const { thumbnail, files } = req.files;
     const { user } = req.auth;
-    const fileJson = files;
     const postData = JSON.parse(req.body.postData);
-    const result = await boardService.createPost(
-      postData,
-      fileJson,
-      thumbnail,
-      user
-    );
-    if (result.success) {
-      res.status(200).json(result);
-    } else {
-      res.status(400).json(result);
+
+    try {
+      const result = await boardService.createPost(postData, files, thumbnail, user);
+      res.status(result.success ? 200 : 400).json(result);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
   },
+
   updatePost: async (req, res, next) => {
-    console.log("update :::::: ", req.files);
-    console.log("update body", req.body);
     const fileJson = req.files.files;
     const postData = JSON.parse(req.body.postData);
-    const sendResult = await boardService.updatePost(postData, fileJson);
-    console.log(sendResult.success);
-    console.log(sendResult.message);
-    if (sendResult.success) {
-      res.status(200).json(sendResult);
-    } else {
-      res.status(400).json(sendResult);
+
+    try {
+      const result = await boardService.updatePost(postData, fileJson);
+      res.status(result.success ? 200 : 400).json(result);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
   },
+
   getBoardById: async (req, res, next) => {
-    console.log(req.body);
-    const boardData = await boardService.findBoardById(req.body.boardId);
-    res.json(boardData);
+    try {
+      const boardData = await boardService.findBoardById(req.body.boardId);
+      res.json(boardData);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
   },
 
   getPostById: async (req, res, next) => {
-    console.log(req.params);
-    const data = await boardService.getPostById(req.params.id);
-    console.log("::::::::: ", data);
-    res.json(data);
-  },
-  getPostByCategory: async (req, res, next) => {
-    // console.log("::::::: ",req.query);
-    const data = await boardService.getPostByCategory(req.query.category);
-    res.json(data);
-  },
-  getCommentById: async (req, res, next) => {
-    console.log("::::::: ", req.params);
-    const data = await boardService.getAllCommentById(req.params.id);
-    if (data.error) {
-      res.status(404).send(data);
-    } else {
-      res.status(200).json(data);
+    try {
+      const data = await boardService.getPostById(req.params.id);
+      res.json(data);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
   },
+
+  getPostByCategory: async (req, res, next) => {
+    try {
+      const data = await boardService.getPostByCategory(req.query.category);
+      res.json(data);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  getCommentById: async (req, res, next) => {
+    try {
+      const data = await boardService.getAllCommentById(req.params.id);
+      res.status(data.error ? 404 : 200).json(data);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
   createComment: async (req, res, next) => {
     const { BoardId, content } = req.body;
     const { isAuthenticated, user } = req.auth;
+
     if (!isAuthenticated) {
-      return res.status(400).json({ message: "Is Not Authenticated User" });
+      return res.status(400).json({ message: "User is not authenticated" });
     }
-    const commentData = {
-      content: content,
-      BoardId: BoardId,
-      UserId: user.id,
-    };
-    const data = await boardService.createComment(commentData);
-    if (!data.success) {
-      res.status(200).json(data);
-    } else {
-      res.status(400).json(data);
+
+    const commentData = { content, BoardId, UserId: user.id };
+
+    try {
+      const data = await boardService.createComment(commentData);
+      res.status(data.success ? 200 : 400).json(data);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
   },
+
   createReply: async (req, res, next) => {
     const { BoardId, content, CommentId } = req.body;
     const { isAuthenticated, user } = req.auth;
+
     if (!isAuthenticated) {
-      return res.status(400).json({ message: "Is Not Authenticated User" });
+      return res.status(400).json({ message: "User is not authenticated" });
     }
-    const replyData = {
-      content: content,
-      BoardId: BoardId,
-      UserId: user.id,
-      CommentId: CommentId,
-    };
-    const data = await boardService.createReply(replyData);
-    if (!data.success) {
-      res.status(200).json(data);
-    } else {
-      res.status(400).json(data);
+
+    const replyData = { content, BoardId, UserId: user.id, CommentId };
+
+    try {
+      const data = await boardService.createReply(replyData);
+      res.status(data.success ? 200 : 400).json(data);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
   },
+
   deleteMyComment: async (req, res) => {
     try {
-      console.log("req.params", req.params);
       const { commentId } = req.params;
       const result = await boardService.deleteMyComment(commentId);
 
-      if (result) {
-        return res
-          .status(200)
-          .json({ success: true, message: "delete MyComment Success" });
-      } else {
-        res
-          .status(400)
-          .json({ success: false, message: "delete MyComment Failed" });
-      }
+      res.status(result.success ? 200 : 400).json(result);
     } catch (error) {
-      console.log("Error in boardController deleteMyComment", error);
-      res.status(500).json({
-        success: false,
-        message: "500",
-      });
+      console.error("Error in deleteMyComment:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
     }
   },
 
@@ -209,21 +176,10 @@ module.exports = {
       const { replyId } = req.params;
       const result = await boardService.deleteMyReply(replyId);
 
-      if (result) {
-        return res
-          .status(200)
-          .json({ success: true, message: "delete MyReply Success" });
-      } else {
-        res
-          .status(400)
-          .json({ success: false, message: "delete MyReply Failed" });
-      }
+      res.status(result.success ? 200 : 400).json(result);
     } catch (error) {
-      console.log("Error in boardController deleteMyReply", error);
-      res.status(500).json({
-        success: false,
-        message: "500",
-      });
+      console.error("Error in deleteMyReply:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
     }
   },
 };
