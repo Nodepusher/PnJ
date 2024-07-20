@@ -46,6 +46,7 @@ module.exports = {
         },
         where: whereCondition,
       });
+      
       return infiniteScroll;
     } catch (error) {
       throw new Error(error.message);
@@ -78,6 +79,7 @@ module.exports = {
         await Promise.all(filePromise);
       }
       await transaction.commit();
+      
       return { success: true, message: "게시물 작성 성공", post: newPost };
     } catch (error) {
       await transaction.rollback();

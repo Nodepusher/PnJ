@@ -124,7 +124,9 @@ const PostWritepage = ({ match }) => {
   };
 
   useEffect(() => {
-    dispatch(fetchPostData(postId));
+    if(postId){
+      dispatch(fetchPostData(postId));
+    }
 
     if (saveTrigger) {
       setIsSaved(true);

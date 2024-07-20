@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPostData, startLoading, finishLoading } from "../../store/postListReducer";
+import { getPostData } from "../../store/postListReducer";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 import defaultThumb from "../../Assets/images/noThumb.png";
-import Spinner from "../../Containers/Common/Spinner";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -17,7 +16,7 @@ const PostList = (({ StProps, category, dropdownState }) => {
   const [page, setPage] = useState(2); // 페이지 번호 상태
   const hasMore = useSelector((state) => state.postList.hasMore); // 가져올 포스트가 더 있는지 확인
   // const loading = useSelector((state) => state.postList.loading);
-  const renderCount = useRef(0);
+  // const renderCount = useRef(0);
   const posts = useSelector((state) => state.postList.postsData); // 리덕스 포스트 데이터 가져오기
   
   // useEffect(() => {
@@ -93,7 +92,7 @@ const PostList = (({ StProps, category, dropdownState }) => {
                 </span>
               </div>
             </div>
-            <div className="mt-[3px] flex items-center">
+            {/* <div className="mt-[3px] flex items-center">
               <div className="font_label_regular_md flex items-center gap-x-[4px]">
                 <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" className="w-[18px] h-[18px] content_quaternary">
                   <path
@@ -105,7 +104,7 @@ const PostList = (({ StProps, category, dropdownState }) => {
                 </svg>
                 <span className="content_quaternary shrink-0">47</span>
               </div>
-            </div>
+            </div> */}
           </button>
         </div>
       </li>

@@ -8,15 +8,18 @@ const START_LOADING = "post/START_LOADING";
 const FINISH_LOADING = "post/FINISH_LOADING";
 
 // 액션 생성자
+// 카테고리를 선택하는 액션 생성자
 export const selectCategory = (category) => ({
   type: SELECT_CATEGORY,
   payload: category,
 });
 
+// 로딩 시작 액션 생성자
 export const startLoading = () => ({
   type: START_LOADING,
 });
 
+// 로딩 종료 액션 생성자
 export const finishLoading = () => ({
   type: FINISH_LOADING,
 });
@@ -24,7 +27,7 @@ export const finishLoading = () => ({
 // 서버에서 포스트 데이터를 가져오는 액션 생성자
 export const getPostData = (category, page = 1, dropdownState = "최신순") => {
   return async (dispatch) => {
-    dispatch(startLoading());
+    dispatch(startLoading()); // 로딩 시작
     try {
       const response = await axios.post("http://localhost:4000/board/list", {
         dropdownState,
@@ -46,8 +49,8 @@ export const getPostData = (category, page = 1, dropdownState = "최신순") => 
           title: `데이터를 가져올 수 없습니다. ::: ${i + 1}`,
           content: `데이터를 가져올 수 없습니다. :::: ${i + 1}`,
           category: categories[i % categories.length],
-          User : {
-            id : i + 1,
+          User: {
+            id: i + 1,
             name: `User ${i + 1}`
           }
         });
@@ -57,18 +60,18 @@ export const getPostData = (category, page = 1, dropdownState = "최신순") => 
         payload: postData,
       });
     } finally {
-      dispatch(finishLoading());
+      dispatch(finishLoading()); // 로딩 종료
     }
   };
 };
 
 // 초기 상태
 const initialState = {
-  category: "",
-  postsData: [],
-  filteredPosts: [],
-  hasMore: true,
-  loading: false,
+  category: "", // 선택된 카테고리
+  postsData: [], // 전체 포스트 데이터
+  filteredPosts: [], // 필터링된 포스트 데이터
+  hasMore: true, // 더 많은 데이터가 있는지 여부
+  loading: false, // 로딩 상태
 };
 
 // 리듀서
@@ -85,6 +88,7 @@ const postListReducer = (state = initialState, action) => {
         filteredPosts: filteredPosts,
       };
     case GET_POST_DATA:
+      // 포스트 데이터를 가져왔을 때
       return {
         ...state,
         postsData: action.payload,
@@ -92,6 +96,7 @@ const postListReducer = (state = initialState, action) => {
         hasMore: action.payload.length >= 8,
       };
     case APPEND_POST_DATA:
+      // 포스트 데이터를 추가로 가져왔을 때
       return {
         ...state,
         postsData: [...state.postsData, ...action.payload],
@@ -99,11 +104,13 @@ const postListReducer = (state = initialState, action) => {
         hasMore: action.payload.length >= 8,
       };
     case START_LOADING:
+      // 로딩 시작
       return {
         ...state,
         loading: true,
       };
     case FINISH_LOADING:
+      // 로딩 종료
       return {
         ...state,
         loading: false,
