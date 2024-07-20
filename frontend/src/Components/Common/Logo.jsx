@@ -1,5 +1,5 @@
 import React from "react";
-import pnj from "../../Assets/images/PNJ.png";
+import pnj from "../../Assets/images/PNJ LOGO.png";
 
 const Logo = () => {
   const style = { width: "96px" };
