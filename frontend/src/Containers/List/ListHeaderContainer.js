@@ -17,4 +17,4 @@ const ListHeaderContainer = () => {
     );
 };
 
-export default ListHeaderContainer;
+export default React.memo(ListHeaderContainer);
