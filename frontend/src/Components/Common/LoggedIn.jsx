@@ -12,18 +12,20 @@ const LoggedIn = ({ onClick, profile }) => {
   return (
     <div className="flex">
       <div className="relative mr-[16px]">
-        <button className="relative block h-[32px] w-[32px] rounded-full">
-          <img
-            alt="프로필 이미지"
-            sizes="10vw"
-            src={profile}
-            decoding="async"
-            data-nimg="fill"
-            className="rounded-full"
-            loading="lazy"
-            style={StImg}
-          />
-        </button>
+          <a href="/mypage">
+            <button className="relative block h-[32px] w-[32px] rounded-full">
+              <img
+                alt="프로필 이미지"
+                sizes="10vw"
+                src={profile}
+                decoding="async"
+                data-nimg="fill"
+                className="rounded-full"
+                loading="lazy"
+                style={StImg}
+              />
+            </button>
+          </a>
       </div>
       <LoginButton onClick={onClick} text="로그아웃" />
     </div>

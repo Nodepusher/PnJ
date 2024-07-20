@@ -13,6 +13,7 @@ import {
 import WriteHeaderContainer from "../Containers/Write/WriteHeaderContainer";
 import WriteSectionContainer from "../Containers/Write/WriteSectionContainer";
 import "../Components/MyPage/animation.css";
+import HeaderContainer from '../Containers/Common/HeaderContainer';
 import styles from "../style/writePage.css";
 import axios from "axios";
 import Thumbnail from "../Components/Write/Thumbnail";
@@ -145,10 +146,12 @@ const PostWritepage = ({ match }) => {
 
   return (
     <>
+      <HeaderContainer search={true} login={true} mypage={true} />
       <WriteHeaderContainer
         showThumbModal={showThumbModal}
         savedPost={savedPost}
       />
+      
       <WriteSectionContainer
         editorRef={editorRef}
         selectedFiles={selectedFiles}

@@ -22,6 +22,7 @@ const WriterPostHeader = ({ showThumbModal, savedPost }) => {
             >
               <path d="M13.833 8a.667.667 0 0 0-.666-.667H5.72L8.973 4.08a.667.667 0 1 0-.943-.943L3.167 8l4.863 4.863a.665.665 0 0 0 .94-.94L5.72 8.667h7.447A.667.667 0 0 0 13.833 8Z"></path>
             </svg>
+            
           </button>
           <h1 className="font_title_bold_lg">포스트 작성하기</h1>
         </div>

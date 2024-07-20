@@ -18,7 +18,7 @@ const WriteHeaderContainer = ({ showThumbModal, savedPost }) => {
 
   return (
     <div className="sticky top-0 z-10 z-100">
-      <WriteNavigation StImg={StImg} />
+      {/* <WriteNavigation StImg={StImg} /> */}
       <WriterPostHeader showThumbModal={showThumbModal} savedPost={savedPost} />
       <div
         className="surface_accent translate-x-0 animate-slideLeftToRight"
