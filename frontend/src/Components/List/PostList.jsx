@@ -93,7 +93,7 @@ const PostList = (({ StProps, category, dropdownState }) => {
                 </span>
               </div>
             </div>
-            <div className="mt-[3px] flex items-center">
+            {/* <div className="mt-[3px] flex items-center">
               <div className="font_label_regular_md flex items-center gap-x-[4px]">
                 <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" className="w-[18px] h-[18px] content_quaternary">
                   <path
@@ -105,7 +105,7 @@ const PostList = (({ StProps, category, dropdownState }) => {
                 </svg>
                 <span className="content_quaternary shrink-0">47</span>
               </div>
-            </div>
+            </div> */}
           </button>
         </div>
       </li>
