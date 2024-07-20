@@ -1,11 +1,6 @@
 import React from "react";
 
-
-const DropdownList = ({ onClick, propsClassName, props  }) => {
-  // const props = [
-  //   { dataOptionValue: "old", content: "오래된순" },
-  //   { dataOptionValue: "latest", content: "최신순" },
-  // ];
+const DropdownList = ({ onClick, propsClassName, props }) => {
   const handleItemClick = (e) => {
     onClick(e.target.innerText);
   };
@@ -13,7 +8,7 @@ const DropdownList = ({ onClick, propsClassName, props  }) => {
     <div className={propsClassName}>
       <ul className="rounded-[8px] p-[8px] surface_primary shadow-menu">
         {props.map((prop, i) => (
-          <li key={prop.content} data-option-value={prop.dataOptionValue} tabIndex="-1">
+          <li data-option-value={prop.dataOptionValue} tabIndex="-1">
             <button
               aria-label="dropdown option"
               className="surface_primary content_primary font_label_regular_lg w-full overflow-hidden text-ellipsis whitespace-nowrap rounded-[8px] py-[12px] px-[20px] text-left hover:surface_tertiary"

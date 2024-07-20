@@ -25,21 +25,19 @@ export const savePostData = (
   deleteFile
 ) => {
   return async (dispatch) => {
-    if(!postId){
-      console.log("TEST")
-      return
-    }
     dispatch(postingData());
     dispatch(updateState());
     try {
       const formData = new FormData();
       const existFile = [];
+      const userId = 1;
       if (isEdit) {
         postData.BoardId = postId;
       }
       if (thumbFile) {
         formData.append("thumbnail", thumbFile);
       }
+      postData.UserId = userId;
       files.forEach((e, i) => {
         if (e.id) {
           existFile.push(e);

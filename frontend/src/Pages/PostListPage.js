@@ -1,38 +1,28 @@
-import React, { useState, useEffect, useCallback, Suspense } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getPostData } from "../store/postListReducer";
 import ListHeaderContainer from "../Containers/List/ListHeaderContainer";
+import ListContentContainer from "../Containers/List/ListContentContainer";
 import ListFooterContainer from "../Containers/List/ListFooterContainer";
-import Spinner from "../Containers/Common/Spinner";
-import { getPostData, startLoading, finishLoading } from "../store/postListReducer";
-import ListContentContainer from "../Containers/List/ListContentContainer"
 
 const PostListPage = () => {
   const [dropdownState, setDropdownState] = useState("최신순");
-  const category = useSelector((state) => state.postList.category);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
-
-  const preloadData = useCallback(async () => {
-    dispatch(startLoading());
-    setLoading(true);
-    await dispatch(getPostData(category, 1, dropdownState));
-    setLoading(false);
-    dispatch(finishLoading());
-  }, [category, dropdownState, dispatch]);
-
+  const category = useSelector((state) => state.postList.category);
+  const postData = useSelector((state) => state.postList.filteredPosts);
   useEffect(() => {
-    preloadData();
-  }, [preloadData]);
+    dispatch(getPostData(category, 1, dropdownState));
+  }, [dispatch, category, dropdownState]);
 
   return (
     <>
       <ListHeaderContainer search={true} login={true} mypage={true} />
-        <ListContentContainer
-          category={category}
-          dropdownState={dropdownState}
-          setDropdownState={setDropdownState}
-          loading={loading}
-        />
+      <ListContentContainer
+        postData={postData}
+        category={category}
+        dropdownState={dropdownState}
+        setDropdownState={setDropdownState}
+      />
       <ListFooterContainer />
     </>
   );

@@ -1,69 +1,79 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
 import DropdownList from "./DropdownList";
-import ErrorToast from "./ErrorToast";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
 const SortPost = ({ dropdownState, setDropdownState }) => {
-  // 카테고리 상태값 
+  const postData = useSelector((state) => state.postList.filteredPosts);
   const category = useSelector((state) => state.postList.category);
   const [isOpen, setIsOpen] = useState(false);
-  const [errorInfo, setError] = useState(null);
-  const [postCount, setPostCount] = useState(0);
+  // const [dropdownState, setDropdownState] = useState('최신순');
+  const [postCount, setPostCount] = useState();
   const dropdownRef = useRef();
-  const [animationClass, setAnimationClass] = useState("");
 
-  // 오래된순, 최신순 드롭다운 메뉴 클릭
-  const handleMenuClick = (selected) => {setDropdownState(selected)};
-  // 드롭다운 클릭 이벤트
-  const handleClickOutside = useCallback((e) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+  const handleMenuClick = (selected) => {
+    setDropdownState(selected);
+  };
+
+  const handleClickOutside = (e) => {
+    if (!dropdownRef.current.contains(e.target)) {
       setIsOpen(false);
     }
-  }, []);
+  };
 
-  // 게시물 카운트 요청 함수
-  const fetchPostCount = useCallback(async (category) => {
+  useEffect(
+    (e) => {
+      if (isOpen) {
+        document.addEventListener("click", handleClickOutside);
+      }
+
+      return () => {
+        document.removeEventListener("click", handleClickOutside);
+      };
+    },
+    [isOpen]
+  );
+
+  useEffect(
+    (e) => {
+      try {
+        console.log(category);
+        let getCount = async () => {
+          const res = await axios.post("/board/count", { category: category });
+          console.log(res.data);
+          setPostCount(res.data);
+        };
+        if (category) {
+          getCount();
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+    [category]
+  );
+  // 최초 렌더링
+  useEffect((e) => {
     try {
-      const res = await axios.post("/board/count", { category });
-      setPostCount(res.data);
-      setError(false);
+      let getCount = async () => {
+        const res = await axios.post("/board/count", { category: "all" });
+        console.log(res.data);
+        setPostCount(res.data);
+      };
+      getCount();
     } catch (error) {
-      console.error("fail to fetch post count :::: ",error.message);
-      setError(true);
-      errorToast()
+      console.log(error.message);
     }
   }, []);
-  // 게시물 카운트 요청
-  useEffect(() => {
-    fetchPostCount(category || 'all');
-}, [category, fetchPostCount]);
 
-  // 드롭다운 이벤트 리스너
-  useEffect(() => {
-    if (isOpen) {
-      document.addEventListener("click", handleClickOutside);
-    } else {
-      document.removeEventListener("click", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, [isOpen, handleClickOutside]);
-
-  // 에러 처리
-  const errorToast = () => {
-    setTimeout(() => {
-      setAnimationClass("fadeIn");
-      setTimeout(() => {
-        setAnimationClass("fadeOut");
-      }, 200); // fadeOut 애니메이션이 끝난 후에 컴포넌트를 제거
-    }, 2000); // 2초 후에 fadeOut 시작
-  }
   const propsClassName = "absolute top-[42px] right-0 z-10 w-[248px]";
 
   const propsList = [
-    { dataOptionValue: "old", content: "오래된순" },
+    {
+      dataOptionValue: "old",
+      content: "오래된순",
+    },
     { dataOptionValue: "latest", content: "최신순" },
   ];
 
@@ -73,7 +83,9 @@ const SortPost = ({ dropdownState, setDropdownState }) => {
       <div
         className="relative"
         ref={dropdownRef}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setIsOpen(!isOpen);
+        }}
       >
         <button
           aria-label="filter"
@@ -100,11 +112,9 @@ const SortPost = ({ dropdownState, setDropdownState }) => {
             onClick={handleMenuClick}
             propsClassName={propsClassName}
             props={propsList}
-
           />
         )}
       </div>
-      {errorInfo && <ErrorToast animationClass={animationClass} errorState={errorInfo}/>}
     </div>
   );
 };
