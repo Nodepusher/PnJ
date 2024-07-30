@@ -107,7 +107,7 @@ const ListFooterContainer = () => {
                         className="font_button_bold_md relative flex items-center justify-center h-[40px] rounded-[8px] content_secondary surface_primary border border-solid border_black_opacity hover:surface_tertiary hover:border_secondary active:surface_tertiary active:border_secondary disabled:surface_primary disabled:border_black_opacity disabled:border disabled:border-solid px-[15px] w-full false disabled:content_disabled"
                         type="button"
                       >
-                        스테디오에 문의
+                        P&J에 문의
                       </button>
                     </a>
                   </div>
