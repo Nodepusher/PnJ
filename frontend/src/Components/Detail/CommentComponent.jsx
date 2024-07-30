@@ -5,33 +5,38 @@ import { getCommentId, getPostStatsData } from "../../store/postDetailReducer";
 import axios from "axios";
 
 const CommentComponent = ({ commentData, profile, loginUser }) => {
-  const [activeReply, setActiveReply] = useState(null);
-  const postId = useSelector((state) => state.detail.postId);
-  const { post } = useSelector((state) => state.detail.postData);
+  const [activeReply, setActiveReply] = useState(null); // 현재 활성화된 답글 입력 상태
+  const postId = useSelector((state) => state.detail.postId); // 현재 게시물 ID
+  const { post } = useSelector((state) => state.detail.postData); // 현재 게시물 데이터
   const dispatch = useDispatch();
+
+  // 답글 입력창 토글 함수
   const showReplyInputComment = (commentId) => {
     setActiveReply((prev) => (prev === commentId ? null : commentId));
     dispatch(getCommentId(commentId));
   };
+
+  // 답글 입력창 숨김 함수
   const hideReplyInputComment = () => {
     setActiveReply(null);
     dispatch(getCommentId(""));
   };
 
+  // 댓글 삭제 함수
   const removeComment = async (commentId) => {
     try {
       const response = await axios.delete(
         `http://localhost:4000/board/deleteComment/${commentId}`
       );
-      console.log(response);
       if (response.data.success) {
-        dispatch(getPostStatsData(postId)); // 댓글 작성 후 댓글 목록 업데이트
+        dispatch(getPostStatsData(postId)); // 댓글 삭제 후 댓글 목록 업데이트
       }
     } catch (error) {
       console.log(error.message);
     }
   };
 
+  // 스타일 설정
   const StImg = {
     position: "absolute",
     height: "100%",
@@ -48,6 +53,7 @@ const CommentComponent = ({ commentData, profile, loginUser }) => {
     outline: "none",
   };
 
+  // 날짜 형식 변환 함수
   const formatDateTime = (dateString) => {
     const options = {
       year: "numeric",
@@ -103,13 +109,13 @@ const CommentComponent = ({ commentData, profile, loginUser }) => {
                   </div>
                   {comment.UserId == post.UserId && (
                     <div
-                      class="surface_accent inline-flex h-[14px] w-[14px] items-center justify-center rounded-[4px] p-[2px]"
+                      className="surface_accent inline-flex h-[14px] w-[14px] items-center justify-center rounded-[4px] p-[2px]"
                       data-testid="creator-badge"
                     >
                       <svg
                         viewBox="0 0 12 12"
                         xmlns="http://www.w3.org/2000/svg"
-                        class="content_primary_inverse h-[14px] w-[14px]"
+                        className="content_primary_inverse h-[14px] w-[14px]"
                       >
                         <path d="M5.567 1.748a.5.5 0 0 1 .866 0L7.499 3.59a.5.5 0 0 0 .329.238l2.082.445a.5.5 0 0 1 .268.823L8.754 6.681a.5.5 0 0 0-.125.386l.22 2.118a.5.5 0 0 1-.7.51L6.203 8.83a.5.5 0 0 0-.406 0l-1.946.864a.5.5 0 0 1-.7-.509l.22-2.118a.5.5 0 0 0-.125-.386L1.822 5.097a.5.5 0 0 1 .268-.823l2.082-.445a.5.5 0 0 0 .329-.238l1.066-1.843Z"></path>
                       </svg>
@@ -120,7 +126,6 @@ const CommentComponent = ({ commentData, profile, loginUser }) => {
                   <button
                     aria-label="remove comment button"
                     type="button"
-                    value="db7a9a37-cf74-47d5-99a1-8b50fccec0c7"
                     onClick={() => removeComment(comment.id)}
                   >
                     <svg
@@ -159,12 +164,12 @@ const CommentComponent = ({ commentData, profile, loginUser }) => {
           </div>
           <div className="h-[12px]"></div>
           <ReplyComponent
-            showReply={activeReply === comment.id}
-            hideReply={hideReplyInputComment}
+            showReply={activeReply === comment.id} // 답글 입력창 표시 여부
+            hideReply={hideReplyInputComment} // 답글 입력창 숨김 함수
             StBtn={StBtn}
             StImg={StImg}
             formatDateTime={formatDateTime}
-            replies={comment.Replies}
+            replies={comment.Replies} // 답글 데이터
             profile={profile}
             loginUser={loginUser}
             post={post}

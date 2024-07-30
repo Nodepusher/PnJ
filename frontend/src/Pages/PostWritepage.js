@@ -15,7 +15,6 @@ import WriteSectionContainer from "../Containers/Write/WriteSectionContainer";
 import "../Components/MyPage/animation.css";
 import HeaderContainer from '../Containers/Common/HeaderContainer';
 import styles from "../style/writePage.css";
-import axios from "axios";
 import Thumbnail from "../Components/Write/Thumbnail";
 const PostWritepage = ({ match }) => {
   // match : parameter 값을 가져옴
@@ -33,13 +32,10 @@ const PostWritepage = ({ match }) => {
 
   const {
     inputData,
-    loading,
     deleteFile,
     updateState,
     writeState,
-    saveCompleted,
   } = useSelector((state) => state.write);
-  console.log(query.get("postId"));
   var postId = query.get("postId");
   var isEdit = postId ? true : false;
 
@@ -127,21 +123,18 @@ const PostWritepage = ({ match }) => {
   useEffect(() => {
     dispatch(fetchPostData(postId));
 
-    if (saveTrigger) {
-      setIsSaved(true);
-      setAnimationClass("fadeIn");
-      setTimeout(() => {
-        setAnimationClass("fadeOut");
-        setTimeout(() => {
-          setIsSaved(false);
-          setSaveTrigger(false);
-          setOnThumbModal(false);
-        }, 200); // fadeOut 애니메이션이 끝난 후에 컴포넌트를 제거
-        // if(writeState){
-        //     nav('/mypage')
-        // }
-      }, 2000); // 2초 후에 fadeOut 시작
-    }
+    // if (saveTrigger) {
+    //   setIsSaved(true);
+    //   setAnimationClass("fadeIn");
+    //   setTimeout(() => {
+    //     setAnimationClass("fadeOut");
+    //     setTimeout(() => {
+    //       setIsSaved(false);
+    //       setSaveTrigger(false);
+    //       setOnThumbModal(false);
+    //     }, 200);
+    //   }, 2000); 
+    // }
   }, [updateState, saveTrigger]);
 
   return (
@@ -166,40 +159,40 @@ const PostWritepage = ({ match }) => {
           setThumbFile={setThumbFile}
         />
       )}
-      {isSaved && (
+      {/* {isSaved && (
         <SaveInfo
           animationClass={animationClass}
           updateState={updateState}
           writeState={writeState}
         />
-      )}
+      )} */}
     </>
   );
 };
-const SaveInfo = ({ animationClass, writeState }) => {
-  return (
-    <div
-      className={`fixed flex flex-col surface_secondary_inverse
-            bottom-[30px] left-[50%] z-50 box-border min-w-[358px] translate-x-[-50%] translate-y-[-50%] rounded-[8px] py-[16px] px-[20px] shadow-s ${animationClass}`}
-    >
-      <div className="content_primary_inverse font_label_bold_lg text-left">
-        <div className="flex">
-          <svg
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-[20px] w-[20px]"
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M19.702 7.288a1 1 0 0 1 .01 1.414l-8.59 8.723-5.834-5.923a1 1 0 0 1 1.424-1.404l4.41 4.477 7.166-7.277a1 1 0 0 1 1.414-.01Z"
-            ></path>
-          </svg>
-          <span className="ml-[6px]">{writeState ? "성공" : "실패"}</span>
-        </div>
-      </div>
-    </div>
-  );
-};
+// const SaveInfo = ({ animationClass, writeState }) => {
+//   return (
+//     <div
+//       className={`fixed flex flex-col surface_secondary_inverse
+//             bottom-[30px] left-[50%] z-50 box-border min-w-[358px] translate-x-[-50%] translate-y-[-50%] rounded-[8px] py-[16px] px-[20px] shadow-s ${animationClass}`}
+//     >
+//       <div className="content_primary_inverse font_label_bold_lg text-left">
+//         <div className="flex">
+//           <svg
+//             viewBox="0 0 24 24"
+//             xmlns="http://www.w3.org/2000/svg"
+//             className="h-[20px] w-[20px]"
+//           >
+//             <path
+//               fillRule="evenodd"
+//               clipRule="evenodd"
+//               d="M19.702 7.288a1 1 0 0 1 .01 1.414l-8.59 8.723-5.834-5.923a1 1 0 0 1 1.424-1.404l4.41 4.477 7.166-7.277a1 1 0 0 1 1.414-.01Z"
+//             ></path>
+//           </svg>
+//           <span className="ml-[6px]">{writeState ? "성공" : "실패"}</span>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 export default React.memo(PostWritepage);

@@ -3,8 +3,6 @@ import { TuiViewer } from "../../Modules/ToastUI";
 import AttachFile from "../../Components/Detail/AttachedFile";
 
 const DetailSectionContent = ({ content, tags, files }) => {
-  console.log(content);
-
   return (
     <div className="border_secondary mt-[24px] border-t pt-[32px]">
       <div>
@@ -33,50 +31,3 @@ const DetailSectionContent = ({ content, tags, files }) => {
 };
 
 export default DetailSectionContent;
-
-// const markdownText = `
-// # Heading 1
-  
-// ## Heading 2 
-
-// ### Heading 3
-
-// #### Heading 4
-
-// ##### Heading 5
-
-// ###### Heading 6
-
-// **bold** *italic* ~~strike~~
-
-// ***
-
-// horizontal line
-
-// ***
-
-// > block quote
-// > > block quote (2 depth)
-// > > > block quote (3 depth)
-
-// * Unordered list
-//   * list indented
-
-// 1. ordered list
-// 2. list
-//   1. ordered list indented
-//   2. indented
-
-// * [ ] task
-// * [ ] list completed
-
-// | table | head |
-// | ----- | ---- |
-// | table | body |
-
-// [link ](/)
-// \`inline code\`
-// \`\`\`
-// code block
-// \`\`\`
-//   `;

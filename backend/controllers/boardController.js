@@ -4,32 +4,26 @@ const path = require("path");
 const fs = require("fs");
 
 module.exports = {
+  // 모든 게시물 수 가져오기
   getAllCount: async (req, res, next) => {
-    var category = req.body.category;
-    if (category === "") {
-      category = "all";
-    }
+    let category = req.body.category || "all";
     try {
-      const board = await boardService.getAllCount(category);
+      const board = await boardService.findAllCount(category);
       res.status(200).json(board);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   },
+  
+  // 무한 스크롤을 위한 게시물 가져오기
   getAllForInfiniteScroll: async (req, res, next) => {
-    console.log(req.body.params);
-    var category = req.body.category;
-    var sort = req.body.dropdownState === "최신순" ? "DESC" : "ASC";
-    console.log(":::cate", !category);
-    if (!category) {
-      category = "all";
-    }
-    console.log(category);
+    let category = req.body.category || "all";
+    const sort = req.body.dropdownState === "최신순" ? "DESC" : "ASC";
     const limit = parseInt(req.body.limit);
     const page = parseInt(req.body.page) || 1;
 
     try {
-      const board = await boardService.getAllForInfiniteScroll(
+      const board = await boardService.findAllForInfiniteScroll(
         limit,
         page,
         category,
@@ -38,17 +32,14 @@ module.exports = {
       if (!board) {
         return res.status(404).json({ error: "No boards found" });
       }
-      console.log(":::::: ", board.length);
       res.status(200).json(board);
     } catch (error) {
-      console.error("1234 :::::::", error);
       res.status(500).json({ error: error.message });
     }
   },
+  
+  // 이미지 업로드 처리 및 저장
   saveUploadImg: async (req, res, next) => {
-    console.log("File received:", req.file);
-    console.log("Other data:", req.body);
-
     if (!req.file) {
       return res.status(400).send("No file uploaded.");
     }
@@ -82,67 +73,64 @@ module.exports = {
       const fileUrl = `http://localhost:4000/uploads/temp/compressed-${req.file.filename}`;
       res.json({ url: fileUrl });
     } catch (error) {
-      console.error("Error processing image:", error);
       res.status(500).json({ message: "Error processing image" });
     }
   },
+  
+  // 게시물 생성
   createPost: async (req, res, next) => {
     const { thumbnail, files } = req.files;
     const { user } = req.auth;
-    const fileJson = files;
     const postData = JSON.parse(req.body.postData);
-    const result = await boardService.createPost(
-      postData,
-      fileJson,
-      thumbnail,
-      user
-    );
+    const result = await boardService.createPost(postData, files, thumbnail, user);
     if (result.success) {
       res.status(200).json(result);
     } else {
       res.status(400).json(result);
     }
   },
+  
+  // 게시물 수정
   updatePost: async (req, res, next) => {
-    console.log("update :::::: ", req.files);
-    console.log("update body", req.body);
     const fileJson = req.files.files;
     const postData = JSON.parse(req.body.postData);
     const sendResult = await boardService.updatePost(postData, fileJson);
-    console.log(sendResult.success);
-    console.log(sendResult.message);
     if (sendResult.success) {
       res.status(200).json(sendResult);
     } else {
       res.status(400).json(sendResult);
     }
   },
+  
+  // 게시물 ID로 게시물 가져오기
   getBoardById: async (req, res, next) => {
-    console.log(req.body);
-    const boardData = await boardService.findBoardById(req.body.boardId);
+    const boardData = await boardService.findPostById(req.body.boardId);
     res.json(boardData);
   },
 
-  getPostById: async (req, res, next) => {
-    console.log(req.params);
-    const data = await boardService.getPostById(req.params.id);
-    console.log("::::::::: ", data);
+  // 작성된 게시물 ID로 게시물 가져오기
+  getWritePostById: async (req, res, next) => {
+    const data = await boardService.findWritePostById(req.params.id);
     res.json(data);
   },
+  
+  // 카테고리별 게시물 가져오기
   getPostByCategory: async (req, res, next) => {
-    // console.log("::::::: ",req.query);
-    const data = await boardService.getPostByCategory(req.query.category);
+    const data = await boardService.findPostByCategory(req.query.category);
     res.json(data);
   },
+  
+  // 게시물 ID로 모든 댓글 가져오기
   getCommentById: async (req, res, next) => {
-    console.log("::::::: ", req.params);
-    const data = await boardService.getAllCommentById(req.params.id);
+    const data = await boardService.findAllCommentById(req.params.id);
     if (data.error) {
       res.status(404).send(data);
     } else {
       res.status(200).json(data);
     }
   },
+  
+  // 댓글 생성
   createComment: async (req, res, next) => {
     const { BoardId, content } = req.body;
     const { isAuthenticated, user } = req.auth;
@@ -155,12 +143,14 @@ module.exports = {
       UserId: user.id,
     };
     const data = await boardService.createComment(commentData);
-    if (!data.success) {
+    if (data.success) {
       res.status(200).json(data);
     } else {
       res.status(400).json(data);
     }
   },
+  
+  // 대댓글 생성
   createReply: async (req, res, next) => {
     const { BoardId, content, CommentId } = req.body;
     const { isAuthenticated, user } = req.auth;
@@ -174,55 +164,55 @@ module.exports = {
       CommentId: CommentId,
     };
     const data = await boardService.createReply(replyData);
-    if (!data.success) {
+    if (data.success) {
       res.status(200).json(data);
     } else {
       res.status(400).json(data);
     }
   },
+  
+  // 내 댓글 삭제
   deleteMyComment: async (req, res) => {
     try {
-      console.log("req.params", req.params);
       const { commentId } = req.params;
       const result = await boardService.deleteMyComment(commentId);
 
-      if (result) {
+      if (result.success) {
         return res
           .status(200)
-          .json({ success: true, message: "delete MyComment Success" });
+          .json({ success: true, message: "댓글 삭제 성공" });
       } else {
         res
           .status(400)
-          .json({ success: false, message: "delete MyComment Failed" });
+          .json({ success: false, message: "댓글 삭제 실패" });
       }
     } catch (error) {
-      console.log("Error in boardController deleteMyComment", error);
       res.status(500).json({
         success: false,
-        message: "500",
+        message: "서버 오류",
       });
     }
   },
 
+  // 내 대댓글 삭제
   deleteMyReply: async (req, res) => {
     try {
       const { replyId } = req.params;
       const result = await boardService.deleteMyReply(replyId);
 
-      if (result) {
+      if (result.success) {
         return res
           .status(200)
-          .json({ success: true, message: "delete MyReply Success" });
+          .json({ success: true, message: "대댓글 삭제 성공" });
       } else {
         res
           .status(400)
-          .json({ success: false, message: "delete MyReply Failed" });
+          .json({ success: false, message: "대댓글 삭제 실패" });
       }
     } catch (error) {
-      console.log("Error in boardController deleteMyReply", error);
       res.status(500).json({
         success: false,
-        message: "500",
+        message: "서버 오류",
       });
     }
   },

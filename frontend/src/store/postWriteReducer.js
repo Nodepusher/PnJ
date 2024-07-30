@@ -1,7 +1,7 @@
 import { produce } from "immer";
 import axios from "axios";
 
-// action type 정의
+// 액션 타입 정의
 const POST_DATA = "post/POST_DATA";
 const UPDATE_INPUT_DATA = "post/UPDATE_INPUT_DATA";
 const UPDATE_FILE_DATA = "post/UPDATE_FILE_DATA";
@@ -15,7 +15,9 @@ const DELETE_FILE = "post/DELETE_FILE";
 const WRITE_STATE = "post/WRITE_STATE";
 const UPDATE_STATE = "post/UPDATE_STATE";
 
-// action 생성
+// 액션 생성 함수
+
+// 게시물 데이터를 저장 또는 업데이트
 export const savePostData = (
   postData,
   thumbFile,
@@ -31,6 +33,7 @@ export const savePostData = (
       const formData = new FormData();
       const existFile = [];
       const userId = 1;
+      
       if (isEdit) {
         postData.BoardId = postId;
       }
@@ -38,13 +41,15 @@ export const savePostData = (
         formData.append("thumbnail", thumbFile);
       }
       postData.UserId = userId;
-      files.forEach((e, i) => {
+      
+      files.forEach((e) => {
         if (e.id) {
           existFile.push(e);
         } else {
           formData.append("files", e);
         }
       });
+      
       postData.files = existFile;
       postData.deleteFile = deleteFile;
       formData.append("postData", JSON.stringify(postData));
@@ -70,6 +75,7 @@ export const savePostData = (
   };
 };
 
+// 게시물 데이터를 가져오기 (수정을 위해)
 export const fetchPostData = (boardId) => {
   return async (dispatch) => {
     dispatch(loadPostData());
@@ -86,23 +92,25 @@ export const fetchPostData = (boardId) => {
   };
 };
 
+// 수정 상태와 게시물 ID 업데이트
 export const updateIsEdit = (isEdit, boardId) => ({
   type: UPDATE_IS_EDIT,
   payload: { isEdit, boardId },
 });
+
+// 파일 데이터 삭제
 export const deleteFileData = (files) => ({
   type: DELETE_FILE,
   payload: files,
 });
 
-export const updatePostData = (inputData) => {
-  console.log("updatePostData called with:", inputData);
-  return {
-    type: UPDATE_INPUT_DATA,
-    payload: inputData,
-  };
-};
+// 입력 데이터 업데이트
+export const updatePostData = (inputData) => ({
+  type: UPDATE_INPUT_DATA,
+  payload: inputData,
+});
 
+// 파일 데이터 업데이트
 export const updateFileData = (fileData) => {
   console.log("updateFileData called with:", fileData);
   return {
@@ -111,10 +119,9 @@ export const updateFileData = (fileData) => {
   };
 };
 
+// 게시물 데이터를 포스팅하는 액션
 export const postingData = () => ({ type: POST_DATA });
-export const writeState = (state) => {
-  return { type: WRITE_STATE, payload: state };
-};
+export const writeState = (state) => ({ type: WRITE_STATE, payload: state });
 export const updateState = () => ({ type: UPDATE_STATE });
 export const postingDataSuccess = (data) => ({
   type: POST_DATA_SUCCESS,
@@ -124,6 +131,8 @@ export const postingDataFailure = (error) => ({
   type: POST_DATA_FAIL,
   payload: error,
 });
+
+// 게시물 데이터를 로드하는 액션
 export const loadPostData = () => ({ type: LOAD_POST_DATA });
 export const loadPostDataSuccess = (data) => ({
   type: LOAD_POST_DATA_SUCCESS,
@@ -134,7 +143,7 @@ export const loadPostDataFail = (error) => ({
   payload: error,
 });
 
-// 초기 스테이트
+// 초기 상태 정의
 const initialState = {
   userId: "",
   boardId: "",
@@ -156,7 +165,7 @@ const initialState = {
   saveCompleted: false,
 };
 
-// 리듀서
+// 리듀서 함수
 const postWriteReducer = (state = initialState, action) => {
   switch (action.type) {
     case WRITE_STATE:
@@ -175,7 +184,6 @@ const postWriteReducer = (state = initialState, action) => {
         loading: true,
       };
     case UPDATE_INPUT_DATA:
-      console.log("Reducer received payload:", action.payload);
       return {
         ...state,
         inputData: {
