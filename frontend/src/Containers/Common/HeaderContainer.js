@@ -49,7 +49,6 @@ const HeaderContainer = ({ search = false, login = false, mypage = false }) => {
     zIndex: 50,
   };
 
-  console.log("공통 헤더 콘솔로그");
   useEffect(() => {
     const fetchData = async () => {
       if (isAuthenticated) {

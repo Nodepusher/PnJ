@@ -8,7 +8,6 @@ const WriteEditorContainer = ({ editorRef }) => {
   const { isEdit, inputData } = useSelector((state) => state.write);
   const [inputTitle, setInputTitle] = useState("");
   const [content, setContent] = useState("");
-  const [selectedFiles, setSelectedFiles] = useState([]);
   const handleChange = (e) => {
     const text = e.target.value;
     setInputTitle(text);

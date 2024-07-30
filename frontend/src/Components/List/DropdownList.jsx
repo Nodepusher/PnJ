@@ -2,10 +2,6 @@ import React from "react";
 
 
 const DropdownList = ({ onClick, propsClassName, props  }) => {
-  // const props = [
-  //   { dataOptionValue: "old", content: "오래된순" },
-  //   { dataOptionValue: "latest", content: "최신순" },
-  // ];
   const handleItemClick = (e) => {
     onClick(e.target.innerText);
   };

@@ -5,12 +5,11 @@ const User = require("../../models/userModel");
 const File = require("../../models/fileModel");
 const Comment = require("../../models/commentModel");
 const Reply = require("../../models/replyModel");
-const db = require("../../models");
 
 module.exports = {
-  findAllCount: async (category) => {
-    console.log("repo ::: ", category);
-    whereCondition = {};
+  // 전체 게시물 수 카운트
+  selectAllCount: async (category) => {
+    let whereCondition = {};
 
     if (category !== "all") {
       whereCondition = { category: category };
@@ -24,17 +23,19 @@ module.exports = {
       throw new Error(error.message);
     }
   },
-  findAllForInfiniteScroll: async (limit, page, category, sort) => {
+
+  // 무한 스크롤을 위한 게시물 찾기
+  selectAllForInfiniteScroll: async (limit, page, category, sort) => {
     try {
       console.log("category", category === "false");
 
-      whereCondition = {};
+      let whereCondition = {};
       if (category !== "all") {
         whereCondition = { category: category };
       }
       const offset = (page - 1) * limit;
 
-      let infiniteScroll = await Board.findAll({
+      const infiniteScroll = await Board.findAll({
         limit: limit,
         offset: offset,
         order: [["created_at", `${sort}`]],
@@ -42,7 +43,6 @@ module.exports = {
           model: User,
           attributes: ["id", "name"],
         },
-        // option
         where: whereCondition,
       });
       return infiniteScroll;
@@ -51,18 +51,13 @@ module.exports = {
     }
   },
 
-  InsertPost: async (postData, fileJson, thumbnail) => {
+  // 게시물 삽입
+  insertPost: async (postData, fileJson, thumbnail) => {
     const transaction = await sequelize.transaction();
-    // 게시물 작성
-    // Board.create()
-    // console.log("postData :::: ", postData);
-    // console.log("files :::: ", fileJson.files);
     const fileData = fileJson.files;
     try {
       const newPost = await Board.create(postData, { transaction });
-      console.log(newPost.dataValues);
       if (fileData && fileData.length > 0) {
-        console.log("test");
         const filePromise = fileData.map((files) => {
           return File.create(
             {
@@ -83,24 +78,26 @@ module.exports = {
       return { success: true, message: "게시물 작성 성공", post: newPost };
     } catch (error) {
       await transaction.rollback();
-      console.log("[boardRepository]" + "게시물 작성 오류 :::: ", error);
+      console.log("[boardRepository] 게시물 작성 오류 :::: ", error);
       return { success: false, message: "게시물 작성 실패", error };
     }
   },
-  findBoardById: async (boardId) => {
+
+  // 게시물 ID로 찾기
+  selectPostById: async (boardId) => {
     try {
       const board = await Board.findOne({
         where: { id: boardId },
       });
-
-      console.log("board 정보 ", board.dataValues);
       return board.dataValues;
     } catch (error) {
       console.log(error);
       return { success: false, message: "에러" };
     }
   },
-  findFileById: async (boardId) => {
+
+  // 게시물 ID로 파일 찾기
+  selectFileById: async (boardId) => {
     try {
       const file = await File.findAll({
         where: { BoardId: boardId },
@@ -111,7 +108,8 @@ module.exports = {
     }
   },
 
-  findPostById: async (id) => {
+  // 게시물 ID로 포스트 찾기
+  selectWritePostById: async (id) => {
     const t = await sequelize.transaction();
     try {
       const postData = await Board.findOne(
@@ -139,19 +137,18 @@ module.exports = {
       );
 
       await t.commit();
-      console.log(Files);
       postData.File = Files;
-      // console.log(postData)
 
       return { postData: postData, userPost: allUserPost, Files: Files };
     } catch (error) {
-      // 오류 처리
       console.error(error);
       await t.rollback();
       throw error;
     }
   },
-  findPostByCategory: async (category) => {
+
+  // 카테고리별 게시물 찾기
+  selectPostByCategory: async (category) => {
     try {
       const postData = await Board.findAll({
         where: { category: category },
@@ -164,7 +161,9 @@ module.exports = {
       console.error(error);
     }
   },
-  findAllCommentById: async (postId) => {
+
+  // 게시물 ID로 모든 댓글 찾기
+  selectAllCommentById: async (postId) => {
     try {
       const comments = await Comment.findAll({
         where: { BoardId: postId },
@@ -184,14 +183,14 @@ module.exports = {
           },
         ],
       });
-
       return comments;
     } catch (error) {
       return { error: error.message };
     }
   },
-  InsertComment: async (commentData) => {
-    console.log(commentData);
+
+  // 댓글 삽입
+  insertComment: async (commentData) => {
     try {
       const newComment = await Comment.create(commentData);
       return newComment;
@@ -200,9 +199,9 @@ module.exports = {
       return { success: false };
     }
   },
-  InsertReply: async (replyData) => {
-    console.log(replyData);
-    console.log(Reply);
+
+  // 답글 삽입
+  insertReply: async (replyData) => {
     try {
       const newReply = await Reply.create(replyData);
       return newReply;
@@ -211,10 +210,11 @@ module.exports = {
       return { success: false };
     }
   },
+
+  // 게시물 업데이트
   updatePost: async (postData) => {
-    console.log("updateadfafas ", postData);
     try {
-      const update = await Board.update(
+      await Board.update(
         {
           title: postData.title,
           content: postData.content,
@@ -232,11 +232,11 @@ module.exports = {
       return { success: false, message: "post update fail" + error.message };
     }
   },
+
+  // 파일 삽입
   insertFile: async (fileJson, boardId, userId) => {
-    console.log(fileJson);
     const fileData = fileJson.files;
     try {
-      // const createFile = await File.create(fileJson.files, {where : {BoardId: boardId}})
       const filePromise = fileData.map((files) => {
         return File.create({
           uuid: files.uuid,
@@ -254,6 +254,8 @@ module.exports = {
       return { success: false, message: "file create Fail" + error.message };
     }
   },
+
+  // 파일 삭제
   deleteFile: async (deleteFile) => {
     try {
       await File.destroy({
@@ -266,18 +268,20 @@ module.exports = {
       return { success: false, message: "file delete Fail" + error.message };
     }
   },
-  findAllFileByBoardId: async (postId) => {
-    console.log("postId", postId);
+
+  // 게시물 ID로 모든 파일 찾기
+  selectAllFileByBoardId: async (postId) => {
     try {
       const file = await File.findAll({
         where: { BoardId: postId },
       });
-      console.log("findAll File", file);
       return file;
     } catch (err) {
       return { success: false, message: "에러" };
     }
   },
+
+  // 댓글 삭제
   deleteComment: async (where) => {
     try {
       return await Comment.destroy({ where: where });
@@ -287,6 +291,7 @@ module.exports = {
     }
   },
 
+  // 답글 삭제
   deleteReply: async (where) => {
     try {
       return await Reply.destroy({ where: where });

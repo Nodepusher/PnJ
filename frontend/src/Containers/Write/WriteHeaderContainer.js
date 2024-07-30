@@ -15,9 +15,12 @@ const WriteHeaderContainer = ({ showThumbModal, savedPost }) => {
     width: "0%",
     height: "3px",
   };
+  const zIndex = {
+    zIndex : 30
+  }
 
   return (
-    <div className="sticky top-0 z-10 z-100">
+    <div className="sticky top-0 z-10 z-100" style={zIndex}>
       {/* <WriteNavigation StImg={StImg} /> */}
       <WriterPostHeader showThumbModal={showThumbModal} savedPost={savedPost} />
       <div

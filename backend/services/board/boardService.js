@@ -1,17 +1,19 @@
 const boardRepository = require("../../repositories/board/boardRepository");
 
 module.exports = {
-  getAllCount: async (category) => {
+  // 모든 게시물 수 조회
+  findAllCount: async (category) => {
     try {
-      return await boardRepository.findAllCount(category);
+      return await boardRepository.selectAllCount(category);
     } catch (error) {
       throw new Error(error.message);
     }
   },
-  getAllForInfiniteScroll: async (limit, page, category, sort) => {
-    console.log("category: " + category, "limit: " + limit, "page: " + page);
+
+  // 무한 스크롤을 위한 게시물 조회
+  findAllForInfiniteScroll: async (limit, page, category, sort) => {
     try {
-      return await boardRepository.findAllForInfiniteScroll(
+      return await boardRepository.selectAllForInfiniteScroll(
         limit,
         page,
         category,
@@ -21,6 +23,8 @@ module.exports = {
       throw new Error(error.message);
     }
   },
+
+  // 게시물 생성
   createPost: async (postData, fileData, thumbnail, user) => {
     console.log(postData.category);
     if (postData.category === "스터디해요") {
@@ -30,9 +34,6 @@ module.exports = {
     } else {
       postData.category = "qna";
     }
-    console.log("fileData", fileData);
-    // console.log(":::::: ",fileData.length)
-    console.log(":::::: ", !!fileData);
     var fileJson = { files: [] };
     if (thumbnail) {
       postData.thumbnail = thumbnail[0].originalname;
@@ -41,7 +42,6 @@ module.exports = {
     }
     postData.UserId = user.id;
     if (!!fileData && fileData.length > 0) {
-      console.log("!!!!!!!");
       fileJson.files = fileData.map((file) => {
         return {
           uuid: file.filename.split(".")[0],
@@ -51,11 +51,12 @@ module.exports = {
           fileSize: file.size,
         };
       });
-      console.log("fileJson :: ", fileJson);
     }
 
-    return await boardRepository.InsertPost(postData, fileJson);
+    return await boardRepository.insertPost(postData, fileJson);
   },
+
+  // 게시물 수정
   updatePost: async (postData, fileData) => {
     console.log(postData.category);
     if (postData.category === "스터디해요") {
@@ -65,13 +66,9 @@ module.exports = {
     } else {
       postData.category = "qna";
     }
-    console.log("fileData", fileData);
-    // console.log(":::::: ",fileData.length)
-    console.log(":::::: ", !!fileData);
     var fileJson = { files: [] };
 
     if (!!fileData && fileData.length > 0) {
-      console.log("!!!!!!!");
       fileJson.files = fileData.map((file) => {
         return {
           uuid: file.filename.split(".")[0],
@@ -81,27 +78,18 @@ module.exports = {
           fileSize: file.size,
         };
       });
-      console.log("fileJson :: ", fileJson);
     }
     const existFile = postData.files;
     const deleteFile = [];
-    console.log("deleteFile ::: ", deleteFile);
     postData.deleteFile.map((file) => deleteFile.push(file.id));
-    console.log("deleteFile ::: ", deleteFile);
-    console.log("existFile", existFile);
 
     delete postData.files;
     delete postData.deleteFile;
 
-    const selectFile = await boardRepository.findAllFileByBoardId(
+    const selectFile = await boardRepository.selectAllFileByBoardId(
       postData.BoardId
     );
     selectFile.map((e) => console.log(e.uuid));
-    console.log(selectFile.length, "갯수");
-
-    console.log(postData.BoardId);
-    console.log(postData.UserId);
-    console.log(postData);
     if (existFile.length > 0) {
       const success_deleteFile =
         deleteFile && (await boardRepository.deleteFile(deleteFile));
@@ -139,31 +127,43 @@ module.exports = {
       };
     }
   },
-  findBoardById: async (boardId) => {
-    const files = await boardRepository.findFileById(boardId);
-    const boardData = await boardRepository.findBoardById(boardId);
-    // return await boardRepository.findBoardById(boardId)
+
+  // 게시물 ID로 게시물 조회
+  findPostById: async (boardId) => {
+    const files = await boardRepository.selectFileById(boardId);
+    const boardData = await boardRepository.selectPostById(boardId);
     return { boardData: boardData, files: files };
   },
-  getPostById: async (id) => {
-    const data = await boardRepository.findPostById(id);
+
+  // 작성된 게시물 ID로 게시물 조회
+  findWritePostById: async (id) => {
+    const data = await boardRepository.selectWritePostById(id);
     const category = data.postData.category;
     data.category = category;
-    // console.log(data)
     return data;
   },
-  getPostByCategory: async (category) => {
-    return await boardRepository.findPostByCategory(category);
+
+  // 카테고리별 게시물 조회
+  findPostByCategory: async (category) => {
+    return await boardRepository.selectPostByCategory(category);
   },
-  getAllCommentById: async (postId) => {
-    return await boardRepository.findAllCommentById(postId);
+
+  // 게시물 ID로 모든 댓글 조회
+  findAllCommentById: async (postId) => {
+    return await boardRepository.selectAllCommentById(postId);
   },
+
+  // 댓글 생성
   createComment: async (commentData) => {
-    return await boardRepository.InsertComment(commentData);
+    return await boardRepository.insertComment(commentData);
   },
+
+  // 대댓글 생성
   createReply: async (replyData) => {
-    return await boardRepository.InsertReply(replyData);
+    return await boardRepository.insertReply(replyData);
   },
+
+  // 내 댓글 삭제
   deleteMyComment: async (commentId) => {
     try {
       if (!commentId) {
@@ -177,6 +177,8 @@ module.exports = {
       return { success: false, message: error.message };
     }
   },
+
+  // 내 대댓글 삭제
   deleteMyReply: async (replyId) => {
     try {
       if (!replyId) {

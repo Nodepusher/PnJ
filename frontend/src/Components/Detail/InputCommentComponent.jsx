@@ -1,5 +1,3 @@
-// src/Components/Detail/InputCommentComponent.js
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -36,15 +34,19 @@ const InputCommentComponent = ({ type, replyCallback, profile }) => {
     }
 
     if (type === "comment") {
-      console.log("Comment submitted:", comment);
       await dispatch(createComment(postId, comment));
     } else if (type === "reply") {
-      console.log("Reply submitted:", comment);
       await dispatch(createReply(postId, comment, commentId));
       replyCallback();
     }
     setComment("");
     await dispatch(getPostStatsData(postId)); // 댓글 작성 후 댓글 목록 업데이트
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // 엔터 키 입력 시 기본 동작 막기
+    }
   };
 
   const StBtn = {
@@ -94,13 +96,14 @@ const InputCommentComponent = ({ type, replyCallback, profile }) => {
                 <div className="border_black_opacity absolute top-0 left-0 h-full w-full rounded-full border"></div>
               </button>
             </div>
-            <form className="w-full">
+            <form className="w-full" onSubmit={handleSubmit}>
               <input
                 type="text"
                 placeholder="댓글을 입력해주세요."
                 className="content_disabled font_label_regular_lg"
                 value={comment}
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 style={StInput}
               />
             </form>
@@ -117,7 +120,7 @@ const InputCommentComponent = ({ type, replyCallback, profile }) => {
             aria-label="button"
             className="font_button_bold_md relative flex items-center justify-center h-[32px] rounded-[16px] content_primary_inverse surface_accent hover:surface_accent_active active:surface_accent_active disabled:surface_disabled px-[16px] false disabled:content_disabled"
             type="button"
-            onClick={isLoggedIn ? (e) => handleSubmit(e) : moveToLoginPage}
+            onClick={isLoggedIn ? handleSubmit : moveToLoginPage}
           >
             {isLoggedIn ? "게시" : "로그인"}
           </button>

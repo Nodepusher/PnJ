@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ListHeaderContainer from "../Containers/List/ListHeaderContainer";
 import ListFooterContainer from "../Containers/List/ListFooterContainer";
-import Spinner from "../Containers/Common/Spinner";
 import { getPostData, startLoading, finishLoading } from "../store/postListReducer";
 import ListContentContainer from "../Containers/List/ListContentContainer"
 

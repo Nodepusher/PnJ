@@ -2,13 +2,13 @@
     margin-left: 115px;
 }
 .header {
-    min-width: 1450px;
+    min-width: 1330px;
 }
 .editor{
-    width: 1450px;
+    width: 1330px;
 }
 .editor > .col-span-10{
-    width: 1070px;
+    width: 980px;
 }
 .z-100 {
     z-index: 100;

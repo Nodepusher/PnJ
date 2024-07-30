@@ -46,7 +46,6 @@ const AttachedFile = ({ files }) => {
       <div className="md:w-[380px]">
         <div style={heightStyle12px}></div>
         <ul className="flex flex-col gap-y-[8px]">
-          {console.log(files)}
           {files.map((file, i) => (
             <li
               key={file.id}

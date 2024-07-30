@@ -21,7 +21,6 @@ const ReplyComponent = ({
   const replyCallback = () => {
     hideReply();
   };
-  console.log("replies", replies);
 
   const removeReply = async (replyId) => {
     try {
