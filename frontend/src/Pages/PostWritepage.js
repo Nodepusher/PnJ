@@ -1,173 +1,171 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
-  savePostData,
-  fetchPostData,
-  updatePostData,
-  updateIsEdit,
-  loadPostDataSuccess,
-} from "../store/postWriteReducer";
+    savePostData,
+    fetchPostData,
+    updatePostData,
+    updateIsEdit,
+    loadPostDataSuccess,
+} from '../store/postWriteReducer';
 
-import WriteHeaderContainer from "../Containers/Write/WriteHeaderContainer";
-import WriteSectionContainer from "../Containers/Write/WriteSectionContainer";
-import "../Components/MyPage/animation.css";
+import WriteHeaderContainer from '../Containers/Write/WriteHeaderContainer';
+import WriteSectionContainer from '../Containers/Write/WriteSectionContainer';
+import '../Components/MyPage/animation.css';
 import HeaderContainer from '../Containers/Common/HeaderContainer';
-import styles from "../style/writePage.css";
-import Thumbnail from "../Components/Write/Thumbnail";
+import styles from '../style/writePage.css';
+import Thumbnail from '../Components/Write/Thumbnail';
+import ToastMsg from '../utils/ToastMsg';
 const PostWritepage = ({ match }) => {
-  // match : parameter 값을 가져옴
-  const [isSaved, setIsSaved] = useState(false);
-  const nav = useNavigate();
-  let [query, setQuery] = useSearchParams();
-  const editorRef = useRef(null);
-  const dispatch = useDispatch();
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [animationClass, setAnimationClass] = useState("");
-  const [saveTrigger, setSaveTrigger] = useState(false);
-  // 썸네일 모달 창 위한 스테이트
-  const [onThumbModal, setOnThumbModal] = useState(false);
-  const [thumbFile, setThumbFile] = useState(null);
+    // match : parameter 값을 가져옴
+    const [isSaved, setIsSaved] = useState(false);
+    const nav = useNavigate();
+    let [query, setQuery] = useSearchParams();
+    const editorRef = useRef(null);
+    const dispatch = useDispatch();
+    const [selectedFiles, setSelectedFiles] = useState([]);
+    const [animationClass, setAnimationClass] = useState('');
+    const [saveTrigger, setSaveTrigger] = useState(false);
+    // 썸네일 모달 창 위한 스테이트
+    const [onThumbModal, setOnThumbModal] = useState(false);
+    const [thumbFile, setThumbFile] = useState(null);
 
-  const {
-    inputData,
-    deleteFile,
-    updateState,
-    writeState,
-  } = useSelector((state) => state.write);
-  var postId = query.get("postId");
-  var isEdit = postId ? true : false;
+    // 토스트 메세지
+    const [onTimer, setOnTimer] = useState(false);
+    const [msg, setMsg] = useState(null);
 
-  useEffect(() => {
-    dispatch(updateIsEdit(isEdit, postId));
-    const savedPost = sessionStorage.getItem("savedPost");
-
-    if (isEdit) {
-      // 수정 게시물
-      dispatch(fetchPostData(postId));
-    } else if (savedPost) {
-      // 세션스토리지에 임시저장 데이터가 있다면
-      const { title, content, category, tag, files } = JSON.parse(savedPost);
-      const data = {
-        boardData: {
-          title: title,
-          content: content,
-          category: category,
-          tag: tag,
-        },
-        files: files,
-      };
-      dispatch(loadPostDataSuccess(data));
-    } else {
-      dispatch(
-        updatePostData({
-          // id: '',
-          title: "",
-          content: "본문",
-          category: "",
-          tag: [],
-          isEdit: isEdit,
-        })
-      );
-    }
-  }, []);
-  // 모달 show/hide
-  const showThumbModal = () => {
-    setOnThumbModal(true);
-  };
-  const hideThumbModal = () => {
-    setOnThumbModal(false);
-  };
-  // 임시저장 이벤트
-  const savedPost = () => {
-    sessionStorage.setItem(
-      "savedPost",
-      JSON.stringify({
-        ...inputData,
-        files: Array(0),
-      })
-    );
-  };
-  // 게시 이벤트
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let markdownContent = editorRef.current?.getInstance().getMarkdown();
+    const { inputData, deleteFile, updateState, writeState } = useSelector((state) => state.write);
+    var postId = query.get('postId');
+    var isEdit = postId ? true : false;
     const { title, content, category } = inputData;
-    if (!title || !content || !category) {
-      alert("필수 필드를 입력해 주세요.");
-      return;
-    }
 
-    const postData = {
-      ...inputData,
-      content: markdownContent,
+    useEffect(() => {
+        dispatch(updateIsEdit(isEdit, postId));
+        const savedPost = sessionStorage.getItem('savedPost');
+
+        if (isEdit) {
+            // 수정 게시물
+            dispatch(fetchPostData(postId));
+        } else if (savedPost) {
+            // 세션스토리지에 임시저장 데이터가 있다면
+            const { title, content, category, tag, files } = JSON.parse(savedPost);
+            const data = {
+                boardData: {
+                    title: title,
+                    content: content,
+                    category: category,
+                    tag: tag,
+                },
+                files: files,
+            };
+            dispatch(loadPostDataSuccess(data));
+        } else {
+            dispatch(
+                updatePostData({
+                    // id: '',
+                    title: '',
+                    content: '본문',
+                    category: '',
+                    tag: [],
+                    isEdit: isEdit,
+                })
+            );
+        }
+    }, []);
+    // 모달 show/hide
+    const showThumbModal = () => {
+        if (!title || !content || !category) {
+            setOnTimer(true);
+            setMsg('제목, 본문, 카테고리를 입력해 주세요.');
+            console.log('title', title, '\n content', content, '\n category', category);
+            return;
+        }
+        setOnThumbModal(true);
+    };
+    const hideThumbModal = () => {
+        setOnThumbModal(false);
+    };
+    // 임시저장 이벤트
+    const savedPost = () => {
+        try {
+            sessionStorage.setItem(
+                'savedPost',
+                JSON.stringify({
+                    ...inputData,
+                    files: Array(0),
+                })
+            );
+            setMsg('게시글 임시저장에 성공하였습니다.');
+            setOnTimer(true);
+        } catch {
+            alert('게시글 임시저장에 실패했습니다.');
+        }
+    };
+    // 게시 이벤트
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        let markdownContent = editorRef.current?.getInstance().getMarkdown();
+        if (!title || !content || !category) {
+            setMsg('필수 필드를 입력해 주세요.');
+            console.log('title', title, '\n content', content, '\n category', category);
+            return;
+        }
+
+        const postData = {
+            ...inputData,
+            content: markdownContent,
+        };
+
+        dispatch(savePostData(postData, thumbFile, isEdit, selectedFiles, postId, deleteFile));
+        setSaveTrigger(true);
+        if (!saveTrigger) {
+            window.location.href = '/';
+        }
     };
 
-    dispatch(
-      savePostData(
-        postData,
-        thumbFile,
-        isEdit,
-        selectedFiles,
-        postId,
-        deleteFile
-      )
-    );
-    setSaveTrigger(true);
-    if (!saveTrigger) {
-      window.location.href = "/";
-    }
-  };
+    useEffect(() => {
+        dispatch(fetchPostData(postId));
 
-  useEffect(() => {
-    dispatch(fetchPostData(postId));
+        // if (saveTrigger) {
+        //   setIsSaved(true);
+        //   setAnimationClass("fadeIn");
+        //   setTimeout(() => {
+        //     setAnimationClass("fadeOut");
+        //     setTimeout(() => {
+        //       setIsSaved(false);
+        //       setSaveTrigger(false);
+        //       setOnThumbModal(false);
+        //     }, 200);
+        //   }, 2000);
+        // }
+    }, [updateState, saveTrigger]);
 
-    // if (saveTrigger) {
-    //   setIsSaved(true);
-    //   setAnimationClass("fadeIn");
-    //   setTimeout(() => {
-    //     setAnimationClass("fadeOut");
-    //     setTimeout(() => {
-    //       setIsSaved(false);
-    //       setSaveTrigger(false);
-    //       setOnThumbModal(false);
-    //     }, 200);
-    //   }, 2000); 
-    // }
-  }, [updateState, saveTrigger]);
+    return (
+        <>
+            <HeaderContainer search={true} login={true} mypage={true} />
+            <WriteHeaderContainer showThumbModal={showThumbModal} savedPost={savedPost} />
 
-  return (
-    <>
-      <HeaderContainer search={true} login={true} mypage={true} />
-      <WriteHeaderContainer
-        showThumbModal={showThumbModal}
-        savedPost={savedPost}
-      />
-      
-      <WriteSectionContainer
-        editorRef={editorRef}
-        selectedFiles={selectedFiles}
-        setSelectedFiles={setSelectedFiles}
-        setIsSaved={setIsSaved}
-        isSaved={isSaved}
-      />
-      {onThumbModal && (
-        <Thumbnail
-          hideThumbModal={hideThumbModal}
-          handleSubmit={handleSubmit}
-          setThumbFile={setThumbFile}
-        />
-      )}
-      {/* {isSaved && (
+            <WriteSectionContainer
+                editorRef={editorRef}
+                selectedFiles={selectedFiles}
+                setSelectedFiles={setSelectedFiles}
+                setIsSaved={setIsSaved}
+                isSaved={isSaved}
+            />
+            {onThumbModal && (
+                <Thumbnail hideThumbModal={hideThumbModal} handleSubmit={handleSubmit} setThumbFile={setThumbFile} />
+            )}
+            {onTimer && <ToastMsg text={msg} onTimer={onTimer} setOnTimer={setOnTimer} />}
+            {/* {isSaved && (
         <SaveInfo
           animationClass={animationClass}
           updateState={updateState}
           writeState={writeState}
         />
       )} */}
-    </>
-  );
+        </>
+    );
 };
 // const SaveInfo = ({ animationClass, writeState }) => {
 //   return (
