@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import {
     savePostData,
     fetchPostData,
@@ -14,18 +13,15 @@ import WriteHeaderContainer from '../Containers/Write/WriteHeaderContainer';
 import WriteSectionContainer from '../Containers/Write/WriteSectionContainer';
 import '../Components/MyPage/animation.css';
 import HeaderContainer from '../Containers/Common/HeaderContainer';
-import styles from '../style/writePage.css';
 import Thumbnail from '../Components/Write/Thumbnail';
 import ToastMsg from '../utils/ToastMsg';
 const PostWritepage = ({ match }) => {
     // match : parameter 값을 가져옴
     const [isSaved, setIsSaved] = useState(false);
-    const nav = useNavigate();
     let [query, setQuery] = useSearchParams();
     const editorRef = useRef(null);
     const dispatch = useDispatch();
     const [selectedFiles, setSelectedFiles] = useState([]);
-    const [animationClass, setAnimationClass] = useState('');
     const [saveTrigger, setSaveTrigger] = useState(false);
     // 썸네일 모달 창 위한 스테이트
     const [onThumbModal, setOnThumbModal] = useState(false);
@@ -38,7 +34,7 @@ const PostWritepage = ({ match }) => {
     const { inputData, deleteFile, updateState, writeState } = useSelector((state) => state.write);
     var postId = query.get('postId');
     var isEdit = postId ? true : false;
-    const { title, content, category } = inputData;
+    const { title, content, category, tag } = inputData;
 
     useEffect(() => {
         dispatch(updateIsEdit(isEdit, postId));
