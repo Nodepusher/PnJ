@@ -121,9 +121,11 @@ const WriteAsideContainer = ({ setModalOn, selectedFiles, setSelectedFiles }) =>
             })
         );
     }, [dropdownState, dispatch]);
+
     useEffect(() => {
         dispatch(deleteFileData(deleteFile));
     }, [deleteFile, dispatch]);
+
     useEffect(() => {
         dispatch(
             updatePostData({

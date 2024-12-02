@@ -3,6 +3,7 @@ import NoPost from './NoPost';
 import MyPageModal from '../MyPage/MyPageModal';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import formattedDate from '../../utils/formmatedDate';
 
 const PostListComponent = ({ postState, post, sort, setPost }) => {
     return <>{postState ? <PostList postList={post} sort={sort} setPost={setPost} /> : <NoPost />}</>;
@@ -48,9 +49,12 @@ const PostList = ({ postList, sort, setPost }) => {
     return (
         <>
             <ul className="col-span-full mt-[8px] flex flex-col">
-                {sortPostList.map((post) => {
+                {sortPostList.map((post, i) => {
                     return (
-                        <li className="border_secondary flex items-center border-b px-[8px] py-[16px] hover:surface_secondary">
+                        <li
+                            className="border_secondary flex items-center border-b px-[8px] py-[16px] hover:surface_secondary"
+                            key={i}
+                        >
                             <button className="block w-[280px] text-left" onClick={() => moveToDetailPost(post.id)}>
                                 <div className="content_secondary flex flex-col gap-y-[2px]">
                                     <div className="flex gap-[12px]">
@@ -76,8 +80,8 @@ const PostList = ({ postList, sort, setPost }) => {
                                     <p className="font_label_medium_lg">0</p>
                                     <p className="content_quaternary font_label_regular_md">좋아요</p>
                                 </div>
-                                <div className="flex w-[76px] flex-col items-end gap-y-[4px]">
-                                    <p className="font_label_medium_lg">{post.date}</p>
+                                <div className="flex w-[130px] flex-col items-end gap-y-[4px]">
+                                    <p className="font_label_medium_lg">{formattedDate(post.updatedAt)}</p>
                                     <p className="content_quaternary font_label_regular_md">게시일</p>
                                 </div>
                             </div>

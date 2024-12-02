@@ -45,7 +45,6 @@ const WriteEditorContainer = ({ editorRef }) => {
                 title: inputTitle,
             })
         );
-        console.log('디스패치 들어왔다!!', '\n', inputTitle, '\n', editorRef.current?.getInstance().getMarkdown());
     }, [dispatch, inputTitle, content]);
 
     return (
