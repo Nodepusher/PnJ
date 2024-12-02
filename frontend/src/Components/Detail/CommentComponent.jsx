@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import ReplyComponent from './ReplyComponent';
 import { getCommentId, getPostStatsData } from '../../store/postDetailReducer';
 import axios from 'axios';
+import defaultImageUrl from '../../Assets/images/default_image.png';
 
 const CommentComponent = ({ commentData, profile, loginUser }) => {
     const [activeReply, setActiveReply] = useState(null); // 현재 활성화된 답글 입력 상태
     const postId = useSelector((state) => state.detail.postId); // 현재 게시물 ID
     const { post } = useSelector((state) => state.detail.postData); // 현재 게시물 데이터
     const dispatch = useDispatch();
-
+    const AssetUrl = '../../Assets/images';
     // 답글 입력창 토글 함수
     const showReplyInputComment = (commentId) => {
         setActiveReply((prev) => (prev === commentId ? null : commentId));
@@ -83,10 +84,7 @@ const CommentComponent = ({ commentData, profile, loginUser }) => {
                                     <img
                                         alt={comment.User.name}
                                         sizes="(max-width: 240px) 100vw, 240px"
-                                        src={
-                                            `/uploads/file/${comment.User.profile}` ||
-                                            `/uploads/file/default_profile_image.png`
-                                        }
+                                        src={`/uploads/file/${comment.User.profile}` || `${defaultImageUrl}`}
                                         decoding="async"
                                         data-nimg="fill"
                                         className="rounded-full"

@@ -7,7 +7,7 @@ import { Editor, Viewer } from '@toast-ui/react-editor';
 import React, { useEffect } from 'react';
 import axios from 'axios';
 
-const TuiEditor = ({ editorRef, content }) => {
+const TuiEditor = ({ editorRef, content, onChange }) => {
     const toolbarItems = [
         ['heading', 'bold', 'italic', 'strike'],
         ['hr', 'quote'],
@@ -17,6 +17,7 @@ const TuiEditor = ({ editorRef, content }) => {
         ['scrollSync'],
         // ['modeSwitch']
     ];
+
     // 여기 함수 내용을 백이랑 상의하면서 설계해야함
     const handleImage = async (blob, callback) => {
         const formData = new FormData();
@@ -39,6 +40,7 @@ const TuiEditor = ({ editorRef, content }) => {
         <>
             <Editor
                 ref={editorRef}
+                onChange={onChange}
                 // initialEditType="wysiwyg"
                 initialEditType="markdown"
                 previewStyle="vertical"

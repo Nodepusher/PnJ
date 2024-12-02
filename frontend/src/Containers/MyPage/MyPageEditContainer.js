@@ -56,7 +56,7 @@ const MyPageEditContainer = ({ user, profile }) => {
         e.preventDefault();
         const isPasswordEmpty = !updateUserInfo.password && !updateUserInfo.passwordCheck;
         const isPasswordValid = valid.passwordValid && valid.passwordMatch;
-        const canUpdate = !isPasswordEmpty && isPasswordValid;
+        const canUpdate = (!isPasswordEmpty && isPasswordValid) || uploadImage;
         if (canUpdate) {
             setUpdateState(true);
             const formData = new FormData();
@@ -71,6 +71,7 @@ const MyPageEditContainer = ({ user, profile }) => {
                     },
                 });
                 console.log('Update successful');
+                alert('Update Successful.');
                 dispatch(loadUser());
             } catch (error) {
                 console.error('Error updating user info:', error);
@@ -93,39 +94,6 @@ const MyPageEditContainer = ({ user, profile }) => {
         });
     }, [loadUser.fulfilled]);
 
-    /*
-  // 렌더링 시, 로그인된 상태의 정보가 있어야함
-  const tempLoginData = {};
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const res = await axios.get("http://localhost:4000/getUserInfo", {
-          params: tempLoginData,
-        });
-        setUserInfo({
-          email: user.email,
-          phoneNumber: user.phone,
-        });
-        if (
-          res.data.profileImage !== undefined &&
-          res.data.profileImage !== null
-        ) {
-          setUploadImage(user.profile);
-        } else {
-          setUploadImage(false);
-        }
-      } catch (error) {
-        setUploadImage(false);
-        setUserInfo({
-          email: user.email,
-          phoneNumber: user.phone,
-        });
-      }
-    };
-
-    fetchUserInfo();
-  }, [updateState]);
-  */
     return (
         <>
             <div className="shrink-0 grow basis-0 overflow-x-auto">

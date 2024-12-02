@@ -3,11 +3,12 @@ import InputCommentComponent from './InputCommentComponent';
 import axios from 'axios';
 import { getPostStatsData } from '../../store/postDetailReducer';
 import { useDispatch } from 'react-redux';
+import defaultImageUrl from '../../Assets/images/default_image.png';
 
 const ReplyComponent = ({ showReply, hideReply, StBtn, StImg, replies, formatDateTime, profile, loginUser, post }) => {
     const dispatch = useDispatch();
     const type = 'reply';
-
+    const AssetUrl = '../../Assets/images';
     const replyCallback = () => {
         hideReply();
     };
@@ -45,10 +46,7 @@ const ReplyComponent = ({ showReply, hideReply, StBtn, StImg, replies, formatDat
                                                 alt="뉴크로셰"
                                                 sizes="(max-width: 240px) 100vw, 240px"
                                                 srcSet=""
-                                                src={
-                                                    `/uploads/file/${reply.User.profile}` ||
-                                                    `/uploads/file/default_profile_image.png`
-                                                }
+                                                src={`/uploads/file/${reply.User.profile}` || `${defaultImageUrl}`}
                                                 decoding="async"
                                                 data-nimg="fill"
                                                 className="rounded-full"
